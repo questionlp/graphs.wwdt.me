@@ -17,7 +17,7 @@ from werkzeug.exceptions import HTTPException
 from wwdtm.panelist import info as pnl_info
 
 #region Global Constants
-APP_VERSION = "0.1.0"
+APP_VERSION = "0.2.0"
 
 #endregion
 
@@ -121,15 +121,16 @@ def panelists_score_breakdown_details(panelist: Text):
     scores = pnl_info.retrieve_scores_grouped_list_by_slug(panelist,
                                                            database_connection)
     return render_template("panelists/score-breakdown/details.html",
-                           panelist_info=info,
-                           panelist_slug=panelist_slug,
+                           info=info,
                            scores=scores)
 
 @app.route("/panelists/scores-by-appearance")
 def panelists_scores_by_appearance_index():
     """Panelists Scores by Appearance Index Page"""
     database_connection.reconnect()
-    return render_template("panelists/scores-by-appearance/index.html")
+    panelists = pnl_info.retrieve_all(database_connection)
+    return render_template("panelists/scores-by-appearance/index.html",
+                           panelists=panelists)
 
 @app.route("/panelists/scores-by-appearance/<string:panelist>")
 def panelists_scores_by_appearance_details(panelist: Text):
@@ -140,11 +141,20 @@ def panelists_scores_by_appearance_details(panelist: Text):
         return redirect(url_for("panelists_scores_by_appearance_details",
                                 panelist=panelist_slug))
 
+    info = pnl_info.retrieve_by_slug(panelist, database_connection)
     scores = pnl_info.retrieve_scores_ordered_pair_by_slug(panelist,
                                                            database_connection)
-    return render_template("panelists/scores-by-appearance/details.html",
-                           scores=scores)
 
+    if scores:
+        scores_json = json.dumps(scores)
+
+        return render_template("panelists/scores-by-appearance/details.html",
+                               info=info,
+                               scores=scores_json)
+
+    return render_template("panelists/scores-by-appearance/details.html",
+                           info=info,
+                           scores=None)
 #endregion
 
 #region Show Routes

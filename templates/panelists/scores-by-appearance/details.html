@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}{{ info.name }} | Scores by Appearance | Panelists{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb">
+    <a href="{{ url_for('panelists_index') }}">Panelists</a> &gt;
+    <a href="{{ url_for('panelists_scores_by_appearance_index') }}">Scores by Appearance</a>
+</div>
+
+<h1>{{ info.name }}</h1>
+<h2>Scores by Appearance</h2>
+{% if scores %}
+<p>
+    This chart displays scores for all of
+    <a href="{{ stats_url}}/panelists/{{ info.slug }}">{{ info.name }}</a>'s
+    appearances on the show, excluding Best Of and Repeat Shows.
+</p>
+<p>
+    The chart supports zooming in and out along the x-axis by clicking and
+    dragging within the chart or by using the zoom in and out icons in the
+    toolbar. Click on the hand icon to switch to panning mode and then click
+    and drag left or right once zoomed in to scroll the graph accordingly.
+</p>
+
+<div id="chart"></div>
+<script>
+var scores = {{ scores|safe }};
+var options = {
+    chart: {
+        id: 'scores-appearance-{{ info.slug }}',
+        animations: {
+            enabled: false,
+            animateGradually: { enabled: false },
+            dynamicAnimation: { enabled: false }
+        },
+        background: '#333',
+        fontFamily: "'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        foreColor: '#ddd',
+        height: 640,
+        type: 'line',
+        toolbar: { autoSelected: 'zoom' },
+        zoom: {
+            enabled: true,
+            type: 'x',
+            autoScaleYaxis: false
+        }   
+    },
+    grid: {
+        show: true,
+        yaxis: {
+            lines: { show: false }
+        }
+    },
+    stroke: { width: 2 },
+    dataLabels: { enabled: false },
+    markers: { size: 2 },
+    series: [{
+        name: 'Score',
+        data: scores
+    }],
+    theme: {
+            mode: 'dark',
+            monochrome: {
+                enabled: true,
+                color: '#42a5f5',
+                shadeIntensity: 0.9
+            }
+    },
+    tooltip: {
+        enabled: true,
+        x: { format: 'yyyy-MM-dd' }
+    },
+    xaxis: {
+        type: 'datetime',
+        labels: { format: 'yyyy-MM-dd' }
+     },
+    yaxis: {
+        axisBorder: { show: true },
+        min: 0,
+        max: 25,
+        tickAmount: 5
+    }
+}
+var chart = new ApexCharts(document.querySelector('#chart'), options);
+chart.render();
+</script>
+{% else %}
+<p>
+    Not enough scoring data is available for {{ info.name }} to
+    generate a graph.
+</p>
+{% endif %}
+
+{% endblock %}

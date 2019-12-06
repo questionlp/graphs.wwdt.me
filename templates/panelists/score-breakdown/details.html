@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Panelists{% endblock %}
+{% block title %}{{ info.name }} | Score Breakdown | Panelists{% endblock %}
 
 {% block content %}
 <div class="page-breadcrumb">
@@ -7,18 +7,25 @@
     <a href="{{ url_for('panelists_score_breakdown_index') }}">Score Breakdown</a>
 </div>
 
-<h1>{{ panelist_info.name }}</h1>
+<h1>{{ info.name }}</h1>
 <h2>Score Breakdown</h2>
 
 {% if scores %}
+<p>
+    This chart displays the count of how many times
+    <a href="{{ stats_url}}/panelists/{{ info.slug }}">{{ info.name }}</a>
+    earned a specific number of points at the end of each show.
+</p>
+
 <div id="chart"></div>
 <script>
 var scores = {{ scores.count }};
 var categories = {{ scores.score }};
 var minCount = Math.min.apply(null, scores);
-var maxCount = Math.max.apply(null, scores) + 1;
+var maxCount = Math.max.apply(null, scores) + 2;
 var options = {
     chart: {
+        id: 'score-breakdown-{{ info.slug }}',
         animations: {
             enabled: false,
             animateGradually: { enabled: false },
@@ -27,6 +34,7 @@ var options = {
         background: '#333',
         fontFamily: "'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
         foreColor: '#ddd',
+        height: 640,
         type: 'bar'
     },
     plotOptions: {
@@ -37,7 +45,7 @@ var options = {
     dataLabels: {
         enabled: true,
         style: { fontSize: '0.9rem' },
-        offsetY: -10
+        offsetY: -16
     },
     series: [{
         name: 'Score Count',
@@ -47,27 +55,30 @@ var options = {
             mode: 'dark',
             monochrome: {
                 enabled: true,
-                color: '#0D47A1',
+                color: '#42a5f5',
                 shadeIntensity: 0.9
             }
     },
     tooltip: { enabled: false },
     xaxis: { categories: categories },
+    grid: {
+        show: true,
+        yaxis: {
+            lines: { show: false }
+        }
+    },
     yaxis: {
-        forceNiceScale: true,
+        axisBorder: { show: true },
         min: minCount,
-        max: maxCount
+        max: maxCount,
     }
 }
-var chart = new ApexCharts(
-    document.querySelector('#chart'),
-    options
-);
+var chart = new ApexCharts(document.querySelector('#chart'), options);
 chart.render();
 </script>
 {% else %}
 <p>
-    Not enough scoring data is available for {{ panelist_info.name }} to
+    Not enough scoring data is available for {{ info.name }} to
     generate a graph.
 </p>
 {% endif %}

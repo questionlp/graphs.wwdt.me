@@ -7,7 +7,7 @@
         <a href="{{ url_for('index') }}" class="brand-logo">Wait Wait Graphs</a>
         <ul id="dropdown-panelist" class="dropdown-content z-depth-0">
             <li><a href="{{ url_for('panelists_score_breakdown_index') }}">Score Breakdown</a></li>
-            <li><a href="#">Scores by Appearance</a></li>
+            <li><a href="{{ url_for('panelists_scores_by_appearance_index') }}">Scores by Appearance</a></li>
         </ul>
         <ul id="dropdown-more" class="dropdown-content z-depth-0">
             <li><a href="{{ api_url }}/docs/">API Docs</a></li>
