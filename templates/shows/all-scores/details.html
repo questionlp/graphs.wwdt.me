@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}{{ year }} | All Scores | Shows{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb">
+    <a href="{{ url_for('shows_index') }}">Shows</a> &gt;
+    <a href="{{ url_for('shows_all_scores') }}">All Scores</a>
+</div>
+
+<h1>All Scores for {{ year }}</h1>
+
+{% if shows %}
+<p>
+    This chart displays all of the panelist scores for each regular show; thus,
+    excluding Best Ofs and Repeat shows.
+</p>
+
+<div id="chart"></div>
+<script>
+var options = {
+    chart: {
+        id: 'all-scores-{{ year }}',
+        type: 'bar',
+        stacked: true,
+        animations: { enabled: false },
+        background: '#333',
+        fontFamily: "'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        foreColor: '#ddd',
+        height: 640
+    },
+    colors: [ '#311b92', '#3949ab', '#2196f3'], 
+    dataLabels: {
+        enabled: true,
+        style: { fontSize: '1rem' },
+    },
+    grid: {
+        show: true,
+        xaxis: {
+            lines: { show: false }
+        },
+        yaxis: {
+            lines: { show: false }
+        }
+    },
+    legend: {
+        show: true,
+        fontFamily: "'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        fontSize: '18px',
+        itemMargin: {
+            horizontal: 12,
+            vertical: 12
+        }
+    },
+    plotOptions: {
+        bar: { horizontal: false }
+    },
+    series: [
+        {
+            name: 'Panelist 1',
+            data: {{ scores_1|safe }}
+        },
+        {
+            name: 'Panelist 2',
+            data: {{ scores_2|safe }}
+        },
+        {
+            name: 'Panelist 3',
+            data: {{ scores_3|safe }}
+        }
+    ],
+    theme: { mode: 'dark' },
+    tooltip: { enabled: true, },
+    xaxis: {
+        axisTicks: { show: true },
+        categories: {{ shows|safe }},
+        labels: { show: false },
+        type: 'category'
+    },
+    yaxis: {
+        axisBorder: { show: true },
+        min: 0,
+        max: 64,
+    }
+}
+var chart = new ApexCharts(document.querySelector('#chart'), options);
+chart.render();
+</script>
+{% else %}
+<p>
+    No scoring data is currently available for {{ year }}.
+</p>
+{% endif %}
+
+{% endblock %}

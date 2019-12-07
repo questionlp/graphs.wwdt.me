@@ -9,6 +9,9 @@
             <li><a href="{{ url_for('panelists_score_breakdown_index') }}">Score Breakdown</a></li>
             <li><a href="{{ url_for('panelists_scores_by_appearance_index') }}">Scores by Appearance</a></li>
         </ul>
+        <ul id="dropdown-show" class="dropdown-content z-depth-0">
+            <li><a href="{{ url_for('shows_all_scores') }}">All Scores</a></li>
+        </ul>
         <ul id="dropdown-more" class="dropdown-content z-depth-0">
             <li><a href="{{ api_url }}/docs/">API Docs</a></li>
             <li><a href="{{ blog_url }}">Blog</a></li>
@@ -20,7 +23,9 @@
             <li><a href="{{ url_for('panelists_index') }}" class="dropdown-trigger"
                 data-target="dropdown-panelist">Panelists
                 <i class="material-icons right">arrow_drop_down</i></a></li>
-            <li><a href="#">Shows</a></li>
+            <li><a href="{{ url_for('shows_index') }}" class="dropdown-trigger"
+                data-target="dropdown-show">Shows
+                <i class="material-icons right">arrow_drop_down</i></a></li>
             <li><a href="#" class="dropdown-trigger" data-target="dropdown-more">
                 More<i class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
@@ -32,7 +37,7 @@
         <li><a href="{{ url_for('index') }}">Home</a></li>
         <li><div class="divider"></div></li>
         <li><a href="{{ url_for('panelists_index') }}">Panelists</a></li>
-        <li><a href="#">Shows</a></li>
+        <li><a href="{{ url_for('shows_index') }}">Shows</a></li>
         <li><div class="divider"></div></li>
         <li><a href="//api.wwdt.me/docs/">API Docs</a></li>
         <li><a href="//blog.wwdt.me/">Blog</a></li>

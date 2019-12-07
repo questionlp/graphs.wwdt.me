@@ -26,11 +26,7 @@ var maxCount = Math.max.apply(null, scores) + 2;
 var options = {
     chart: {
         id: 'score-breakdown-{{ info.slug }}',
-        animations: {
-            enabled: false,
-            animateGradually: { enabled: false },
-            dynamicAnimation: { enabled: false }
-        },
+        animations: { enabled: false },
         background: '#333',
         fontFamily: "'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
         foreColor: '#ddd',
@@ -40,6 +36,7 @@ var options = {
     plotOptions: {
         bar: {
             dataLabels: { position: 'top' },
+            horizontal: false
         }
     },
     dataLabels: {

@@ -15,6 +15,7 @@ import pytz
 from slugify import slugify
 from werkzeug.exceptions import HTTPException
 from wwdtm.panelist import info as pnl_info
+from wwdtm.show import info as show_info
 
 #region Global Constants
 APP_VERSION = "0.2.0"
@@ -48,6 +49,15 @@ def generate_date_time_stamp(time_zone: pytz.timezone = pytz.timezone("UTC")):
     """Generate a current date/timestamp string"""
     now = datetime.now(time_zone)
     return now.strftime("%Y-%m-%d %H:%M:%S %Z")
+
+def retrieve_show_years(reverse_order: bool = True):
+    """Retrieve a list of available show years"""
+    database_connection.reconnect()
+    years = show_info.retrieve_years(database_connection)
+    if years and reverse_order:
+        years.reverse()
+
+    return years
 
 #endregion
 
@@ -142,22 +152,69 @@ def panelists_scores_by_appearance_details(panelist: Text):
                                 panelist=panelist_slug))
 
     info = pnl_info.retrieve_by_slug(panelist, database_connection)
-    scores = pnl_info.retrieve_scores_ordered_pair_by_slug(panelist,
-                                                           database_connection)
+    scores = pnl_info.retrieve_scores_list_by_slug(panelist,
+                                                   database_connection)
 
     if scores:
-        scores_json = json.dumps(scores)
+        shows_json = json.dumps(scores["shows"])
+        scores_json = json.dumps(scores["scores"])
 
         return render_template("panelists/scores-by-appearance/details.html",
                                info=info,
+                               shows=shows_json,
                                scores=scores_json)
 
     return render_template("panelists/scores-by-appearance/details.html",
                            info=info,
+                           shows=None,
                            scores=None)
 #endregion
 
 #region Show Routes
+@app.route("/shows")
+def shows_index():
+    """Shows Index Page"""
+    return render_template("shows/index.html")
+
+@app.route("/shows/all-scores")
+def shows_all_scores():
+    """Shows All Scores Page"""
+    database_connection.reconnect()
+    show_years = retrieve_show_years()
+
+    if not show_years:
+        return redirect(url_for('shows_index'))
+
+    return render_template("shows/all-scores/index.html",
+                           show_years=show_years)
+
+@app.route("/shows/all-scores/<int:year>")
+def shows_all_scores_by_year(year: int):
+    """Panelists All Scores Page"""
+    database_connection.reconnect()
+    show_scores = show_info.retrieve_scores_by_year(year,
+                                                    database_connection)
+    print(show_scores)
+    if not show_scores:
+        return render_template("shows/all-scores/details.html",
+                               year=year, shows=None)
+
+    shows = []
+    scores_1 = []
+    scores_2 = []
+    scores_3 = []
+    for show in show_scores:
+        shows.append(show[0])
+        scores_1.append(show[1])
+        scores_2.append(show[2])
+        scores_3.append(show[3])
+
+    return render_template("shows/all-scores/details.html",
+                           year=year,
+                           shows=shows,
+                           scores_1=scores_1,
+                           scores_2=scores_2,
+                           scores_3=scores_3)
 
 
 #endregion
