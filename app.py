@@ -100,7 +100,16 @@ def index():
 #endregion
 
 #region Sitemap XML Route
-
+@app.route("/sitemap.xml")
+def sitemap_xml():
+    """Default Sitemap XML"""
+    database_connection.reconnect()
+    show_years = retrieve_show_years(reverse_order=False)
+    panelists = pnl_info.retrieve_all(database_connection)
+    sitemap = render_template("core/sitemap.xml",
+                              show_years=show_years,
+                              panelists=panelists)
+    return Response(sitemap, mimetype="text/xml")
 
 #endregion
 
@@ -194,7 +203,6 @@ def shows_all_scores_by_year(year: int):
     database_connection.reconnect()
     show_scores = show_info.retrieve_scores_by_year(year,
                                                     database_connection)
-    print(show_scores)
     if not show_scores:
         return render_template("shows/all-scores/details.html",
                                year=year, shows=None)
@@ -229,6 +237,7 @@ app.jinja_env.globals["rendered_at"] = generate_date_time_stamp
 app.jinja_env.globals["api_url"] = config["settings"]["api_url"]
 app.jinja_env.globals["blog_url"] = config["settings"]["blog_url"]
 app.jinja_env.globals["reports_url"] = config["settings"]["reports_url"]
+app.jinja_env.globals["site_url"] = config["settings"]["site_url"]
 app.jinja_env.globals["stats_url"] = config["settings"]["stats_url"]
 
 database_connection = mysql.connector.connect(**config["database"])
