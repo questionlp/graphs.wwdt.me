@@ -39,7 +39,7 @@ var options = {
             lines: { show: false }
         },
         yaxis: {
-            lines: { show: false }
+            lines: { show: true }
         }
     },
     legend: {
@@ -78,8 +78,10 @@ var options = {
     },
     yaxis: {
         axisBorder: { show: true },
+        forceNiceScale: true,
         min: 0,
-        max: 64,
+        max: 60,
+        tickAmount: 7
     }
 }
 var chart = new ApexCharts(document.querySelector('#chart'), options);
