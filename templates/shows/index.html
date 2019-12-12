@@ -2,7 +2,12 @@
 {% block title %}Shows{% endblock %}
 
 {% block content %}
+<div class="page-breadcrumb">
+    <a href="{{ url_for('index') }}">Home</a>
+</div>
+
 <h1>Shows</h1>
+
 <p>
     Choose from one of the following links to view graphs representing data
     collected from each broadcasted show.
