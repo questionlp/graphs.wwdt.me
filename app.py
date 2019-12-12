@@ -168,7 +168,7 @@ def panelists_scores_by_appearance_details(panelist: Text):
                                                    database_connection)
 
     if not info and not scores:
-        return redirect("panelists_scores_by_appearance_index")
+        return redirect(url_for("panelists_scores_by_appearance_index"))
 
     if scores:
         shows_json = json.dumps(scores["shows"])
