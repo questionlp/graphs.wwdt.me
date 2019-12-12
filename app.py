@@ -18,7 +18,7 @@ from wwdtm.panelist import info as pnl_info
 from wwdtm.show import info as show_info
 
 #region Global Constants
-APP_VERSION = "1.0.0b1"
+APP_VERSION = "1.0.0"
 
 #endregion
 
@@ -83,11 +83,6 @@ def handle_exception(error):
     app_logger.error(error_traceback)
     return render_template("errors/500.html",
                            error_traceback=error_traceback), 500
-
-#endregion
-
-#region General Redirect Routes
-
 
 #endregion
 
@@ -255,6 +250,5 @@ database_connection.autocommit = True
 
 if __name__ == "__main__":
     app.run(debug=False, host="0.0.0.0", port="9257")
-
 
 #endregion
