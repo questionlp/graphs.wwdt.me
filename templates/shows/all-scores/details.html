@@ -2,7 +2,7 @@
 {% block title %}{{ year }} | All Scores | Shows{% endblock %}
 
 {% block content %}
-<div class="page-breadcrumb">
+<div class="page-breadcrumb hide-on-small-only">
     <a href="{{ url_for('index') }}">Home</a> &gt;
     <a href="{{ url_for('shows_index') }}">Shows</a> &gt;
     <a href="{{ url_for('shows_all_scores') }}">All Scores</a>
