@@ -24,11 +24,6 @@
     ul.footer-nav-links { list-style: none; margin: 0; padding: 0; }
     ul.footer-nav-links li { display: inline; margin: 0 0.5rem; padding: 0; }
     .traceback { border: 2px solid rgba(0, 0, 0, 0.25); font-size: 90%; overflow: scroll; padding: 1.5rem; width: 100%; }
-
-    #chart, #chart-wrapper { padding-top: 1rem; width: 100%; margin: 0 auto; }
-    .apexcharts-canvas, .apexcharts-menu.open  { background-color: #333 !important; }
-    .apexcharts-menu-item:hover { background-color: #222 !important; }
-    .apexcharts-yaxis-label, .apexcharts-xaxis-label { font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: inherit; }
 }
 
 @media (prefers-color-scheme: light) {
@@ -57,7 +52,6 @@
     nav .brand-logo { font-size: 1.0rem; font-weight: 500; left: 45%; transform: translateX(-40%); }
     .col.s12 { margin-top: 0.5rem; margin-bottom: 0.5rem; }
     .footer-copyright span.right { display: block; float: initial !important; }
-    .apexcharts-yaxis-label, .apexcharts-xaxis-label { font-size: 0.9rem; }
 }
 
 @media only print {
