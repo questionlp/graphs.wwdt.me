@@ -17,6 +17,10 @@
     earned a specific number of points at the end of each show.
 </p>
 
+<p class="hide-on-large-only">
+    Note: This chart is best viewed in landscape mode on mobile and tablet devices.
+</p>
+    
 <canvas id="chart"></canvas>
 <script>
     // Set the chart background based on prefers-color-scheme
@@ -67,7 +71,7 @@
             yAxisMax++;
         } else {
             var yAxisTickStepSize = 1;
-            yAxisMax = 5;
+            yAxisMax++;
         }
 
         // Render chart
