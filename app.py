@@ -18,7 +18,7 @@ from wwdtm.panelist import info as pnl_info
 from wwdtm.show import info as show_info
 
 #region Global Constants
-APP_VERSION = "1.0.0a1"
+APP_VERSION = "1.0.0b1"
 
 #endregion
 
@@ -139,6 +139,9 @@ def panelists_score_breakdown_details(panelist: Text):
     info = pnl_info.retrieve_by_slug(panelist, database_connection)
     scores = pnl_info.retrieve_scores_grouped_list_by_slug(panelist,
                                                            database_connection)
+    if not info and not scores:
+        return redirect(url_for("panelists_score_breakdown_index"))
+
     return render_template("panelists/score-breakdown/details.html",
                            info=info,
                            scores=scores)
@@ -163,6 +166,9 @@ def panelists_scores_by_appearance_details(panelist: Text):
     info = pnl_info.retrieve_by_slug(panelist, database_connection)
     scores = pnl_info.retrieve_scores_list_by_slug(panelist,
                                                    database_connection)
+
+    if not info and not scores:
+        return redirect("panelists_scores_by_appearance_index")
 
     if scores:
         shows_json = json.dumps(scores["shows"])
@@ -201,6 +207,10 @@ def shows_all_scores():
 def shows_all_scores_by_year(year: int):
     """Panelists All Scores Page"""
     database_connection.reconnect()
+    show_years = retrieve_show_years()
+    if year not in show_years:
+        return redirect(url_for("shows_all_scores"))
+
     show_scores = show_info.retrieve_scores_by_year(year,
                                                     database_connection)
     if not show_scores:
