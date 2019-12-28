@@ -124,7 +124,7 @@ def panelists_score_breakdown_index():
 
 @app.route("/panelists/score-breakdown/<string:panelist>")
 def panelists_score_breakdown_details(panelist: Text):
-    """Panelists Score Breakdown Index Page"""
+    """Panelists Score Breakdown Graph Page"""
     database_connection.reconnect()
     panelist_slug = slugify(panelist)
     if panelist and panelist != panelist_slug:
@@ -151,7 +151,7 @@ def panelists_scores_by_appearance_index():
 
 @app.route("/panelists/scores-by-appearance/<string:panelist>")
 def panelists_scores_by_appearance_details(panelist: Text):
-    """Panelists Scores by Appearance Index Page"""
+    """Panelists Scores by Appearance Graph Page"""
     database_connection.reconnect()
     panelist_slug = slugify(panelist)
     if panelist and panelist != panelist_slug:
