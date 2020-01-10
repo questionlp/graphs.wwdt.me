@@ -9,6 +9,10 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>{{ site_url }}{{ url_for("panelists_appearances_by_year_index") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>{{ site_url }}{{ url_for("panelists_score_breakdown_index") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
@@ -17,6 +21,10 @@
     <changefreq>weekly</changefreq>
   </url>
 {% for panelist in panelists %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists_appearances_by_year_details", panelist=panelist.slug) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
   <url>
     <loc>{{ site_url }}{{ url_for("panelists_score_breakdown_details", panelist=panelist.slug) }}</loc>
     <changefreq>weekly</changefreq>

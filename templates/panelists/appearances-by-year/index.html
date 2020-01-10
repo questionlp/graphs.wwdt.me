@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Appearances by Year | Panelists{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb hide-on-small-only">
+    <a href="{{ url_for('index') }}">Home</a> &gt;
+    <a href="{{ url_for('panelists_index') }}">Panelists</a>
+</div>
+
+<h1>Appearances by Year</h1>
+<p>
+    Choose from one of the panelists below to view a chart displaying
+    the number of appearances broken down by year.
+</p>
+
+<ul class="collection">
+    {% for panelist in panelists %}
+    <li class="collection-item">
+        <a href="{{ url_for('panelists_appearances_by_year_details', panelist=panelist.slug) }}">{{ panelist.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

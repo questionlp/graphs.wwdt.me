@@ -18,7 +18,7 @@ from wwdtm.panelist import info as pnl_info
 from wwdtm.show import info as show_info
 
 #region Global Constants
-APP_VERSION = "1.0.1"
+APP_VERSION = "1.1.0"
 
 #endregion
 
@@ -118,6 +118,37 @@ def sitemap_xml():
 def panelists_index():
     """Panelists Index Page"""
     return render_template("panelists/index.html")
+
+@app.route("/panelists/appearances-by-year")
+def panelists_appearances_by_year_index():
+    """Panelists Appearances by Year Index Page"""
+    database_connection.reconnect()
+    panelists = pnl_info.retrieve_all(database_connection)
+    return render_template("panelists/appearances-by-year/index.html",
+                           panelists=panelists)
+
+@app.route("/panelists/appearances-by-year/<string:panelist>")
+def panelists_appearances_by_year_details(panelist: Text):
+    """Panelists Appearances by Year Graph Page"""
+    database_connection.reconnect()
+    panelist_slug = slugify(panelist)
+    if panelist and panelist != panelist_slug:
+        return redirect(url_for("panelists_appearances_by_year_details",
+                                panelist=panelist_slug))
+
+    info = pnl_info.retrieve_by_slug(panelist, database_connection)
+    appearances = pnl_info.retrieve_yearly_appearances_by_slug(panelist,
+                                                               database_connection)
+    if not appearances:
+        return redirect(url_for("panelists_appearances_by_year_index"))
+
+    years = list(appearances.keys())
+    count = list(appearances.values())
+
+    return render_template("panelists/appearances-by-year/details.html",
+                           info=info,
+                           years=years,
+                           count=count)
 
 @app.route("/panelists/score-breakdown")
 def panelists_score_breakdown_index():
