@@ -15,10 +15,9 @@ import pytz
 from slugify import slugify
 from werkzeug.exceptions import HTTPException
 
-from reports.panel import gender_mix
-
 from wwdtm.panelist import info as pnl_info
 from wwdtm.show import info as show_info
+from reports.panel import gender_mix
 
 #region Global Constants
 APP_VERSION = "1.2.0"
