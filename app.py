@@ -14,6 +14,9 @@ import mysql.connector
 import pytz
 from slugify import slugify
 from werkzeug.exceptions import HTTPException
+
+from reports.panel import gender_mix
+
 from wwdtm.panelist import info as pnl_info
 from wwdtm.show import info as show_info
 
@@ -265,6 +268,35 @@ def shows_all_scores_by_year(year: int):
                            scores_2=scores_2,
                            scores_3=scores_3)
 
+@app.route("/shows/panel-gender-mix")
+def shows_panel_gender_mix():
+    """Show Panel Gender Mix Graph"""
+    database_connection.reconnect()
+    panel_mix = gender_mix.panel_gender_mix_breakdown(gender="female",
+                                                      database_connection=database_connection)
+
+    if not panel_mix:
+        return redirect(url_for("shows_index"))
+
+    years = []
+    panel_0f = []
+    panel_1f = []
+    panel_2f = []
+    panel_3f = []
+
+    for year in panel_mix:
+        years.append(year)
+        panel_0f.append(panel_mix[year]["0F"])
+        panel_1f.append(panel_mix[year]["1F"])
+        panel_2f.append(panel_mix[year]["2F"])
+        panel_3f.append(panel_mix[year]["3F"])
+
+    return render_template("shows/panel-gender-mix/graph.html",
+                           years=years,
+                           panel_0f=panel_0f,
+                           panel_1f=panel_1f,
+                           panel_2f=panel_2f,
+                           panel_3f=panel_3f)
 
 #endregion
 
