@@ -21,7 +21,7 @@ from wwdtm.panelist import info as pnl_info
 from wwdtm.show import info as show_info
 
 #region Global Constants
-APP_VERSION = "1.1.1"
+APP_VERSION = "1.2.0"
 
 #endregion
 
