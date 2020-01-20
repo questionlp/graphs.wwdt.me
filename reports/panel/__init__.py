@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2018-2020 Linh Pham
 # graphs.wwdt.me is relased under the terms of the Apache License 2.0
-"""Flask WSGI startup file"""
+"""Explicitly listing all panelist reporting modules"""
 
-from app import app
+from reports.panel import gender_mix
 
-if __name__ == "__main__":
-    app.run(debug=False)
+__all__ = ["gender_mix"]
