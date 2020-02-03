@@ -17,10 +17,10 @@ from werkzeug.exceptions import HTTPException
 
 from wwdtm.panelist import info as pnl_info
 from wwdtm.show import info as show_info
-from reports.panel import gender_mix
+from reports.panel import aggregate_scores, gender_mix
 
 #region Global Constants
-APP_VERSION = "1.2.0"
+APP_VERSION = "1.3.0.1"
 
 #endregion
 
@@ -120,6 +120,15 @@ def sitemap_xml():
 def panelists_index():
     """Panelists Index Page"""
     return render_template("panelists/index.html")
+
+@app.route("/panelists/aggregate-scores")
+def panelists_aggregate_scores():
+    """Panelists Aggregate Scores Graph Page"""
+    database_connection.reconnect()
+    score, count = aggregate_scores.retrieve_score_spread(database_connection)
+    return render_template("panelists/aggregate-scores/graph.html",
+                           score=score,
+                           count=count)
 
 @app.route("/panelists/appearances-by-year")
 def panelists_appearances_by_year_index():

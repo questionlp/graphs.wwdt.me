@@ -3,7 +3,7 @@
 # graphs.wwdt.me is relased under the terms of the Apache License 2.0
 """Explicitly listing all reporting modules"""
 
-from reports.panel import gender_mix
+from reports.panel import aggregate_scores, gender_mix
 
 __all__ = [
     "panel",

@@ -6,6 +6,7 @@
         </a>
         <a href="{{ url_for('index') }}" class="brand-logo">Wait Wait Graphs</a>
         <ul id="dropdown-panelist" class="dropdown-content z-depth-0">
+            <li><a href="{{ url_for('panelists_aggregate_scores') }}">Aggregate Scores</a></li>
             <li><a href="{{ url_for('panelists_appearances_by_year_index') }}">Appearances by Year</a></li>
             <li><a href="{{ url_for('panelists_score_breakdown_index') }}">Score Breakdown</a></li>
             <li><a href="{{ url_for('panelists_scores_by_appearance_index') }}">Scores by Appearance</a></li>
