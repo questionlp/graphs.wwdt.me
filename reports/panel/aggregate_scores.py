@@ -34,9 +34,6 @@ def retrieve_score_spread(database_connection: mysql.connector.connect
         score.append(row[0])
         count.append(row[1])
 
-    score_breakdown = {}
-    score_breakdown["score"] = score
-    score_breakdown["count"] = count
-    return score_breakdown
+    return score, count
 
 #endregion

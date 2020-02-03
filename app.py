@@ -125,10 +125,10 @@ def panelists_index():
 def panelists_aggregate_scores():
     """Panelists Aggregate Scores Graph Page"""
     database_connection.reconnect()
-    score_breakdown = aggregate_scores.retrieve_score_spread(database_connection)
+    score, count = aggregate_scores.retrieve_score_spread(database_connection)
     return render_template("panelists/aggregate-scores/graph.html",
-                           score=score_breakdown["score"],
-                           count=score_breakdown["count"])
+                           score=score,
+                           count=count)
 
 @app.route("/panelists/appearances-by-year")
 def panelists_appearances_by_year_index():
