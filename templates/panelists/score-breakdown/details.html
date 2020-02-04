@@ -10,11 +10,15 @@
 
 <h1>{{ info.name }}</h1>
 
-{% if scores %}
+{% if scores and aggregate_scores.scores %}
 <p>
     This chart displays the count of how many times
-    <a href="{{ stats_url}}/panelists/{{ info.slug }}">{{ info.name }}</a>
+    <a href="{{ stats_url }}/panelists/{{ info.slug }}">{{ info.name }}</a>
     earned a specific number of points at the end of each show.
+</p>
+<p>The orange line represents
+    <a href="{{ url_for('panelists_aggregate_scores') }}">aggregate score
+    breakdown</a> for all panelists.
 </p>
 
 <p class="hide-on-large-only">
@@ -40,11 +44,23 @@
     var barChartData = {
         labels: {{ scores.score|safe }},
         datasets: [{
-            label: 'Score',
             backgroundColor: '#1170aa',
-            data: {{ scores.count|safe }}
+            data: {{ scores.count|safe }},
+            order: 1,
+            label: 'Count',
+            yAxisID: 'y-score',
+        }, {
+            backgroundColor: '#fc7d0b',
+            borderColor: '#fc7d0b',
+            data: {{ aggregate_scores.counts|safe }},
+            fill: false,
+            pointRadius: 5,
+            label: 'Aggregate Count',
+            lineTension: 0.25,
+            order: 0,
+            type: 'line',
+            yAxisID: 'y-aggregate'
         }]
-
     };
 
     // Set up and render the chart
@@ -111,6 +127,8 @@
                     }],
                     yAxes: [{
                         gridLines: { color: gridLinesColor },
+                        id: 'y-score',
+                        position: 'left',
                         scaleLabel: {
                             display: true,
                             labelString: 'Count',
@@ -123,6 +141,17 @@
                             suggestedMax: yAxisMax,
                             stepSize: yAxisTickStepSize
                         }
+                    }, {
+                        display: true,
+                        id: 'y-aggregate',
+                        gridLines: { drawOnChartArea: false },
+                        position: 'right',
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Aggregate Count',
+                            fontSize: 18,
+                            fontStyle: 'bold'
+                        }
                     }]
                 },
                 title: {
@@ -132,8 +161,8 @@
                     text: 'Score Breakdown for {{ info.name }}'
                 },
                 tooltips: {
-                    mode: 'nearest',
-                    intersect: true,
+                    mode: 'index',
+                    intersect: false,
                     titleFontStyle: 'bold'
                 }
             }

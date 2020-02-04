@@ -28,12 +28,12 @@ def retrieve_score_spread(database_connection: mysql.connector.connect
     if not result:
         return None
 
-    score = []
-    count = []
+    scores = []
+    counts = []
     for row in result:
-        score.append(row[0])
-        count.append(row[1])
+        scores.append(row[0])
+        counts.append(row[1])
 
-    return score, count
+    return {"scores": scores, "counts": counts}
 
 #endregion

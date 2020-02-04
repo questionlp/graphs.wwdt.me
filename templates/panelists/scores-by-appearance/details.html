@@ -37,18 +37,24 @@
     });
 
     // Define chart data and draw settings
+    var data_obj = {{ scores|safe }};
+    if (data_obj.length >= 40) {
+        var showLine = false;
+    } else {
+        var showLine = true;
+    }
     var lineChartData = {
         labels: {{ shows|safe }},
         datasets: [{
             backgroundColor: '#1170aa',
             borderColor: '#1170aa',
-            data: {{ scores|safe }},
+            data: data_obj,
             fill: false,
             label: 'Score',
             lineTension: 0.25,
             pointBorderColor: '#f5f5f5',
             pointRadius: 5,
-            showLine: true
+            showLine: showLine
         }]
     };
 
