@@ -139,10 +139,10 @@
                     display: true,
                     fontSize: 20,
                     fontStyle: 'bold',
-                    text: 'Scores by Appearance for {{ info.name }}'
+                    text: "Scores by Appearance for {{ info.name|safe }}"
                 },
                 tooltips: {
-                    mode: 'nearest',
+                    mode: 'index',
                     intersect: false,
                     titleFontStyle: 'bold'
                 }
