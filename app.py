@@ -20,7 +20,7 @@ from wwdtm.show import info as show_info
 from reports.panel import aggregate_scores, gender_mix
 
 #region Global Constants
-APP_VERSION = "1.3.0.1"
+APP_VERSION = "1.3.1"
 
 #endregion
 
@@ -125,10 +125,9 @@ def panelists_index():
 def panelists_aggregate_scores():
     """Panelists Aggregate Scores Graph Page"""
     database_connection.reconnect()
-    score, count = aggregate_scores.retrieve_score_spread(database_connection)
+    agg_scores = aggregate_scores.retrieve_score_spread(database_connection)
     return render_template("panelists/aggregate-scores/graph.html",
-                           score=score,
-                           count=count)
+                           aggregate_scores=agg_scores)
 
 @app.route("/panelists/appearances-by-year")
 def panelists_appearances_by_year_index():
@@ -181,12 +180,14 @@ def panelists_score_breakdown_details(panelist: Text):
     info = pnl_info.retrieve_by_slug(panelist, database_connection)
     scores = pnl_info.retrieve_scores_grouped_list_by_slug(panelist,
                                                            database_connection)
-    if not info and not scores:
+    agg_scores = aggregate_scores.retrieve_score_spread(database_connection)
+    if not info and not scores and not agg_scores:
         return redirect(url_for("panelists_score_breakdown_index"))
 
     return render_template("panelists/score-breakdown/details.html",
                            info=info,
-                           scores=scores)
+                           scores=scores,
+                           aggregate_scores=agg_scores)
 
 @app.route("/panelists/scores-by-appearance")
 def panelists_scores_by_appearance_index():

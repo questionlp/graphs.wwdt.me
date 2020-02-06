@@ -9,7 +9,7 @@
 
 <h1>Aggregate Scores</h1>
 
-{% if score %}
+{% if aggregate_scores.scores %}
 <p>
     This chart displays the score breakdown for all panelists scores.
 </p>
@@ -35,11 +35,11 @@
 
     // Define chart data and draw settings
     var barChartData = {
-        labels: {{ score|safe }},
+        labels: {{ aggregate_scores.scores|safe }},
         datasets: [{
             label: 'Count',
             backgroundColor: '#1170aa',
-            data: {{ count|safe }}
+            data: {{ aggregate_scores.counts|safe }}
         }]
     };
 
@@ -87,7 +87,6 @@
                             fontSize: 18,
                             fontStyle: 'bold'
                         },
-                        stacked: true,
                         ticks: {
                             minRotation: 0,
                             maxRotation: 0
@@ -100,8 +99,7 @@
                             labelString: 'Count',
                             fontSize: 18,
                             fontStyle: 'bold'
-                        },
-                        stacked: true
+                        }
                     }]
                 },
                 title: {
