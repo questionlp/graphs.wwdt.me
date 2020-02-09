@@ -20,7 +20,7 @@ from wwdtm.show import info as show_info
 from reports.panel import aggregate_scores, gender_mix
 
 #region Global Constants
-APP_VERSION = "1.3.1"
+APP_VERSION = "1.3.2"
 
 #endregion
 
