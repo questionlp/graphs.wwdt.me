@@ -3,8 +3,17 @@
 
 {% block content %}
 <div class="page-breadcrumb hide-on-small-only">
-    <a href="{{ url_for('index') }}">Home</a> &gt;
-    <a href="{{ url_for('panelists_index') }}">Panelists</a>
+    <ul>
+        <li>
+            <a href="{{ url_for('index') }}">Home</a>
+        </li>
+        <li>
+            <a href="{{ url_for('panelists_index') }}">Panelists</a>
+        </li>
+        <li>
+            Score Breakdown
+        </li>
+    </ul>
 </div>
 
 <h1>Score Breakdown</h1>
