@@ -17,7 +17,11 @@
     .container { max-width: initial; width: 95%; }
     .dropdown-content { border: 2px solid rgba(0, 0, 0, 0.1); }
     .dropdown-content li>a, .dropdown-content li>span { color: initial; }
-    .page-breadcrumb { margin: 1rem 0; }
+    .page-breadcrumb { background-color: rgba(96, 96, 96, 0.05); margin: 1.25rem 0; padding: 0.25rem 1rem; }
+    .page-breadcrumb ul { list-style: none; padding: 0; }
+    .page-breadcrumb ul li { display: inline; padding: 0; }
+    .page-breadcrumb ul li:first-child { padding: 0 0.5rem 0 0; }
+    .page-breadcrumb ul li:not(:last-child)::after { content: ">"; margin: 0 0.75rem;  }
     .sidenav .divider { margin: 1rem 0; }
     .sidenav ul#sidenav-show-years { margin-left: 1rem; }
     .sidenav li>a { font-size: initial; font-weight: initial; }
@@ -28,6 +32,7 @@
 
 @media (prefers-color-scheme: light) {
     html, button, input, select, textarea { background-color: initial; color: initial; }
+    .page-breadcrumb { background-color: rgba(160, 160, 160, 0.1); }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -49,6 +54,7 @@
 
 @media only screen and (max-width: 600px) {
     .collection .collection-item { padding: 1.33rem; }
+    .page-breadcrumb { font-size: 110%; line-height: 2.5rem;}
     nav .brand-logo { font-size: 1.0rem; font-weight: 500; left: 45%; transform: translateX(-40%); }
     .col.s12 { margin-top: 0.5rem; margin-bottom: 0.5rem; }
     .footer-copyright span.right { display: block; float: initial !important; }
@@ -56,5 +62,5 @@
 
 @media only print {
     html { margin: 1rem; }
-    nav, div.sidenav { display: none; visibility: hidden; }
+    nav, div.sidenav, .page-breadcrumb { display: none; visibility: hidden; }
 }
