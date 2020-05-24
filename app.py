@@ -3,7 +3,7 @@
 # graphs.wwdt.me is relased under the terms of the Apache License 2.0
 """Flask application startup file"""
 
-from datetime import date, datetime
+from datetime import date
 import json
 from typing import Text
 import traceback
@@ -17,10 +17,11 @@ from werkzeug.exceptions import HTTPException
 
 from wwdtm.panelist import info as pnl_info
 from wwdtm.show import info as show_info
+from graphs import utility
 from reports.panel import aggregate_scores, gender_mix
 
 #region Global Constants
-APP_VERSION = "1.3.2"
+APP_VERSION = "1.4.0"
 
 #endregion
 
@@ -42,21 +43,23 @@ def load_config():
     with open("config.json", "r") as config_file:
         config_dict = json.load(config_file)
 
+    if "time_zone" in config_dict["settings"] and config_dict["settings"]["time_zone"]:
+        time_zone = config_dict["settings"]["time_zone"]
+        time_zone_object, time_zone_string = utility.time_zone_parser(time_zone)
+
+        config_dict["settings"]["app_time_zone"] = time_zone_object
+        config_dict["settings"]["time_zone"] = time_zone_string
+        config_dict["database"]["time_zone"] = time_zone_string
+    else:
+        config_dict["settings"]["app_time_zone"] = pytz.timezone("UTC")
+        config_dict["settings"]["time_zone"] = "UTC"
+        config_dict["database"]["time_zone"] = "UTC"
+
     return config_dict
 
 #endregion
 
 #region Common Functions
-def generate_date_time_stamp(time_zone: pytz.timezone = pytz.timezone("UTC")):
-    """Generate a current date/timestamp string"""
-    now = datetime.now(time_zone)
-    return now.strftime("%Y-%m-%d %H:%M:%S %Z")
-
-def current_year(time_zone: pytz.timezone = pytz.timezone("UTC")):
-    """Return the current year"""
-    now = datetime.now(time_zone)
-    return now.strftime("%Y")
-
 def retrieve_show_years(reverse_order: bool = True):
     """Retrieve a list of available show years"""
     database_connection.reconnect()
@@ -311,11 +314,14 @@ def shows_panel_gender_mix():
 
 #region Application Initialization
 config = load_config()
+app_time_zone = config["settings"]["app_time_zone"]
+time_zone_name = config["settings"]["time_zone"]
 app.jinja_env.globals["app_version"] = APP_VERSION
 app.jinja_env.globals["current_date"] = date.today()
 app.jinja_env.globals["ga_property_code"] = config["settings"]["ga_property_code"]
-app.jinja_env.globals["rendered_at"] = generate_date_time_stamp
-app.jinja_env.globals["current_year"] = current_year
+app.jinja_env.globals["time_zone"] = app_time_zone
+app.jinja_env.globals["rendered_at"] = utility.generate_date_time_stamp
+app.jinja_env.globals["current_year"] = utility.current_year
 
 app.jinja_env.globals["api_url"] = config["settings"]["api_url"]
 app.jinja_env.globals["blog_url"] = config["settings"]["blog_url"]
