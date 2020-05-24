@@ -3,7 +3,6 @@
 # graphs.wwdt.me is relased under the terms of the Apache License 2.0
 """WWDTM Panel Aggregate Scores Report Functions"""
 
-from collections import OrderedDict
 from typing import List, Dict
 import mysql.connector
 
