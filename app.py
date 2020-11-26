@@ -21,7 +21,7 @@ from graphs import utility
 from reports.panel import aggregate_scores, gender_mix
 
 #region Global Constants
-APP_VERSION = "1.5.2"
+APP_VERSION = "1.5.3"
 
 #endregion
 
@@ -152,7 +152,7 @@ def panelists_appearances_by_year_details(panelist: Text):
     info = pnl_info.retrieve_by_slug(panelist, database_connection)
     appearances = pnl_info.retrieve_yearly_appearances_by_slug(panelist,
                                                                database_connection)
-    if not appearances:
+    if not info:
         return redirect(url_for("panelists_appearances_by_year_index"))
 
     years = list(appearances.keys())
@@ -184,7 +184,7 @@ def panelists_score_breakdown_details(panelist: Text):
     scores = pnl_info.retrieve_scores_grouped_list_by_slug(panelist,
                                                            database_connection)
     agg_scores = aggregate_scores.retrieve_score_spread(database_connection)
-    if not info and not scores and not agg_scores:
+    if not info:
         return redirect(url_for("panelists_score_breakdown_index"))
 
     return render_template("panelists/score-breakdown/details.html",
@@ -213,7 +213,7 @@ def panelists_scores_by_appearance_details(panelist: Text):
     scores = pnl_info.retrieve_scores_list_by_slug(panelist,
                                                    database_connection)
 
-    if not info and not scores:
+    if not info:
         return redirect(url_for("panelists_scores_by_appearance_index"))
 
     if scores:
