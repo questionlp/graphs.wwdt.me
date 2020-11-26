@@ -21,7 +21,7 @@ from graphs import utility
 from reports.panel import aggregate_scores, gender_mix
 
 #region Global Constants
-APP_VERSION = "1.5.1"
+APP_VERSION = "1.5.2"
 
 #endregion
 
