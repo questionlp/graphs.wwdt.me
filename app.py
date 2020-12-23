@@ -19,9 +19,10 @@ from wwdtm.panelist import info as pnl_info
 from wwdtm.show import info as show_info
 from graphs import utility
 from reports.panel import aggregate_scores, gender_mix
+from reports.show import bluff_count as bluff
 
 #region Global Constants
-APP_VERSION = "1.5.3"
+APP_VERSION = "1.6.0"
 
 #endregion
 
@@ -279,6 +280,71 @@ def shows_all_scores_by_year(year: int):
                            scores_1=scores_1,
                            scores_2=scores_2,
                            scores_3=scores_3)
+
+@app.route("/shows/bluff-counts")
+def shows_bluff_counts():
+    """Show Bluff the Listener Counts Graph"""
+    database_connection.reconnect()
+    show_years = retrieve_show_years()
+    if not show_years:
+        return redirect(url_for('shows_index'))
+
+    return render_template("shows/bluff-counts/index.html",
+                           show_years=show_years)
+
+@app.route("/shows/bluff-counts/all")
+def shows_bluff_counts_all():
+    """Show Bluff the Listener Counts by Month Line Graph for all
+    years"""
+    database_connection.reconnect()
+    bluff_data = bluff.retrieve_all_bluff_counts(database_connection)
+
+    if not bluff_data:
+        return redirect(url_for("shows_bluff_counts"))
+
+    dates = list(bluff_data.keys())
+    correct = []
+    incorrect = []
+    for month_year in dates:
+        correct.append(bluff_data[month_year]["correct"])
+        incorrect.append(bluff_data[month_year]["incorrect"])
+
+    return render_template("shows/bluff-counts/all.html",
+                           dates=dates,
+                           correct=correct,
+                           incorrect=incorrect)
+
+@app.route("/shows/bluff-counts/<int:year>")
+def shows_bluff_counts_by_year(year: int):
+    """Show Bluff the Listener Counts by Month Bar Graph for the
+    requested year"""
+    database_connection.reconnect()
+    show_years = retrieve_show_years()
+    if year not in show_years:
+        return redirect(url_for("shows_bluff_counts"))
+
+    bluff_data = bluff.retrieve_bluff_count_year(year=year,
+                                                 database_connection=database_connection)
+
+    if not bluff_data:
+        return render_template("shows/bluff-counts/details.html",
+                               year=year,
+                               months=None,
+                               correct=None,
+                               incorrect=None)
+
+    months = list(bluff_data.keys())
+    correct = []
+    incorrect = []
+    for month in bluff_data:
+        correct.append(bluff_data[month]["correct"])
+        incorrect.append(bluff_data[month]["incorrect"])
+
+    return render_template("shows/bluff-counts/details.html",
+                           year=year,
+                           months=months,
+                           correct=correct,
+                           incorrect=incorrect)
 
 @app.route("/shows/panel-gender-mix")
 def shows_panel_gender_mix():
