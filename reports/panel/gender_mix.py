@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2018-2020 Linh Pham
 # graphs.wwdt.me is relased under the terms of the Apache License 2.0
-"""WWDTM Panel Gender Mix Report Functions"""
+"""WWDTM Panel Gender Mix Data Retrieval and Reporting Functions"""
 
 from collections import OrderedDict
 from typing import Dict, List, Text

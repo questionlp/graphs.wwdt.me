@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ info.name }} | Appearances by Year | Panelists{% endblock %}
+{% block title %}{{ year }} | Bluff the Listener Counts | Shows{% endblock %}
 
 {% block content %}
 <div class="page-breadcrumb hide-on-small-only">
@@ -8,30 +8,29 @@
             <a href="{{ url_for('index') }}">Home</a>
         </li>
         <li>
-            <a href="{{ url_for('panelists_index') }}">Panelists</a>
+            <a href="{{ url_for('shows_index') }}">Shows</a>
         </li>
         <li>
-            <a href="{{ url_for('panelists_appearances_by_year_index') }}">Appearances by Year</a>
+            <a href="{{ url_for('shows_bluff_counts') }}">Bluff the Listener Counts</a>
         </li>
         <li>
-            {{ info.name }}
+            {{ year }}
         </li>
     </ul>
 </div>
 
-<h1>{{ info.name }}</h1>
+<h1>Bluff the Listener Counts for {{ year }}</h1>
 
-{% if years %}
+{% if months %}
 <p>
-    This chart displays the number of times
-    <a href="{{ stats_url}}/panelists/{{ info.slug }}">{{ info.name }}</a>
-    has made an appearance on the show, broken down by year.
+    This chart displays the number of times a listener contestant has chosen
+    the correct or incorrect Bluff the Listener story, broken down by month.
 </p>
 
 <p class="hide-on-large-only">
     Note: This chart is best viewed in landscape mode on mobile and tablet devices.
 </p>
-    
+
 <canvas id="chart"></canvas>
 <script>
     // Set the chart background based on prefers-color-scheme
@@ -49,12 +48,17 @@
 
     // Define chart data and draw settings
     var barChartData = {
-        labels: {{ years|safe }},
+        labels: {{ months|safe }},
         datasets: [{
+            label: 'Correct',
             backgroundColor: '#1170aa',
-            data: {{ count|safe }},
-            label: 'Appearances'
+            data: {{ correct|safe }}
+        }, {
+            label: 'Incorrect',
+            backgroundColor: '#fc7d0b',
+            data: {{ incorrect|safe }}
         }]
+
     };
 
     // Set up and render the chart
@@ -70,18 +74,6 @@
             // Light Mode
             Chart.defaults.global.defaultFontColor = '#212121';
             var gridLinesColor = '#9e9e9e';
-        }
-
-        // Calculate y-axis max and tick values
-        var yAxisMax = Math.max(...barChartData.datasets[0].data);
-        if (yAxisMax >= 20) {
-            var yAxisTickStepSize = 5;
-        } else if (yAxisMax >= 10) {
-            var yAxisTickStepSize = 3;
-            yAxisMax++;
-        } else {
-            var yAxisTickStepSize = 1;
-            yAxisMax++;
         }
 
         // Render chart
@@ -101,7 +93,10 @@
                         left: 15
                     }                
                 },
-                legend: { display: false },
+                legend: {
+                    labels: { fontSize: 18 },
+                    position: 'bottom'
+                },
                 responsive: true,
                 responsiveAnimationDuration: 0,
                 scales: {
@@ -109,28 +104,26 @@
                         gridLines: { color: gridLinesColor },
                         scaleLabel: {
                             display: true,
-                            labelString: 'Year',
+                            labelString: 'Month',
                             fontSize: 18,
                             fontStyle: 'bold'
                         },
-                        ticks: {
-                            minRotation: 45,
-                            maxRotation: 45
-                        },
+                        stacked: true
                     }],
                     yAxes: [{
                         gridLines: { color: gridLinesColor },
                         scaleLabel: {
                             display: true,
-                            labelString: 'Appearances',
+                            labelString: 'Count',
                             fontSize: 18,
                             fontStyle: 'bold'
                         },
+                        stacked: true,
                         ticks: {
                             beginAtZero: true,
                             suggestedMin: 0,
-                            suggestedMax: yAxisMax,
-                            stepSize: yAxisTickStepSize
+                            suggestedMax: 6,
+                            stepSize: 1
                         }
                     }]
                 },
@@ -138,7 +131,7 @@
                     display: true,
                     fontSize: 20,
                     fontStyle: 'bold',
-                    text: "Appearances by Year for {{ info.name|safe }}"
+                    text: 'Bluff the Listener Counts for {{ year }}'
                 },
                 tooltips: {
                     mode: 'x',
@@ -148,11 +141,10 @@
             }
         });
     };
-</script>
+    </script>
 {% else %}
 <p>
-    Not enough scoring data is available for {{ info.name }} to
-    generate a graph.
+    No Bluff the Listener data is currently available for {{ year }}.
 </p>
 {% endif %}
 
