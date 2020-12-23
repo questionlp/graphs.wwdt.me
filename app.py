@@ -22,7 +22,7 @@ from reports.panel import aggregate_scores, gender_mix
 from reports.show import bluff_count as bluff
 
 #region Global Constants
-APP_VERSION = "1.6.0"
+APP_VERSION = "1.6.0.1"
 
 #endregion
 
