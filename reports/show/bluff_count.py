@@ -42,6 +42,7 @@ def build_bluff_data_year_month_dict(database_connection: mysql.connector.connec
              "ORDER BY s.showdate ASC;")
     cursor.execute(query, )
     result = cursor.fetchall()
+    cursor.close()
 
     if not result:
         return None
@@ -96,6 +97,7 @@ def retrieve_all_bluff_counts(database_connection: mysql.connector.connect):
              "ORDER BY s.showdate ASC")
     cursor.execute(query)
     incorrect_result = cursor.fetchall()
+    cursor.close()
 
     if not correct_result and not incorrect_result:
         return None
@@ -155,6 +157,7 @@ def retrieve_bluff_count_year(year: int,
              "ORDER BY s.showdate ASC;")
     cursor.execute(query, (year, ))
     incorrect_result = cursor.fetchall()
+    cursor.close()
 
     if not correct_result and not incorrect_result:
         return None
