@@ -53,6 +53,20 @@
   </url>
 {% endfor %}
   <url>
+    <loc>{{ site_url }}{{ url_for("shows_bluff_counts") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows_bluff_counts_all") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% for year in show_years %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows_bluff_counts_by_year", year=year) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% endfor %}  
+  <url>
     <loc>{{ site_url}}{{ url_for("shows_panel_gender_mix") }}</loc>
     <changefreq>weekly</changefreq>
   </url>

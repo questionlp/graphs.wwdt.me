@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}All Scores | Shows{% endblock %}
+{% block title %}Bluff the Listener Counts | Shows{% endblock %}
 
 {% block content %}
 <div class="page-breadcrumb hide-on-small-only">
@@ -11,20 +11,24 @@
             <a href="{{ url_for('shows_index') }}">Shows</a>
         </li>
         <li>
-            All Scores
+            Bluff the Listener Counts
         </li>
     </ul>
 </div>
 
 <h1>Years</h1>
 <p>
-    Choose from one of the years below to view the available scores for that year.
+    Choose from one of the years below to view the available Bluff the Listener
+    counts data for that year.
 </p>
 
 <ul class="collection">
+    <li class="collection-item">
+        <a href="{{ url_for('shows_bluff_counts_all') }}">All</a>
+    </li>
     {% for year in show_years %}
     <li class="collection-item">
-        <a href="{{ url_for('shows_all_scores_by_year', year=year) }}">{{ year }}</a>
+        <a href="{{ url_for('shows_bluff_counts_by_year', year=year) }}">{{ year }}</a>
     </li>
     {% endfor %}
 </ul>

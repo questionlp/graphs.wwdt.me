@@ -49,23 +49,15 @@
 
     // Define chart data and draw settings
     var data_obj = {{ scores|safe }};
-    if (data_obj.length >= 30) {
-        var showLine = false;
-    } else {
-        var showLine = true;
-    }
-    var lineChartData = {
+
+    var chartData = {
         labels: {{ shows|safe }},
         datasets: [{
             backgroundColor: '#1170aa',
             borderColor: '#1170aa',
             data: data_obj,
-            fill: false,
-            label: 'Score',
-            lineTension: 0.25,
-            pointBorderColor: '#f5f5f5',
-            pointRadius: 5,
-            showLine: showLine
+            hoverBackgroundColor: '#fc7d0b',
+            label: 'Score'
         }]
     };
 
@@ -85,7 +77,7 @@
         }
 
         // Calculate y-axis max and tick values
-        var yAxisMax = Math.max(...lineChartData.datasets[0].data);
+        var yAxisMax = Math.max(...chartData.datasets[0].data);
         var yAxisTickStepSize = 4;
         if (yAxisMax >= 20) {        
             yAxisMax++;
@@ -94,8 +86,8 @@
         // Render chart
         var ctx = document.getElementById('chart');
         window.myBar = new Chart(ctx, {
-            type: 'line',
-            data: lineChartData,
+            type: 'bar',
+            data: chartData,
             options: {
                 animation: { duration: 0 },
                 aspectRatio: 1.618034,
@@ -153,8 +145,8 @@
                     text: "Scores by Appearance for {{ info.name|safe }}"
                 },
                 tooltips: {
-                    mode: 'index',
-                    intersect: false,
+                    mode: 'x',
+                    intersect: true,
                     titleFontStyle: 'bold'
                 }
             }
