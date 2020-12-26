@@ -35,149 +35,120 @@
 <p class="hide-on-large-only">
     Note: This chart is best viewed in landscape mode on mobile and tablet devices.
 </p>
-    
-<canvas id="chart"></canvas>
+
+<div id="ww-chart"></div>
+
 <script>
-    // Set the chart background based on prefers-color-scheme
-    Chart.plugins.register({
-        beforeDraw: function(chartInstance) {
-            var ctx = chartInstance.chart.ctx;
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                ctx.fillStyle = '#202124';
-            } else {
-                ctx.fillStyle = '#fff';
-            }
-            ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
-        }
-    });
+    // Set default colors
+    let axisColor = "#212121";
+    let backgroundColor = "#fff";
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
-    // Define chart data and draw settings
-    var barChartData = {
-        labels: {{ scores.score|safe }},
-        datasets: [{
-            backgroundColor: '#1170aa',
-            data: {{ scores.count|safe }},
-            order: 1,
-            label: 'Count',
-            yAxisID: 'y-score'
-        }, {
-            backgroundColor: '#fc7d0b',
-            borderColor: '#fc7d0b',
-            data: {{ aggregate_scores.counts|safe }},
-            fill: false,
-            pointRadius: 5,
-            label: 'Aggregate Count',
-            lineTension: 0.25,
-            order: 0,
-            type: 'line',
-            yAxisID: 'y-aggregate'
-        }]
+    // Change colors if in dark mode
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        axisColor = "#f5f5f5";
+        backgroundColor = "#202124";
+    }
+
+    // Set y-axis dtick value
+    let yAxisdTick = 2;
+    let scoreCounts = {{ scores.count|safe }};
+    let maxCount = Math.max(...scoreCounts);
+    if (maxCount <= 3) {
+        yAxisdTick = 1;
+    }
+
+    let data = [
+        {
+            x: {{ scores.score|safe }},
+            y: scoreCounts,
+            name: "Count",
+            showlegend: false,
+            type: "bar"
+        },
+        {
+            x: {{ scores.score|safe }},
+            y: {{ aggregate_scores.counts|safe }},
+            name: "Aggregrate Count",
+            showlegend: false,
+            type: "scatter",
+            yaxis: "y2"
+        }
+    ];
+
+    let layout = {
+        autosize: true,
+        font: { family: fontList },
+        hoverlabel: {
+            font: {
+                family: fontList,
+                size: 16
+            },
+        },
+        margin: {
+            l: 60,
+            r: 60,
+            t: 48,
+            b: 68
+        },
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        title: {
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            text: "Score Breakdown for {{ info.name|safe }}"
+        },
+        xaxis: {
+            color: axisColor,
+            tickangle: -45,
+            tickfont: { size: 16 },
+            tickmode: "linear",
+            title: {
+                font: { size: 18 },
+                text: "Year"
+            }
+        },
+        yaxis: {
+            color: axisColor,
+            dtick: yAxisdTick,
+            tickfont: { size: 16 },
+            title: {
+                font: { size: 18 },
+                text: "Appearances"
+            }
+        },
+        yaxis2: {
+            color: axisColor,
+            overlaying: "y",
+            rangemode: "tozero",
+            showgrid: false,
+            side: "right",
+            tickfont: {
+             size: 16
+            },   
+            title: {
+                font: {
+                    size: 18
+                },
+                text: "Aggregate Count"
+            }
+        }
     };
 
-    // Set up and render the chart
-    window.onload = function() {
-        // Override chart defaults
-        Chart.defaults.global.defaultFontFamily = "'IBM Plex Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
-        Chart.defaults.global.defaultFontSize = 16;
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            // Dark Mode
-            Chart.defaults.global.defaultFontColor = '#f5f5f5';
-            var gridLinesColor = '#616161';
-        } else {
-            // Light Mode
-            Chart.defaults.global.defaultFontColor = '#212121';
-            var gridLinesColor = '#9e9e9e';
+    let config = {
+        displaylogo: false,
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "score-breakdown-{{ info.slug }}",
+            height: 800,
+            scale: 1,
+            width: 1200
         }
-
-        // Calculate y-axis max and tick values
-        var yAxisMax = Math.max(...barChartData.datasets[0].data);
-        if (yAxisMax >= 20) {
-            var yAxisTickStepSize = 5;
-        } else if (yAxisMax >= 10) {
-            var yAxisTickStepSize = 3;
-            yAxisMax++;
-        } else {
-            var yAxisTickStepSize = 1;
-            yAxisMax++;
-        }
-
-        // Render chart
-        var ctx = document.getElementById('chart');
-        window.myBar = new Chart(ctx, {
-            type: 'bar',
-            data: barChartData,
-            options: {
-                animation: { duration: 0 },
-                aspectRatio: 1.618034,
-                hover: { animationDuration: 150 },
-                layout: {
-                    padding: {
-                        top: 30,
-                        right: 15,
-                        bottom: 10,
-                        left: 15
-                    }                
-                },
-                legend: { display: false },
-                responsive: true,
-                responsiveAnimationDuration: 0,
-                scales: {
-                    xAxes: [{
-                        gridLines: { color: gridLinesColor },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Score',
-                            fontSize: 18,
-                            fontStyle: 'bold'
-                        },
-                        ticks: {
-                            minRotation: 0,
-                            maxRotation: 0
-                        },
-                    }],
-                    yAxes: [{
-                        gridLines: { color: gridLinesColor },
-                        id: 'y-score',
-                        position: 'left',
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Count',
-                            fontSize: 18,
-                            fontStyle: 'bold'
-                        },
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            suggestedMax: yAxisMax,
-                            stepSize: yAxisTickStepSize
-                        }
-                    }, {
-                        display: true,
-                        id: 'y-aggregate',
-                        gridLines: { drawOnChartArea: false },
-                        position: 'right',
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Aggregate Count',
-                            fontSize: 18,
-                            fontStyle: 'bold'
-                        }
-                    }]
-                },
-                title: {
-                    display: true,
-                    fontSize: 20,
-                    fontStyle: 'bold',
-                    text: "Score Breakdown for {{ info.name|safe }}"
-                },
-                tooltips: {
-                    mode: 'x',
-                    intersect: true,
-                    titleFontStyle: 'bold'
-                }
-            }
-        });
     };
+
+    Plotly.newPlot("ww-chart", data, layout, config);
 </script>
 {% else %}
 <p>
