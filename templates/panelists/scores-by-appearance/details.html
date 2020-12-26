@@ -50,6 +50,8 @@
         {
             x: {{ shows|safe }},
             y: {{ scores|safe }},
+            name: "Score",
+            showlegend: true,
             type: "bar"
         }
     ];
@@ -62,6 +64,13 @@
                 family: fontList,
                 size: 16
             },
+        },
+        legend: {
+            font: {
+                color: axisColor,
+                family: fontList,
+                size: 16
+            }
         },
         margin: {
             l: 60,

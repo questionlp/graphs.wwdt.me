@@ -63,14 +63,12 @@
             x: {{ scores.score|safe }},
             y: scoreCounts,
             name: "Count",
-            showlegend: false,
             type: "bar"
         },
         {
             x: {{ scores.score|safe }},
             y: {{ aggregate_scores.counts|safe }},
             name: "Aggregrate Count",
-            showlegend: false,
             type: "scatter",
             yaxis: "y2"
         }
@@ -84,6 +82,13 @@
                 family: fontList,
                 size: 16
             },
+        },
+        legend: {
+            font: {
+                color: axisColor,
+                family: fontList,
+                size: 16
+            }
         },
         margin: {
             l: 60,
