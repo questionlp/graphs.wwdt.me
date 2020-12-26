@@ -52,21 +52,18 @@
             x: shows,
             y: {{ scores_1|safe }},
             name: "Panelist 1",
-            showlegend: false,
             type: "bar"
         },
         {
             x: shows,
             y: {{ scores_2|safe }},
             name: "Panelist 2",
-            showlegend: false,
             type: "bar"
         },
         {
             x: shows,
             y: {{ scores_3|safe }},
             name: "Panelist 3",
-            showlegend: false,
             type: "bar"
         }
     ];
@@ -85,6 +82,14 @@
                 family: fontList,
                 size: 16
             },
+        },
+        legend: {
+            font: {
+                color: axisColor,
+                family: fontList,
+                size: 16
+            },
+            traceorder: "normal",
         },
         margin: {
             l: 60,
@@ -108,7 +113,7 @@
             tickfont: { size: 14 },
             title: {
                 font: { size: 18 },
-                text: "Year"
+                text: "Show Date"
             },
             type: "category"
         },

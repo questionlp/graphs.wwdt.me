@@ -45,6 +45,8 @@
         {
             x: {{ aggregate_scores.scores|safe }},
             y: {{ aggregate_scores.counts|safe }},
+            name: "Count",
+            showlegend: true,
             type: "bar"
         }
     ];
@@ -57,6 +59,13 @@
                 family: fontList,
                 size: 16
             },
+        },
+        legend: {
+            font: {
+                color: axisColor,
+                family: fontList,
+                size: 16
+            }
         },
         margin: {
             l: 60,
