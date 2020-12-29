@@ -118,6 +118,7 @@
         yaxis: {
             color: axisColor,
             dtick: 5,
+            fixedrange: true,
             range: [0, 60],
             tickfont: { size: 16 },
             title: {
@@ -129,6 +130,10 @@
 
     let config = {
         displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
         responsive: true,
         toImageButtonOptions: {
             filename: "panel-gender-mix",

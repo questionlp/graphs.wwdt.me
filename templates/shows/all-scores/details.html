@@ -116,6 +116,7 @@
         yaxis: {
             color: axisColor,
             dtick: 5,
+            fixedrange: true,
             tickfont: { size: 16 },
             title: {
                 font: { size: 18 },
@@ -126,6 +127,10 @@
 
     let config = {
         displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
         responsive: true,
         toImageButtonOptions: {
             filename: "all-scores-{{ year }}",

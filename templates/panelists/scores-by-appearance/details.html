@@ -97,6 +97,7 @@
         yaxis: {
             color: axisColor,
             dtick: 2,
+            fixedrange: true,
             tickfont: { size: 16 },
             range: [0, 22],
             title: {
@@ -108,6 +109,10 @@
 
     let config = {
         displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
         responsive: true,
         toImageButtonOptions: {
             filename: "scores-by-appearance-{{ info.slug }}",
