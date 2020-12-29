@@ -110,6 +110,7 @@
         yaxis: {
             color: axisColor,
             dtick: 1,
+            fixedrange: true,
             range: [0, 6],
             tickfont: { size: 16 },
             title: {
@@ -121,6 +122,10 @@
 
     let config = {
         displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
         responsive: true,
         toImageButtonOptions: {
             filename: "bluff-counts-year-month",
