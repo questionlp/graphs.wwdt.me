@@ -45,7 +45,7 @@
     // Set y-axis dtick value
     let yAxisdTick = 2;
     let appearanceCounts = {{ count|safe }};
-    let maxCount = Math.max(...appearanceCounts);
+    let maxCount = Math.max.apply(Math, appearanceCounts);
     if (maxCount <= 3) {
         yAxisdTick = 1;
     }
