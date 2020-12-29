@@ -49,7 +49,7 @@
     // Set y-axis dtick value
     let yAxisdTick = 2;
     let scoreCounts = {{ scores.count|safe }};
-    let maxCount = Math.max(...scoreCounts);
+    let maxCount = Math.max.apply(Math, scoreCounts);
     if (maxCount <= 3) {
         yAxisdTick = 1;
     }
