@@ -24,130 +24,111 @@
 {% if years %}
 <p>
     This chart displays the number of times
-    <a href="{{ stats_url}}/panelists/{{ info.slug }}">{{ info.name }}</a>
+    <a href="{{ stats_url }}/panelists/{{ info.slug }}">{{ info.name }}</a>
     has made an appearance on the show, broken down by year.
 </p>
 
-<p class="hide-on-large-only">
-    Note: This chart is best viewed in landscape mode on mobile and tablet devices.
-</p>
-    
-<canvas id="chart"></canvas>
+<div id="ww-chart"></div>
+
 <script>
-    // Set the chart background based on prefers-color-scheme
-    Chart.plugins.register({
-        beforeDraw: function(chartInstance) {
-            var ctx = chartInstance.chart.ctx;
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                ctx.fillStyle = '#202124';
-            } else {
-                ctx.fillStyle = '#fff';
-            }
-            ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
-        }
-    });
+    // Set default colors
+    let axisColor = "#212121";
+    let backgroundColor = "#fff";
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
-    // Define chart data and draw settings
-    var barChartData = {
-        labels: {{ years|safe }},
-        datasets: [{
-            backgroundColor: '#1170aa',
-            data: {{ count|safe }},
-            label: 'Appearances'
-        }]
+    // Change colors if in dark mode
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        axisColor = "#f5f5f5";
+        backgroundColor = "#202124";
+    }
+
+    // Set y-axis dtick value
+    let yAxisdTick = 2;
+    let appearanceCounts = {{ count|safe }};
+    let maxCount = Math.max.apply(Math, appearanceCounts);
+    if (maxCount <= 3) {
+        yAxisdTick = 1;
+    }
+
+    let data = [
+        {
+            x: {{ years|safe }},
+            y: appearanceCounts,
+            name: "Appearances",
+            showlegend: true,
+            type: "bar"
+        }
+    ];
+
+    let layout = {
+        autosize: true,
+        font: { family: fontList },
+        hoverlabel: {
+            font: {
+                family: fontList,
+                size: 16
+            },
+        },
+        legend: {
+            font: {
+                color: axisColor,
+                family: fontList,
+                size: 16
+            }
+        },
+        margin: {
+            l: 60,
+            r: 40,
+            t: 48,
+            b: 68
+        },
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        title: {
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            text: "Appearances by Year for {{ info.name|safe }}"
+        },
+        xaxis: {
+            color: axisColor,
+            tickangle: -45,
+            tickfont: { size: 16 },
+            tickmode: "linear",
+            title: {
+                font: { size: 18 },
+                text: "Year"
+            }
+        },
+        yaxis: {
+            dtick: yAxisdTick,
+            color: axisColor,
+            fixedrange: true,
+            tickfont: { size: 16 },
+            title: {
+                font: { size: 18 },
+                text: "Appearances"
+            }
+        }
     };
 
-    // Set up and render the chart
-    window.onload = function() {
-        // Override chart defaults
-        Chart.defaults.global.defaultFontFamily = "'IBM Plex Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
-        Chart.defaults.global.defaultFontSize = 16;
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            // Dark Mode
-            Chart.defaults.global.defaultFontColor = '#f5f5f5';
-            var gridLinesColor = '#616161';
-        } else {
-            // Light Mode
-            Chart.defaults.global.defaultFontColor = '#212121';
-            var gridLinesColor = '#9e9e9e';
+    let config = {
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "appearances-by-year-{{ info.slug }}",
+            height: 800,
+            scale: 1,
+            width: 1200
         }
-
-        // Calculate y-axis max and tick values
-        var yAxisMax = Math.max(...barChartData.datasets[0].data);
-        if (yAxisMax >= 20) {
-            var yAxisTickStepSize = 5;
-        } else if (yAxisMax >= 10) {
-            var yAxisTickStepSize = 3;
-            yAxisMax++;
-        } else {
-            var yAxisTickStepSize = 1;
-            yAxisMax++;
-        }
-
-        // Render chart
-        var ctx = document.getElementById('chart');
-        window.myBar = new Chart(ctx, {
-            type: 'bar',
-            data: barChartData,
-            options: {
-                animation: { duration: 0 },
-                aspectRatio: 1.618034,
-                hover: { animationDuration: 150 },
-                layout: {
-                    padding: {
-                        top: 30,
-                        right: 15,
-                        bottom: 10,
-                        left: 15
-                    }                
-                },
-                legend: { display: false },
-                responsive: true,
-                responsiveAnimationDuration: 0,
-                scales: {
-                    xAxes: [{
-                        gridLines: { color: gridLinesColor },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Year',
-                            fontSize: 18,
-                            fontStyle: 'bold'
-                        },
-                        ticks: {
-                            minRotation: 45,
-                            maxRotation: 45
-                        },
-                    }],
-                    yAxes: [{
-                        gridLines: { color: gridLinesColor },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Appearances',
-                            fontSize: 18,
-                            fontStyle: 'bold'
-                        },
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            suggestedMax: yAxisMax,
-                            stepSize: yAxisTickStepSize
-                        }
-                    }]
-                },
-                title: {
-                    display: true,
-                    fontSize: 20,
-                    fontStyle: 'bold',
-                    text: "Appearances by Year for {{ info.name|safe }}"
-                },
-                tooltips: {
-                    mode: 'x',
-                    intersect: true,
-                    titleFontStyle: 'bold'
-                }
-            }
-        });
     };
+
+    Plotly.newPlot("ww-chart", data, layout, config);
 </script>
 {% else %}
 <p>

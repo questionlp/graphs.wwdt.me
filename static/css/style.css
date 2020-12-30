@@ -28,6 +28,7 @@
     ul.footer-nav-links { list-style: none; margin: 0; padding: 0; }
     ul.footer-nav-links li { display: inline; margin: 0 0.5rem; padding: 0; }
     .traceback { border: 2px solid rgba(0, 0, 0, 0.25); font-size: 90%; overflow: scroll; padding: 1.5rem; width: 100%; }
+    div#ww-chart { height: 65%; height: 65vh; }
 }
 
 @media (prefers-color-scheme: light) {
@@ -50,6 +51,7 @@
 
 @media only screen and (max-width: 720px) {
     .collection .collection-item { padding: 1.25rem; }
+    div#ww-chart { height: 55%; height: 55vh; }
 }
 
 @media only screen and (max-width: 600px) {
@@ -58,6 +60,7 @@
     nav .brand-logo { font-size: 1.0rem; font-weight: 500; left: 45%; transform: translateX(-40%); }
     .col.s12 { margin-top: 0.5rem; margin-bottom: 0.5rem; }
     .footer-copyright span.right { display: block; float: initial !important; }
+    div#ww-chart { height: 50%; height: 50vh; }
 }
 
 @media only print {

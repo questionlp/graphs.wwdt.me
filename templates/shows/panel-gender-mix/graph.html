@@ -23,126 +23,128 @@
     This chart displays the gender mix of the panels broken out by year.
 </p>
 
-<p class="hide-on-large-only">
-    Note: This chart is best viewed in landscape mode on mobile and tablet devices.
-</p>
+<div id="ww-chart"></div>
 
-<canvas id="chart"></canvas>
 <script>
-    // Set the chart background based on prefers-color-scheme
-    Chart.plugins.register({
-        beforeDraw: function(chartInstance) {
-            var ctx = chartInstance.chart.ctx;
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                ctx.fillStyle = '#202124';
-            } else {
-                ctx.fillStyle = '#fff';
-            }
-            ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
-        }
-    });
+    // Set default colors and font list
+    let axisColor = "#212121";
+    let backgroundColor = "#fff";
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
-    // Define chart data and draw settings
-    var barChartData = {
-        labels: {{ years|safe }},
-        datasets: [{
-            label: '0F / 3M',
-            backgroundColor: '#ffc000',
-            data: {{ panel_0f|safe }}
-        }, {
-            label: '1F / 2M',
-            backgroundColor: '#1170aa',
-            data: {{ panel_1f|safe }}
-        }, {
-            label: '2F / 1M',
-            backgroundColor: '#fc7d0b',
-            data: {{ panel_2f|safe }}
-        }, {
-            label: '3F / 0M',
-            backgroundColor: '#70ad47',
-            data: {{ panel_3f|safe }}
-        }]
+    // Change colors if in dark mode
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        axisColor = "#f5f5f5";
+        backgroundColor = "#202124";
+    }
+
+    let showYears = {{ years|safe }};
+    let data = [
+        {
+            x: showYears,
+            y: {{ panel_0f|safe }},
+            name: "0F / 3M",
+            type: "bar"
+        },
+        {
+            x: showYears,
+            y: {{ panel_1f|safe }},
+            name: "1F / 2M",
+            type: "bar"
+        },
+        {
+            x: showYears,
+            y: {{ panel_2f|safe }},
+            name: "2F / 1M",
+            type: "bar"
+        },
+        {
+            x: showYears,
+            y: {{ panel_3f|safe }},
+            name: "3F / 0M",
+            type: "bar"
+        }
+    ];
+
+    let layout = {
+        autosize: true,
+        barmode: "stack",
+        colorway: [
+            "#ffc000",
+            "#1f77b4",
+            "#ff7f0e",
+            "#70ad47"
+        ],
+        font: { family: fontList },
+        hoverlabel: {
+            font: {
+                family: fontList,
+                size: 16
+            },
+        },
+        legend: {
+            font: {
+                color: axisColor,
+                family: fontList,
+                size: 16
+            },
+            traceorder: "normal",
+        },
+        margin: {
+            l: 60,
+            r: 40,
+            t: 48,
+            b: 90
+        },
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        showlegend: true,
+        title: {
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            text: "Panel Gender Mix"
+        },
+        xaxis: {
+            color: axisColor,
+            tickangle: -45,
+            tickfont: { size: 14 },
+            title: {
+                font: { size: 18 },
+                text: "Year"
+            },
+            type: "category"
+        },
+        yaxis: {
+            color: axisColor,
+            dtick: 5,
+            fixedrange: true,
+            range: [0, 60],
+            tickfont: { size: 16 },
+            title: {
+                font: { size: 18 },
+                text: "Shows"
+            }
+        }
     };
 
-    // Set up and render the chart
-    window.onload = function() {
-        // Override chart defaults
-        Chart.defaults.global.defaultFontFamily = "'IBM Plex Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
-        Chart.defaults.global.defaultFontSize = 16;
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            // Dark Mode
-            Chart.defaults.global.defaultFontColor = '#f5f5f5';
-            var gridLinesColor = '#616161';
-        } else {
-            // Light Mode
-            Chart.defaults.global.defaultFontColor = '#212121';
-            var gridLinesColor = '#9e9e9e';
+    let config = {
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "panel-gender-mix",
+            height: 800,
+            scale: 1,
+            width: 1200
         }
-
-        // Render chart
-        var ctx = document.getElementById('chart');
-        window.myBar = new Chart(ctx, {
-            type: 'bar',
-            data: barChartData,
-            options: {
-                animation: { duration: 0 },
-                aspectRatio: 1.618034,
-                hover: { animationDuration: 150 },
-                layout: {
-                    padding: {
-                        top: 30,
-                        right: 15,
-                        bottom: 10,
-                        left: 15
-                    }                
-                },
-                legend: {
-                    labels: { fontSize: 18 },
-                    position: 'bottom'
-                },
-                responsive: true,
-                responsiveAnimationDuration: 0,
-                scales: {
-                    xAxes: [{
-                        gridLines: { color: gridLinesColor },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Year',
-                            fontSize: 18,
-                            fontStyle: 'bold'
-                        },
-                        stacked: true,
-                        ticks: {
-                            minRotation: 45,
-                            maxRotation: 45
-                        },
-                    }],
-                    yAxes: [{
-                        gridLines: { color: gridLinesColor },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Shows',
-                            fontSize: 18,
-                            fontStyle: 'bold'
-                        },
-                        stacked: true
-                    }]
-                },
-                title: {
-                    display: true,
-                    fontSize: 20,
-                    fontStyle: 'bold',
-                    text: 'Panel Gender Mix'
-                },
-                tooltips: {
-                    mode: 'x',
-                    intersect: true,
-                    titleFontStyle: 'bold'
-                }
-            }
-        });
     };
-    </script>
+
+    Plotly.newPlot("ww-chart", data, layout, config);
+</script>
 {% else %}
 <p>
     No panel data available.
