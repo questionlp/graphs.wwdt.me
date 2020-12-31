@@ -3,8 +3,9 @@
 # graphs.wwdt.me is relased under the terms of the Apache License 2.0
 """Explicitly listing all show graphing modules"""
 
-from reports.show import bluff_count
+from reports.show import bluff_count, scores
 
 __all__ = [
-    "bluff_count"
+    "bluff_count",
+    "scores"
 ]

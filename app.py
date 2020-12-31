@@ -19,10 +19,10 @@ from wwdtm.panelist import info as pnl_info
 from wwdtm.show import info as show_info
 from graphs import utility
 from reports.panel import aggregate_scores, gender_mix
-from reports.show import bluff_count as bluff
+from reports.show import bluff_count as bluff, scores as show_scores
 
 #region Global Constants
-APP_VERSION = "1.7.0"
+APP_VERSION = "1.8.0"
 
 #endregion
 
@@ -258,9 +258,9 @@ def shows_all_scores_by_year(year: int):
     if year not in show_years:
         return redirect(url_for("shows_all_scores"))
 
-    show_scores = show_info.retrieve_scores_by_year(year,
-                                                    database_connection)
-    if not show_scores:
+    all_scores = show_info.retrieve_scores_by_year(year,
+                                                   database_connection)
+    if not all_scores:
         return render_template("shows/all-scores/details.html",
                                year=year, shows=None)
 
@@ -268,7 +268,7 @@ def shows_all_scores_by_year(year: int):
     scores_1 = []
     scores_2 = []
     scores_3 = []
-    for show in show_scores:
+    for show in all_scores:
         shows.append(show[0])
         scores_1.append(show[1])
         scores_2.append(show[2])
@@ -375,6 +375,48 @@ def shows_panel_gender_mix():
                            panel_1f=panel_1f,
                            panel_2f=panel_2f,
                            panel_3f=panel_3f)
+
+@app.route("/shows/monthly-aggregate-score-heatmap")
+def shows_monthly_aggregate_score_heatmap():
+    """Monthly Aggregate Score Heatmap Graph"""
+
+    database_connection.reconnect()
+    all_scores = show_scores.retrieve_monthly_aggregate_scores(database_connection)
+
+    if not all_scores:
+        return render_template("shows/monthly-aggregate-score-heatmap/graph.html",
+                               years=None,
+                               scores=None)
+
+    scores_list = []
+    years = list(all_scores.keys())
+    for year in all_scores:
+        scores_list.append(list(all_scores[year].values()))
+
+    return render_template("shows/monthly-aggregate-score-heatmap/graph.html",
+                           years=years,
+                           scores=scores_list)
+
+@app.route("/shows/monthly-average-score-heatmap")
+def shows_monthly_average_score_heatmap():
+    """Monthly Average Score Heatmap Graph"""
+
+    database_connection.reconnect()
+    all_scores = show_scores.retrieve_monthly_average_scores(database_connection)
+
+    if not all_scores:
+        return render_template("shows/monthly-average-score-heatmap/graph.html",
+                               years=None,
+                               scores=None)
+
+    scores_list = []
+    years = list(all_scores.keys())
+    for year in all_scores:
+        scores_list.append(list(all_scores[year].values()))
+
+    return render_template("shows/monthly-average-score-heatmap/graph.html",
+                           years=years,
+                           scores=scores_list)
 
 #endregion
 
