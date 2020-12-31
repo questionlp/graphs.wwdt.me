@@ -75,7 +75,8 @@
             hovertemplate: "Year: %{y}<br>Month: %{x}<br>Average Score: %{z}<extra></extra>",
             type: "heatmap",
             zmin: 0,
-            zmax: Math.ceil(Math.max.apply(Math, scores))
+            zmax: Math.ceil(Math.max.apply(Math, scores)),
+            zsmooth: false
         }
     ];
 
