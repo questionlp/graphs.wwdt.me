@@ -15,6 +15,7 @@ import pytz
 from slugify import slugify
 from werkzeug.exceptions import HTTPException
 
+from wwdtm import VERSION as WWDTM_VERSION
 from wwdtm.panelist import info as pnl_info
 from wwdtm.show import info as show_info
 from graphs import utility
@@ -22,7 +23,7 @@ from reports.panel import aggregate_scores, gender_mix
 from reports.show import bluff_count as bluff, scores as show_scores
 
 #region Global Constants
-APP_VERSION = "1.8.0.1"
+APP_VERSION = "1.8.1"
 
 #endregion
 
@@ -425,6 +426,7 @@ config = load_config()
 app_time_zone = config["settings"]["app_time_zone"]
 time_zone_name = config["settings"]["time_zone"]
 app.jinja_env.globals["app_version"] = APP_VERSION
+app.jinja_env.globals["libwwdtm_version"] = WWDTM_VERSION
 app.jinja_env.globals["current_date"] = date.today()
 app.jinja_env.globals["ga_property_code"] = config["settings"]["ga_property_code"]
 app.jinja_env.globals["time_zone"] = app_time_zone
