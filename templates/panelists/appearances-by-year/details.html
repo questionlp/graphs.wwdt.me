@@ -69,6 +69,7 @@
                 size: 16
             },
         },
+        hovermode: "x",
         legend: {
             font: {
                 color: axisColor,
@@ -93,6 +94,11 @@
         },
         xaxis: {
             color: axisColor,
+            showspikes: true,
+            spikecolor: axisColor,
+            spikedash: "dot",
+            spikemode: "across",
+            spikethickness: 1,
             tickangle: -45,
             tickfont: { size: 16 },
             tickmode: "linear",
