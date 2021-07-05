@@ -65,17 +65,21 @@
     <loc>{{ site_url }}{{ url_for("shows_bluff_counts_by_year", year=year) }}</loc>
     <changefreq>weekly</changefreq>
   </url>
-{% endfor %}  
+{% endfor %}
   <url>
-    <loc>{{ site_url}}{{ url_for("shows_monthly_aggregate_score_heatmap") }}</loc>
+    <loc>{{ site_url }}{{ url_for("shows_counts_by_year") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>{{ site_url}}{{ url_for("shows_monthly_average_score_heatmap") }}</loc>
+    <loc>{{ site_url }}{{ url_for("shows_monthly_aggregate_score_heatmap") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>{{ site_url}}{{ url_for("shows_panel_gender_mix") }}</loc>
+    <loc>{{ site_url }}{{ url_for("shows_monthly_average_score_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows_panel_gender_mix") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
 </urlset>

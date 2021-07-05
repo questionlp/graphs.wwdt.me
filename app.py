@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2018-2020 Linh Pham
+# Copyright (c) 2018-2021 Linh Pham
 # graphs.wwdt.me is relased under the terms of the Apache License 2.0
 """Flask application startup file"""
 
 from datetime import date
 import json
-from typing import Text
+from typing import Dict, List
 import traceback
 
 from flask import Flask, redirect, render_template, Response, url_for
@@ -20,10 +20,12 @@ from wwdtm.panelist import info as pnl_info
 from wwdtm.show import info as show_info
 from graphs import utility
 from reports.panel import aggregate_scores, gender_mix
-from reports.show import bluff_count as bluff, scores as show_scores
+from reports.show import (bluff_count as bluff,
+                          scores as show_scores,
+                          show_counts)
 
 #region Global Constants
-APP_VERSION = "1.10.0"
+APP_VERSION = "1.11.0"
 
 #endregion
 
@@ -40,7 +42,7 @@ app.create_jinja_environment()
 #endregion
 
 #region Bootstrap Functions
-def load_config():
+def load_config() -> Dict:
     """Load configuration settings from config.json"""
     with open("config.json", "r") as config_file:
         config_dict = json.load(config_file)
@@ -62,7 +64,7 @@ def load_config():
 #endregion
 
 #region Common Functions
-def retrieve_show_years(reverse_order: bool = True):
+def retrieve_show_years(reverse_order: bool = True) -> List[int]:
     """Retrieve a list of available show years"""
     database_connection.reconnect()
     years = show_info.retrieve_years(database_connection)
@@ -75,7 +77,7 @@ def retrieve_show_years(reverse_order: bool = True):
 
 #region Filters
 @app.template_filter("pretty_jsonify")
-def pretty_jsonify(data):
+def pretty_jsonify(data) -> str:
     """Returns a prettier JSON output for an object than Flask's default
     tojson filter"""
     return json.dumps(data, indent=2)
@@ -143,7 +145,7 @@ def panelists_appearances_by_year_index():
                            panelists=panelists)
 
 @app.route("/panelists/appearances-by-year/<string:panelist>")
-def panelists_appearances_by_year_details(panelist: Text):
+def panelists_appearances_by_year_details(panelist: str):
     """Panelists Appearances by Year Graph Page"""
     database_connection.reconnect()
     panelist_slug = slugify(panelist)
@@ -174,7 +176,7 @@ def panelists_score_breakdown_index():
                            panelists=panelists)
 
 @app.route("/panelists/score-breakdown/<string:panelist>")
-def panelists_score_breakdown_details(panelist: Text):
+def panelists_score_breakdown_details(panelist: str):
     """Panelists Score Breakdown Graph Page"""
     database_connection.reconnect()
     panelist_slug = slugify(panelist)
@@ -203,7 +205,7 @@ def panelists_scores_by_appearance_index():
                            panelists=panelists)
 
 @app.route("/panelists/scores-by-appearance/<string:panelist>")
-def panelists_scores_by_appearance_details(panelist: Text):
+def panelists_scores_by_appearance_details(panelist: str):
     """Panelists Scores by Appearance Graph Page"""
     database_connection.reconnect()
     panelist_slug = slugify(panelist)
@@ -418,6 +420,35 @@ def shows_panel_gender_mix():
                            panel_1f=panel_1f,
                            panel_2f=panel_2f,
                            panel_3f=panel_3f)
+
+@app.route("/shows/show-counts-by-year")
+def shows_counts_by_year():
+    """Show Counts by Year Graph"""
+    database_connection.reconnect()
+    counts = show_counts.retrieve_show_counts_by_year(database_connection=database_connection)
+
+    if not counts:
+        return redirect(url_for("shows_index"))
+
+    years = []
+    regular = []
+    best_ofs = []
+    repeats = []
+    repeat_best_ofs = []
+
+    for year in counts:
+        years.append(year)
+        regular.append(counts[year]["regular"])
+        best_ofs.append(counts[year]["best_of"])
+        repeats.append(counts[year]["repeat"])
+        repeat_best_ofs.append(counts[year]["repeat_best_of"])
+
+    return render_template("shows/counts-by-year/graph.html",
+                           years=years,
+                           regular=regular,
+                           best_ofs=best_ofs,
+                           repeats=repeats,
+                           repeat_best_ofs=repeat_best_ofs)
 
 #endregion
 
