@@ -365,13 +365,13 @@ def shows_counts_by_day_of_month(month: int):
 
     # Validate that the month number is valid
     if not month in range(1, 13):
-        return redirect(url_for("shows_counts_by_day_of_month"))
+        return redirect(url_for("shows_counts_by_day_of_month_index"))
 
     shows_month = dates.retrieve_show_counts_by_month_day(month,
                                                           database_connection)
 
     if not shows_month:
-        return redirect(url_for("shows_counts_by_day_of_month"))
+        return redirect(url_for("shows_counts_by_day_of_month_index"))
 
     days = []
     regular_shows = []
