@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}{{ year }} | All Scores | Shows{% endblock %}
+{% set page_title = "All Scores" %}
+{% block title %}{{ year }} | {{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <div class="page-breadcrumb hide-on-small-only">
@@ -11,7 +12,7 @@
             <a href="{{ url_for('shows_index') }}">Shows</a>
         </li>
         <li>
-            <a href="{{ url_for('shows_all_scores') }}">All Scores</a>
+            <a href="{{ url_for('shows_all_scores') }}">{{ page_title }}</a>
         </li>
         <li>
             {{ year }}
@@ -19,7 +20,7 @@
     </ul>
 </div>
 
-<h1>All Scores for {{ year }}</h1>
+<h1>{{ page_title }} for {{ year }}</h1>
 
 {% if shows %}
 <p>
@@ -101,7 +102,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "All Scores for {{ year }}"
+            text: "{{ page_title }} for {{ year }}"
         },
         xaxis: {
             color: axisColor,

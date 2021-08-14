@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Monthly Aggregate Score Heatmap | Shows{% endblock %}
+{% set page_title="Monthly Aggregate Score Heatmap" %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <div class="page-breadcrumb hide-on-small-only">
@@ -11,12 +12,12 @@
             <a href="{{ url_for('shows_index') }}">Shows</a>
         </li>
         <li>
-            Monthly Aggregate Score Heatmap
+            {{ page_title }}
         </li>
     </ul>
 </div>
 
-<h1>Monthly Aggregate Score Heatmap</h1>
+<h1>{{ page_title }}</h1>
 
 {% if years and scores %}
 <p>
@@ -102,7 +103,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Monthly Aggregate Score Heatmap"
+            text: "{{ page_title }}"
         },
         xaxis: {
             color: axisColor,

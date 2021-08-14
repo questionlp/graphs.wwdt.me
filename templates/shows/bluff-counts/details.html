@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}{{ year }} | Bluff the Listener Counts | Shows{% endblock %}
+{% set page_title="Bluff the Listener Counts" %}
+{% block title %}{{ year }} | {{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <div class="page-breadcrumb hide-on-small-only">
@@ -11,7 +12,7 @@
             <a href="{{ url_for('shows_index') }}">Shows</a>
         </li>
         <li>
-            <a href="{{ url_for('shows_bluff_counts') }}">Bluff the Listener Counts</a>
+            <a href="{{ url_for('shows_bluff_counts') }}">{{ page_title }}</a>
         </li>
         <li>
             {{ year }}
@@ -19,7 +20,7 @@
     </ul>
 </div>
 
-<h1>Bluff the Listener Counts for {{ year }}</h1>
+<h1>{{ page_title }} for {{ year }}</h1>
 
 {% if months %}
 <p>
@@ -94,7 +95,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Bluff the Listener Counts for {{ year }}"
+            text: "{{ page_title }} for {{ year }}"
         },
         xaxis: {
             color: axisColor,

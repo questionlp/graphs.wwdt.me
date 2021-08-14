@@ -26,7 +26,7 @@ from reports.show import (bluff_count as bluff,
                           show_counts)
 
 #region Global Constants
-APP_VERSION = "1.12.0"
+APP_VERSION = "1.13.0"
 
 #endregion
 
@@ -98,6 +98,12 @@ def handle_exception(error):
     app_logger.error(error_traceback)
     return render_template("errors/500.html",
                            error_traceback=error_traceback), 500
+
+@app.errorhandler(404)
+def not_found(error):
+    """Handle resource not found conditions"""
+    return render_template("errors/404.html",
+                           error_description=error.description), 404
 
 #endregion
 

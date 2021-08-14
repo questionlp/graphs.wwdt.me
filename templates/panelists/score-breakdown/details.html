@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}{{ info.name }} | Score Breakdown | Panelists{% endblock %}
+{% set page_title = "Score Breakdown" %}
+{% block title %}{{ info.name }} | {{ page_title }} | Panelists{% endblock %}
 
 {% block content %}
 <div class="page-breadcrumb hide-on-small-only">
@@ -11,7 +12,7 @@
             <a href="{{ url_for('panelists_index') }}">Panelists</a>
         </li>
         <li>
-            <a href="{{ url_for('panelists_score_breakdown_index') }}">Score Breakdown</a>
+            <a href="{{ url_for('panelists_score_breakdown_index') }}">{{ page_title }}</a>
         </li>
         <li>
             {{ info.name }}
@@ -100,7 +101,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Score Breakdown for {{ info.name|safe }}"
+            text: "{{ page_title }} for {{ info.name|safe }}"
         },
         xaxis: {
             color: axisColor,
