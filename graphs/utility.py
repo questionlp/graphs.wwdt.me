@@ -7,6 +7,12 @@ from datetime import datetime
 from dateutil import parser
 import pytz
 
+month_names = {
+    1: "January", 2: "February", 3: "March", 4: "April",
+    5: "May", 6: "June", 7: "July", 8: "August",
+    9: "September", 10: "October", 11: "November", 12: "December"
+}
+
 #region Date/Time Functions
 def current_year(time_zone: pytz.timezone = pytz.timezone("UTC")):
     """Return the current year"""

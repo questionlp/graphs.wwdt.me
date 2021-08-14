@@ -4,7 +4,7 @@
 """Explicitly listing all reporting modules"""
 
 from reports.panel import aggregate_scores, gender_mix
-from reports.show import bluff_count, scores, show_counts
+from reports.show import bluff_count, dates, scores, show_counts
 
 __all__ = [
     "panel",
