@@ -24,6 +24,9 @@
 </p>
 
 <ul class="collection">
+    <li class="collection-item">
+        <a href="{{ url_for('shows_counts_by_day_of_month_all') }}">All</a>
+    </li>
     {% for month in months %}
     <li class="collection-item">
         <a href="{{ url_for('shows_counts_by_day_of_month', month=month) }}">{{ months[month] }}</a>
