@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Bluff the Listener Counts | Shows{% endblock %}
+{% set page_title="Bluff the Listener Counts" %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <div class="page-breadcrumb hide-on-small-only">
@@ -11,12 +12,12 @@
             <a href="{{ url_for('shows_index') }}">Shows</a>
         </li>
         <li>
-            Bluff the Listener Counts
+            {{ page_title }}
         </li>
     </ul>
 </div>
 
-<h1>Years</h1>
+<h1>{{ page_title }}</h1>
 <p>
     Choose from one of the years below to view the available Bluff the Listener
     counts data for that year.

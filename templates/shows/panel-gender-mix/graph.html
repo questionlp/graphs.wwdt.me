@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Panel Gender Mix | Shows{% endblock %}
+{% set page_title="Panel Gender Mix" %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <div class="page-breadcrumb hide-on-small-only">
@@ -11,12 +12,12 @@
             <a href="{{ url_for('shows_index') }}">Shows</a>
         </li>
         <li>
-            Panel Gender Mix
+            {{ page_title }}
         </li>
     </ul>
 </div>
 
-<h1>Panel Gender Mix</h1>
+<h1>{{ page_title }}</h1>
 
 {% if years %}
 <p>
@@ -104,7 +105,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Panel Gender Mix"
+            text: "{{ page_title }}"
         },
         xaxis: {
             color: axisColor,

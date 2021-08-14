@@ -5,13 +5,25 @@
 <h1>Wait Wait Don't Tell Me! Graphs</h1>
 <p>
     This site provides a charts and graphs that represent information
-    based on the data stored in the Wait Wait Don't Tell Me! Stats Page
+    based on the data stored in the
+    <a href="{{ stats_url }}">Wait Wait Don't Tell Me! Stats Page</a>
     database.
 </p>
 
 <p>
-    The list of graphs can be found by using the top navigation bar or the
-    slide-out navigation menu.
+    You can view each of the sections of this site by using the list of
+    sections below or, depending on the device you are viewing this page on,
+    the slide-out navigation menu or the menu items in the navigation bar at
+    the top of this page.
 </p>
+
+<ul class="collection">
+    <li class="collection-item">
+        <a href="{{ url_for('panelists_index') }}">Panelists</a>
+    </li>
+    <li class="collection-item">
+        <a href="{{ url_for('shows_index') }}">Shows</a>
+    </li>
+</ul>
 
 {% endblock %}
