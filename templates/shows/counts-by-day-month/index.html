@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% set page_title="Counts by Day of Month" %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb hide-on-small-only">
+    <ul>
+        <li>
+            <a href="{{ url_for('index') }}">Home</a>
+        </li>
+        <li>
+            <a href="{{ url_for('shows_index') }}">Shows</a>
+        </li>
+        <li>
+            {{ page_title }}
+        </li>
+    </ul>
+</div>
+
+<h1>Months</h1>
+<p>
+    Choose from one of the months below to view the counts of shows by day of
+    month for each calendar month.
+</p>
+
+<ul class="collection">
+    {% for month in months %}
+    <li class="collection-item">
+        <a href="{{ url_for('shows_counts_by_day_of_month', month=month) }}">{{ months[month] }}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

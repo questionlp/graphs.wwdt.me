@@ -21,11 +21,12 @@ from wwdtm.show import info as show_info
 from graphs import utility
 from reports.panel import aggregate_scores, gender_mix
 from reports.show import (bluff_count as bluff,
+                          dates,
                           scores as show_scores,
                           show_counts)
 
 #region Global Constants
-APP_VERSION = "1.11.0"
+APP_VERSION = "1.12.0"
 
 #endregion
 
@@ -116,6 +117,7 @@ def sitemap_xml():
     show_years = retrieve_show_years(reverse_order=False)
     panelists = pnl_info.retrieve_all(database_connection)
     sitemap = render_template("core/sitemap.xml",
+                              months=utility.month_names.keys(),
                               show_years=show_years,
                               panelists=panelists)
     return Response(sitemap, mimetype="text/xml")
@@ -349,10 +351,51 @@ def shows_bluff_counts_by_year(year: int):
                            correct=correct,
                            incorrect=incorrect)
 
+@app.route("/shows/counts-by-day-month")
+def shows_counts_by_day_of_month_index():
+    """Counts by Day of Month Graph Index Page"""
+    database_connection.reconnect()
+    return render_template("shows/counts-by-day-month/index.html",
+                           months=utility.month_names)
+
+@app.route("/shows/counts-by-day-month/<int:month>")
+def shows_counts_by_day_of_month(month: int):
+    """Counts by Day of Month Graph"""
+    database_connection.reconnect()
+
+    # Validate that the month number is valid
+    if not month in range(1, 13):
+        return redirect(url_for("shows_counts_by_day_of_month_index"))
+
+    shows_month = dates.retrieve_show_counts_by_month_day(month,
+                                                          database_connection)
+
+    if not shows_month:
+        return redirect(url_for("shows_counts_by_day_of_month_index"))
+
+    days = []
+    regular_shows = []
+    best_of_shows = []
+    repeat_shows = []
+    repeat_best_of_shows = []
+    for day, value in shows_month.items():
+        days.append(day)
+        regular_shows.append(value["regular"])
+        best_of_shows.append(value["best_of"])
+        repeat_shows.append(value["repeat"])
+        repeat_best_of_shows.append(value["best_of_repeat"])
+
+    return render_template("shows/counts-by-day-month/details.html",
+                           month=utility.month_names[month],
+                           days=days,
+                           regular_shows=regular_shows,
+                           best_of_shows=best_of_shows,
+                           repeat_shows=repeat_shows,
+                           repeat_best_of_shows=repeat_best_of_shows)
+
 @app.route("/shows/monthly-aggregate-score-heatmap")
 def shows_monthly_aggregate_score_heatmap():
     """Monthly Aggregate Score Heatmap Graph"""
-
     database_connection.reconnect()
     all_scores = show_scores.retrieve_monthly_aggregate_scores(database_connection)
 
