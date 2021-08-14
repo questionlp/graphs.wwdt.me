@@ -67,6 +67,16 @@
   </url>
 {% endfor %}
   <url>
+    <loc>{{ site_url }}{{ url_for("shows_counts_by_day_of_month_index") }}</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+{% for month in months %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows_counts_by_day_of_month", month=month) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% endfor %}
+  <url>
     <loc>{{ site_url }}{{ url_for("shows_counts_by_year") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
