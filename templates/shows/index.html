@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Shows{% endblock %}
+{% set page_title = "Shows" %}
+{% block title %}{{ page_title }}{% endblock %}
 
 {% block content %}
 <div class="page-breadcrumb hide-on-small-only">
@@ -8,12 +9,12 @@
             <a href="{{ url_for('index') }}">Home</a>
         </li>
         <li>
-            Shows
+            {{ page_title }}
         </li>
     </ul>
 </div>
 
-<h1>Shows</h1>
+<h1>{{ page_title }}</h1>
 
 <p>
     Choose from one of the following links to view graphs representing data

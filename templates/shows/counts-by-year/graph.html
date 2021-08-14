@@ -21,7 +21,7 @@
 
 {% if years %}
 <p>
-    This chart displays number of regular, Best Of, Repeat, and Best Of repeat
+    This chart displays number of regular, Best Of, Repeat, and repeat Best Of
     shows aired for each year.
 </p>
 
@@ -55,19 +55,19 @@
         {
             x: showYears,
             y: {{ best_ofs|safe }},
-            name: "Best Ofs",
+            name: "Best Of",
             type: "bar"
         },
         {
             x: showYears,
             y: {{ repeats|safe }},
-            name: "Repeats",
+            name: "Repeat",
             type: "bar"
         },
         {
             x: showYears,
             y: {{ repeat_best_ofs|safe }},
-            name: "Best Of Repeats",
+            name: "Repeat Best Of",
             type: "bar"
         }
     ];
@@ -111,7 +111,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Show Counts by Year"
+            text: "{{ page_title }}"
         },
         xaxis: {
             color: axisColor,

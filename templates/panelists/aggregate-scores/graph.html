@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Aggregate Score Breakdown | Panelists{% endblock %}
+{% set page_title = "Aggregate Scores" %}
+{% block title %}{{ page_title }} | Panelists{% endblock %}
 
 {% block content %}
 <div class="page-breadcrumb hide-on-small-only">
@@ -11,12 +12,12 @@
             <a href="{{ url_for('panelists_index') }}">Panelists</a>
         </li>
         <li>
-            Aggregate Scores
+            {{ page_title }}
         </li>
     </ul>
 </div>
 
-<h1>Aggregate Scores</h1>
+<h1>{{ page_title }}</h1>
 
 {% if aggregate_scores.scores %}
 <p>
@@ -77,7 +78,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Aggregate Score Breakdown"
+            text: "{{ page_title }} Breakdown"
         },
         xaxis: {
             color: axisColor,

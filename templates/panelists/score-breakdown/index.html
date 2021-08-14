@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Score Breakdown | Panelists{% endblock %}
+{% set page_title = "Score Breakdown" %}
+{% block title %}{{ page_title }} | Panelists{% endblock %}
 
 {% block content %}
 <div class="page-breadcrumb hide-on-small-only">
@@ -11,12 +12,12 @@
             <a href="{{ url_for('panelists_index') }}">Panelists</a>
         </li>
         <li>
-            Score Breakdown
+            {{ page_title }}
         </li>
     </ul>
 </div>
 
-<h1>Score Breakdown</h1>
+<h1>{{ page_title }}</h1>
 <p>
     Choose from one of the panelists below to view a chart displaying a
     breakdown of their scores.
