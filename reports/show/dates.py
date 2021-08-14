@@ -56,6 +56,7 @@ def retrieve_show_counts_by_month_day(month: int,
     cursor = database_connection.cursor(dictionary=True)
     query = ("SELECT DAY(showdate) AS day, bestof, repeatshowid FROM ww_shows "
              "WHERE MONTH(showdate) = %s "
+             "AND showdate <= NOW() "
              "ORDER BY DAY(showdate) ASC;")
     cursor.execute(query, (month, ))
     results = cursor.fetchall()
