@@ -26,7 +26,7 @@ from reports.show import (bluff_count as bluff,
                           show_counts)
 
 #region Global Constants
-APP_VERSION = "1.14.1"
+APP_VERSION = "1.14.2"
 
 #endregion
 
