@@ -122,7 +122,7 @@ def retrieve_show_counts_by_month_day_all(database_connection: mysql.connector.c
         return None
 
     cursor = database_connection.cursor(dictionary=True)
-    query = ("SELECT DATE_FORMAT(showdate, '%b %d') AS date, bestof, repeatshowid "
+    query = ("SELECT DATE_FORMAT(showdate, '%d %b') AS date, bestof, repeatshowid "
              "FROM ww_shows "
              "WHERE showdate <= NOW() "
              "ORDER BY MONTH(showdate) ASC, DAY(showdate) ASC;")
