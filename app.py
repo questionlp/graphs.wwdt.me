@@ -26,7 +26,7 @@ from reports.show import (bluff_count as bluff,
                           show_counts)
 
 #region Global Constants
-APP_VERSION = "1.14.2"
+APP_VERSION = "1.15.0"
 
 #endregion
 
@@ -547,6 +547,7 @@ app.jinja_env.globals["blog_url"] = config["settings"]["blog_url"]
 app.jinja_env.globals["reports_url"] = config["settings"]["reports_url"]
 app.jinja_env.globals["site_url"] = config["settings"]["site_url"]
 app.jinja_env.globals["stats_url"] = config["settings"]["stats_url"]
+app.jinja_env.globals["repo_url"] = config["settings"]["repo_url"]
 
 database_connection = mysql.connector.connect(**config["database"])
 database_connection.autocommit = True
