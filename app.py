@@ -26,7 +26,7 @@ from reports.show import (bluff_count as bluff,
                           show_counts)
 
 #region Global Constants
-APP_VERSION = "1.13.0"
+APP_VERSION = "1.14.0"
 
 #endregion
 
@@ -393,6 +393,35 @@ def shows_counts_by_day_of_month(month: int):
 
     return render_template("shows/counts-by-day-month/details.html",
                            month=utility.month_names[month],
+                           days=days,
+                           regular_shows=regular_shows,
+                           best_of_shows=best_of_shows,
+                           repeat_shows=repeat_shows,
+                           repeat_best_of_shows=repeat_best_of_shows)
+
+@app.route("/shows/counts-by-day-month/all")
+def shows_counts_by_day_of_month_all():
+    """Counts by Day of Month for all Months Graph"""
+    database_connection.reconnect()
+
+    days_info = dates.retrieve_show_counts_by_month_day_all(database_connection)
+
+    if not days_info:
+        return redirect(url_for("shows_counts_by_day_of_month_index"))
+
+    days = []
+    regular_shows = []
+    best_of_shows = []
+    repeat_shows = []
+    repeat_best_of_shows = []
+    for day, value in days_info.items():
+        days.append(day)
+        regular_shows.append(value["regular"])
+        best_of_shows.append(value["best_of"])
+        repeat_shows.append(value["repeat"])
+        repeat_best_of_shows.append(value["best_of_repeat"])
+
+    return render_template("shows/counts-by-day-month/all.html",
                            days=days,
                            regular_shows=regular_shows,
                            best_of_shows=best_of_shows,
