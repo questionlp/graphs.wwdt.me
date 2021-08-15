@@ -26,6 +26,7 @@
             <li><a href="{{ blog_url }}/contact-me/">Contact Me</a></li>
             <li><a href="{{ reports_url }}">Reports</a></li>
             <li><a href="{{ stats_url }}">Stats Page</a></li>
+            <li><a href="{{ repo_url }}">GitHub</a></li>
         </ul>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="{{ url_for('panelists_index') }}" class="dropdown-trigger"
@@ -47,11 +48,12 @@
         <li><a href="{{ url_for('panelists_index') }}">Panelists</a></li>
         <li><a href="{{ url_for('shows_index') }}">Shows</a></li>
         <li><div class="divider"></div></li>
-        <li><a href="//api.wwdt.me/docs/">API Docs</a></li>
-        <li><a href="//blog.wwdt.me/">Blog</a></li>
-        <li><a href="//blog.wwdt.me/contact-me/">Contact Me</a></li>
-        <li><a href="//reports.wwdt.me/">Reports</a></li>
-        <li><a href="//stats.wwdt.me/">Stats Page</a></li>
+        <li><a href="{{ api_url }}/docs/">API Docs</a></li>
+        <li><a href="{{ blog_url }}">Blog</a></li>
+        <li><a href="{{ blog_url }}/contact-me/">Contact Me</a></li>
+        <li><a href="{{ reports_url }}">Reports</a></li>
+        <li><a href="{{ stats_url }}">Stats Page</a></li>
+        <li><a href="{{ repo_url }}">GitHub</a></li>
     </ul>
 </div>
 <!-- End Navigation -->
