@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% set page_title = "Shows" %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb hide-on-small-only">
+    <ul>
+        <li>
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li>
+            {{ page_title }}
+        </li>
+    </ul>
+</div>
+
+<h1>{{ page_title }}</h1>
+
+<p>
+    Choose from one of the following links to view graphs representing data
+    collected from each broadcasted show.
+</p>
+
+<ul class="collection">
+    <li class="collection-item">
+        <a href="{{ url_for('shows.all_scores') }}">All Scores</a>
+    </li>
+    <li class="collection-item">
+        <a href="{{ url_for('shows.bluff_counts') }}">Bluff the Listener Counts</a>
+    </li>
+    <li class="collection-item">
+        <a href="{{ url_for('shows.counts_by_day_of_month') }}">Counts by Day of Month</a>
+    </li>
+    <li class="collection-item">
+        <a href="{{ url_for('shows.counts_by_year') }}">Counts by Year</a>
+    </li>
+    <li class="collection-item">
+        <a href="{{ url_for('shows.monthly_aggregate_score_heatmap') }}">Monthly Aggregate Score Heatmap</a>
+    </li>
+    <li class="collection-item">
+        <a href="{{ url_for('shows.monthly_average_score_heatmap') }}">Monthly Average Score Heatmap</a>
+    </li>
+    <li class="collection-item">
+        <a href="{{ url_for('shows.panel_gender_mix') }}">Panel Gender Mix</a>
+    </li>
+</ul>
+
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% set page_title = "Aggregate Scores" %}
+{% block title %}{{ page_title }} | Panelists{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb hide-on-small-only">
+    <ul>
+        <li>
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li>
+            <a href="{{ url_for('panelists.index') }}">Panelists</a>
+        </li>
+        <li>
+            {{ page_title }}
+        </li>
+    </ul>
+</div>
+
+<h1>{{ page_title }}</h1>
+
+{% if aggregate_scores.scores %}
+<p>
+    This chart displays the score breakdown for all panelists scores.
+</p>
+
+<div id="ww-chart"></div>
+
+<script>
+    // Set default colors
+    let axisColor = "#212121";
+    let backgroundColor = "#fff";
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
+
+    // Change colors if in dark mode
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        axisColor = "#f5f5f5";
+        backgroundColor = "#202124";
+    }
+
+    let data = [
+        {
+            x: {{ aggregate_scores.scores|safe }},
+            y: {{ aggregate_scores.counts|safe }},
+            name: "Count",
+            showlegend: true,
+            type: "bar"
+        }
+    ];
+
+    let layout = {
+        autosize: true,
+        font: { family: fontList },
+        hoverlabel: {
+            font: {
+                family: fontList,
+                size: 16
+            },
+        },
+        hovermode: "x",
+        legend: {
+            font: {
+                color: axisColor,
+                family: fontList,
+                size: 16
+            },
+            orientation: "h",
+            y: 1.025,
+            x: 0,
+        },
+        margin: {
+            l: 60,
+            r: 40,
+            t: 48,
+            b: 60
+        },
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        title: {
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            text: "{{ page_title }} Breakdown"
+        },
+        xaxis: {
+            color: axisColor,
+            showspikes: true,
+            spikecolor: axisColor,
+            spikedash: "dot",
+            spikemode: "across",
+            spikethickness: 1,
+            tickangle: 0,
+            tickfont: { size: 16 },
+            tickmode: "linear",
+            title: {
+                font: { size: 18 },
+                text: "Score"
+            }
+        },
+        yaxis: {
+            color: axisColor,
+            fixedrange: true,
+            tickfont: { size: 16 },
+            title: {
+                font: { size: 18 },
+                text: "Count"
+            }
+        }
+    };
+
+    let config = {
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "aggregate-scores",
+            height: 800,
+            scale: 1,
+            width: 1200
+        }
+    };
+
+    Plotly.newPlot("ww-chart", data, layout, config);
+</script>
+{% else %}
+<p>
+    No panel data available.
+</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% set page_title = "Scores by Appearance" %}
+{% block title %}{{ info.name }} | {{ page_title }} | Panelists{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb hide-on-small-only">
+    <ul>
+        <li>
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li>
+            <a href="{{ url_for('panelists.index') }}">Panelists</a>
+        </li>
+        <li>
+            <a href="{{ url_for('panelists.scores_by_appearance') }}">{{ page_title }}</a>
+        </li>
+        <li>
+            {{ info.name }}
+        </li>
+    </ul>
+</div>
+
+<h1>{{ info.name }}</h1>
+
+{% if shows and scores %}
+<p>
+    This chart displays scores for all of
+    <a href="{{ stats_url }}/panelists/{{ info.slug }}">{{ info.name }}</a>'s
+    appearances on the show, excluding Best Of and Repeat Shows.
+</p>
+
+<div id="ww-chart"></div>
+
+<script>
+    // Set default colors
+    let axisColor = "#212121";
+    let backgroundColor = "#fff";
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
+
+    // Change colors if in dark mode
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        axisColor = "#f5f5f5";
+        backgroundColor = "#202124";
+    }
+
+    let data = [
+        {
+            x: {{ shows|safe }},
+            y: {{ scores|safe }},
+            name: "Score",
+            showlegend: true,
+            type: "bar"
+        }
+    ];
+
+    let layout = {
+        autosize: true,
+        font: { family: fontList },
+        hoverlabel: {
+            font: {
+                family: fontList,
+                size: 16
+            },
+        },
+        hovermode: "x",
+        legend: {
+            font: {
+                color: axisColor,
+                family: fontList,
+                size: 16
+            },
+            orientation: "h",
+            y: 1.025,
+            x: 0,
+        },
+        margin: {
+            l: 60,
+            r: 40,
+            t: 48,
+            b: 92
+        },
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        title: {
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            text: "{{ page_title }} for {{ info.name|safe }}"
+        },
+        xaxis: {
+            color: axisColor,
+            nticks: 12,
+            showspikes: true,
+            spikecolor: axisColor,
+            spikedash: "dot",
+            spikemode: "across",
+            spikethickness: 1,
+            tickangle: -45,
+            tickfont: { size: 14 },
+            title: {
+                font: { size: 18 },
+                text: "Show"
+            },
+            type: "category"
+        },
+        yaxis: {
+            color: axisColor,
+            dtick: 2,
+            fixedrange: true,
+            tickfont: { size: 16 },
+            range: [0, 22],
+            title: {
+                font: { size: 18 },
+                text: "Score"
+            }
+        }
+    };
+
+    let config = {
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "scores-by-appearance-{{ info.slug }}",
+            height: 800,
+            scale: 1,
+            width: 1200
+        }
+    };
+
+    Plotly.newPlot("ww-chart", data, layout, config);
+</script>
+{% else %}
+<p>
+    Not enough scoring data is available for {{ info.name }} to
+    generate a graph.
+</p>
+{% endif %}
+
+{% endblock %}

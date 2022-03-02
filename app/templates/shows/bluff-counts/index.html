@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% set page_title="Bluff the Listener Counts" %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb hide-on-small-only">
+    <ul>
+        <li>
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li>
+            <a href="{{ url_for('shows.index') }}">Shows</a>
+        </li>
+        <li>
+            {{ page_title }}
+        </li>
+    </ul>
+</div>
+
+<h1>{{ page_title }}</h1>
+<p>
+    Choose from one of the years below to view the available Bluff the Listener
+    counts data for that year.
+</p>
+
+<ul class="collection">
+    <li class="collection-item">
+        <a href="{{ url_for('shows.bluff_counts_all') }}">All</a>
+    </li>
+    {% for year in show_years %}
+    <li class="collection-item">
+        <a href="{{ url_for('shows.bluff_counts_by_year', year=year) }}">{{ year }}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% set page_title = "Panelists" %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb hide-on-small-only">
+    <ul>
+        <li>
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li>
+            {{ page_title }}
+        </li>
+    </ul>
+</div>
+
+<h1>{{ page_title }}</h1>
+<p>
+    Choose from one of the following graph types to get a list of available
+    panelists.
+</p>
+
+<ul class="collection">
+    <li class="collection-item">
+        <a href="{{ url_for('panelists.aggregate_scores') }}">Aggregate Scores</a>
+    </li>
+    <li class="collection-item">
+        <a href="{{ url_for('panelists.appearances_by_year') }}">Appearances by Year</a>
+    </li>
+    <li class="collection-item">
+        <a href="{{ url_for('panelists.score_breakdown') }}">Score Breakdown</a>
+    </li>
+    <li class="collection-item">
+        <a href="{{ url_for('panelists.scores_by_appearance') }}">Scores by Appearance</a>
+    </li>
+</ul>
+
+{% endblock %}

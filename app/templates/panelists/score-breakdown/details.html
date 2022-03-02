@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% set page_title = "Score Breakdown" %}
+{% block title %}{{ info.name }} | {{ page_title }} | Panelists{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb hide-on-small-only">
+    <ul>
+        <li>
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li>
+            <a href="{{ url_for('panelists.index') }}">Panelists</a>
+        </li>
+        <li>
+            <a href="{{ url_for('panelists.score_breakdown') }}">{{ page_title }}</a>
+        </li>
+        <li>
+            {{ info.name }}
+        </li>
+    </ul>
+</div>
+
+<h1>{{ info.name }}</h1>
+
+{% if scores and aggregate_scores.scores %}
+<p>
+    This chart displays the count of how many times
+    <a href="{{ stats_url }}/panelists/{{ info.slug }}">{{ info.name }}</a>
+    earned a specific number of points at the end of each show.
+</p>
+<p>The orange line represents
+    <a href="{{ url_for('panelists.aggregate_scores') }}">aggregate score
+    breakdown</a> for all panelists.
+</p>
+
+<div id="ww-chart"></div>
+
+<script>
+    // Set default colors
+    let axisColor = "#212121";
+    let backgroundColor = "#fff";
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
+
+    // Change colors if in dark mode
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        axisColor = "#f5f5f5";
+        backgroundColor = "#202124";
+    }
+
+    // Set y-axis dtick value
+    let yAxisdTick = 2;
+    let scoreCounts = {{ scores.count|safe }};
+    let maxCount = Math.max.apply(Math, scoreCounts);
+    if (maxCount <= 3) {
+        yAxisdTick = 1;
+    }
+
+    let data = [
+        {
+            x: {{ scores.score|safe }},
+            y: scoreCounts,
+            name: "Count",
+            type: "bar"
+        },
+        {
+            x: {{ scores.score|safe }},
+            y: {{ aggregate_scores.counts|safe }},
+            name: "Aggregrate Count",
+            type: "scatter",
+            yaxis: "y2"
+        }
+    ];
+
+    let layout = {
+        autosize: true,
+        font: { family: fontList },
+        hoverlabel: {
+            font: {
+                family: fontList,
+                size: 16
+            },
+        },
+        hovermode: "x",
+        legend: {
+            font: {
+                color: axisColor,
+                family: fontList,
+                size: 15
+            },
+            orientation: "h",
+            y: 1.025,
+            x: 0,
+        },
+        margin: {
+            l: 60,
+            r: 60,
+            t: 48,
+            b: 68
+        },
+        showlegend: true,
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        title: {
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            text: "{{ page_title }} for {{ info.name|safe }}"
+        },
+        xaxis: {
+            color: axisColor,
+            showspikes: true,
+            spikecolor: axisColor,
+            spikedash: "dot",
+            spikemode: "across",
+            spikethickness: 1,
+            tickfont: { size: 16 },
+            tickmode: "linear",
+            title: {
+                font: { size: 18 },
+                text: "Score"
+            }
+        },
+        yaxis: {
+            color: axisColor,
+            dtick: yAxisdTick,
+            fixedrange: true,
+            tickfont: { size: 16 },
+            title: {
+                font: { size: 18 },
+                text: "Appearances"
+            }
+        },
+        yaxis2: {
+            color: axisColor,
+            overlaying: "y",
+            rangemode: "tozero",
+            showgrid: false,
+            side: "right",
+            tickfont: {
+             size: 16
+            },
+            title: {
+                font: {
+                    size: 18
+                },
+                text: "Aggregate Count"
+            }
+        }
+    };
+
+    let config = {
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "score-breakdown-{{ info.slug }}",
+            height: 800,
+            scale: 1,
+            width: 1200
+        }
+    };
+
+    Plotly.newPlot("ww-chart", data, layout, config);
+</script>
+{% else %}
+<p>
+    Not enough scoring data is available for {{ info.name }} to
+    generate a graph.
+</p>
+{% endif %}
+
+{% endblock %}

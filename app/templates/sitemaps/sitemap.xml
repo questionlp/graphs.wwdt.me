@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{ site_url }}{{ url_for("main.index") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.index") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.aggregate_scores") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.appearances_by_year") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.score_breakdown") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.scores_by_appearance") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% for panelist in panelists %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.appearances_by_year_details", panelist=panelist.slug) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.score_breakdown_details", panelist=panelist.slug) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.scores_by_appearance_details", panelist=panelist.slug) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% endfor %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.index") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.all_scores") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% for year in show_years %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.all_scores_by_year", year=year) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% endfor %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.bluff_counts") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.bluff_counts_all") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% for year in show_years %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.bluff_counts_by_year", year=year) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% endfor %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.counts_by_day_of_month") }}</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.counts_by_day_of_month_all") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% for month in months %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.counts_by_day_of_month", month=month) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% endfor %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.counts_by_year") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.monthly_aggregate_score_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.monthly_average_score_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.panel_gender_mix") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+</urlset>

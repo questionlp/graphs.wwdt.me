@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% set page_title="Counts by Day of Month" %}
+{% block title %}{{ month }} | {{ page_title }} | Shows{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb hide-on-small-only">
+    <ul>
+        <li>
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li>
+            <a href="{{ url_for('shows.index') }}">Shows</a>
+        </li>
+        <li>
+            <a href="{{ url_for('shows.counts_by_day_of_month') }}">{{ page_title }}</a>
+        </li>
+        <li>
+            {{ month }}
+        </li>
+    </ul>
+</div>
+
+<h1>Counts by Day of Month for {{ month }}</h1>
+
+{% if days and regular_shows %}
+<p>
+    This chart displays the number of shows that have aired for a specific day
+    of month, broken out by regular shows, Best Of shows, repeat shows, and
+    repeat Best Of shows.
+</p>
+
+<div id="ww-chart"></div>
+
+<script>
+    // Set default colors and font list
+    let axisColor = "#212121";
+    let backgroundColor = "#fff";
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
+
+    // Change colors if in dark mode
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        axisColor = "#f5f5f5";
+        backgroundColor = "#202124";
+    }
+
+    let days = {{ days|safe }};
+    let regular_shows = {{ regular_shows|safe }};
+    let best_of_shows = {{ best_of_shows|safe }};
+    let repeat_shows = {{ repeat_shows|safe }};
+    let repeat_best_of_shows = {{ repeat_best_of_shows|safe }};
+
+    let data = [
+        {
+            x: days,
+            y: regular_shows,
+            name: "Regular",
+            type: "bar"
+        },
+        {
+            x: days,
+            y: best_of_shows,
+            name: "Best Of",
+            type: "bar"
+        },
+        {
+            x: days,
+            y: repeat_shows,
+            name: "Repeat",
+            type: "bar"
+        },
+        {
+            x: days,
+            y: repeat_best_of_shows,
+            name: "Repeat Best Of",
+            type: "bar"
+        }
+    ];
+
+    let layout = {
+        autosize: true,
+        barmode: "stack",
+        colorway: [
+            "#1f77b4",
+            "#ffc000",
+            "#ff7f0e",
+            "#70ad47"
+        ],
+        font: { family: fontList },
+        hoverlabel: {
+            font: {
+                family: fontList,
+                size: 16
+            },
+        },
+        hovermode: "x",
+        legend: {
+            font: {
+                color: axisColor,
+                family: fontList,
+                size: 16
+            },
+            traceorder: "normal",
+            orientation: "h",
+            y: 1.025,
+            x: 0,
+        },
+        margin: {
+            l: 60,
+            r: 40,
+            t: 48,
+            b: 90
+        },
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        showlegend: true,
+        title: {
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            text: "{{ page_title }} for {{ month }}"
+        },
+        xaxis: {
+            color: axisColor,
+            showspikes: true,
+            spikecolor: axisColor,
+            spikedash: "dot",
+            spikemode: "across",
+            spikethickness: 1,
+            tickfont: { size: 14 },
+            title: {
+                font: { size: 18 },
+                text: "Day of Month"
+            },
+            type: "category"
+        },
+        yaxis: {
+            color: axisColor,
+            dtick: 1,
+            fixedrange: true,
+            tickfont: { size: 16 },
+            title: {
+                font: { size: 18 },
+                text: "Shows"
+            }
+        }
+    };
+
+    let config = {
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "counts-by-day-month-{{ month }}".toLowerCase(),
+            height: 800,
+            scale: 1,
+            width: 1200
+        }
+    };
+
+    Plotly.newPlot("ww-chart", data, layout, config);
+</script>
+{% else %}
+<p>
+    No show count data available.
+</p>
+{% endif %}
+
+{% endblock %}

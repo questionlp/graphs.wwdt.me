@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% set page_title="Monthly Average Score Heatmap" %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb hide-on-small-only">
+    <ul>
+        <li>
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li>
+            <a href="{{ url_for('shows.index') }}">Shows</a>
+        </li>
+        <li>
+            {{ page_title }}
+        </li>
+    </ul>
+</div>
+
+<h1>{{ page_title }}</h1>
+
+{% if years and scores %}
+<p>
+    This heatmap chart displays average panelist scores on a monthly
+    basis.
+</p>
+
+<div id="ww-chart"></div>
+
+<script>
+    // Set default colors and font list
+    let axisColor = "#212121";
+    let backgroundColor = "#fff";
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
+
+    // Change colors if in dark mode
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        axisColor = "#f5f5f5";
+        backgroundColor = "#202124";
+    }
+
+    let months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+    let years = {{ years|safe }};
+    let scores = {{ scores|safe }};
+
+    let data = [
+        {
+            x: months,
+            y: years,
+            z: scores,
+            colorbar: {
+                tickfont: {
+                    color: axisColor,
+                    family: fontList,
+                    size: 16
+                }
+            },
+            colorscale: [
+                [0, "#000000"],
+                [0.5, "#7a2800"],
+                [0.875, "#f55000"],
+                [1, "#ff8a52"]
+            ],
+            hoverongaps: false,
+            hovertemplate: "Year: %{y}<br>Month: %{x}<br>Average Score: %{z}<extra></extra>",
+            type: "heatmap",
+            zmin: 0,
+            zmax: Math.ceil(Math.max.apply(Math, scores)),
+            zsmooth: false
+        }
+    ];
+
+    let layout = {
+        font: { family: fontList },
+        hoverlabel: {
+            font: {
+                family: fontList,
+                size: 16
+            },
+        },
+        margin: {
+            l: 128,
+            r: 64,
+            t: 64,
+            b: 64
+        },
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        showlegend: true,
+        title: {
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            text: "{{ page_title }}"
+        },
+        xaxis: {
+            color: axisColor,
+            tickfont: { size: 14 },
+            title: {
+                font: { size: 18 },
+                text: "Month"
+            },
+        },
+        yaxis: {
+            color: axisColor,
+            tickfont: { size: 16 },
+            title: {
+                font: { size: 18 },
+                text: "Year"
+            }
+        }
+    };
+
+    let config = {
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "monthly-average-score-heatmap",
+            height: 800,
+            scale: 1,
+            width: 1200
+        }
+    };
+
+    Plotly.newPlot("ww-chart", data, layout, config);
+</script>
+{% else %}
+<p>
+    No scoring data available.
+</p>
+{% endif %}
+
+{% endblock %}

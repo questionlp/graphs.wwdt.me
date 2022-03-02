@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% set page_title="Bluff the Listener Counts" %}
+{% block title %}All | {{ page_title }} | Shows{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb hide-on-small-only">
+    <ul>
+        <li>
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li>
+            <a href="{{ url_for('shows.index') }}">Shows</a>
+        </li>
+        <li>
+            <a href="{{ url_for('shows.bluff_counts') }}">{{ page_title }}</a>
+        </li>
+        <li>
+            All
+        </li>
+    </ul>
+</div>
+
+<h1>{{ page_title }} by Year and Month</h1>
+
+{% if dates %}
+<p>
+    This chart displays all of the counts of listener contestants choosing the
+    correct or incorrect Bluff the Listener stories, broken down by year and
+    month.
+</p>
+
+<div id="ww-chart"></div>
+
+<script>
+    // Set default colors and font list
+    let axisColor = "#212121";
+    let backgroundColor = "#fff";
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
+
+    // Change colors if in dark mode
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        axisColor = "#f5f5f5";
+        backgroundColor = "#202124";
+    }
+
+    let showDates = {{ dates|safe }};
+    let data = [
+        {
+            x: showDates,
+            y: {{ correct|safe }},
+            name: "Correct",
+            type: "bar"
+        },
+        {
+            x: showDates,
+            y: {{ incorrect|safe }},
+            name: "Incorrect",
+            type: "bar"
+        }
+    ];
+
+    let layout = {
+        autosize: true,
+        barmode: "stack",
+        colorway: [
+            "#1f77b4",
+            "#ff7f0e",
+        ],
+        font: { family: fontList },
+        hoverlabel: {
+            font: {
+                family: fontList,
+                size: 16
+            },
+        },
+        hovermode: "x",
+        legend: {
+            font: {
+                color: axisColor,
+                family: fontList,
+                size: 16
+            },
+            traceorder: "normal",
+            orientation: "h",
+            y: 1.025,
+            x: 0,
+        },
+        margin: {
+            l: 60,
+            r: 40,
+            t: 48,
+            b: 90
+        },
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        showlegend: true,
+        title: {
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            text: "{{ page_title }} by Year and Month"
+        },
+        xaxis: {
+            color: axisColor,
+            nticks: 12,
+            showspikes: true,
+            spikecolor: axisColor,
+            spikedash: "dot",
+            spikemode: "across",
+            spikethickness: 1,
+            tickangle: -45,
+            tickfont: { size: 14 },
+            title: {
+                font: { size: 18 },
+                text: "Show Date"
+            },
+            type: "category"
+        },
+        yaxis: {
+            color: axisColor,
+            dtick: 1,
+            fixedrange: true,
+            range: [0, 6],
+            tickfont: { size: 16 },
+            title: {
+                font: { size: 18 },
+                text: "Count"
+            }
+        }
+    };
+
+    let config = {
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "bluff-counts-year-month",
+            height: 800,
+            scale: 1,
+            width: 1200
+        }
+    };
+
+    Plotly.newPlot("ww-chart", data, layout, config);
+</script>
+{% else %}
+<p>
+    No Bluff the Listener data is currently available.
+</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,59 @@
+<!-- Start Navigation -->
+<nav class="blue darken-4 z-depth-0">
+    <div class="nav-wrapper">
+        <a href="#" data-target="slide-out" class="sidenav-trigger">
+            <i class="material-icons">menu</i>
+        </a>
+        <a href="{{ url_for('main.index') }}" class="brand-logo">Wait Wait Graphs</a>
+        <ul id="dropdown-panelist" class="dropdown-content z-depth-0">
+            <li><a href="{{ url_for('panelists.aggregate_scores') }}">Aggregate Scores</a></li>
+            <li><a href="{{ url_for('panelists.appearances_by_year') }}">Appearances by Year</a></li>
+            <li><a href="{{ url_for('panelists.score_breakdown') }}">Score Breakdown</a></li>
+            <li><a href="{{ url_for('panelists.scores_by_appearance') }}">Scores by Appearance</a></li>
+        </ul>
+        <ul id="dropdown-show" class="dropdown-content z-depth-0">
+            <li><a href="{{ url_for('shows.all_scores') }}">All Scores</a></li>
+            <li><a href="{{ url_for('shows.bluff_counts') }}">Bluff Counts</a></li>
+            <li><a href="{{ url_for('shows.counts_by_day_of_month') }}">Counts by Day of Month</a></li>
+            <li><a href="{{ url_for('shows.counts_by_year') }}">Counts by Year</a></li>
+            <li><a href="{{ url_for('shows.monthly_aggregate_score_heatmap') }}">Monthly Aggregate Scores</a></li>
+            <li><a href="{{ url_for('shows.monthly_average_score_heatmap') }}">Monthly Average Scores</a></li>
+            <li><a href="{{ url_for('shows.panel_gender_mix') }}">Panel Gender Mix</a></li>
+        </ul>
+        <ul id="dropdown-more" class="dropdown-content z-depth-0">
+            <li><a href="{{ api_url }}/docs/">API Docs</a></li>
+            <li><a href="{{ blog_url }}">Blog</a></li>
+            <li><a href="{{ blog_url }}/contact-me/">Contact Me</a></li>
+            <li><a href="{{ reports_url }}">Reports</a></li>
+            <li><a href="{{ stats_url }}">Stats Page</a></li>
+            <li><a href="{{ repo_url }}">GitHub</a></li>
+        </ul>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="{{ url_for('panelists.index') }}" class="dropdown-trigger"
+                data-target="dropdown-panelist">Panelists
+                <i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a href="{{ url_for('shows.index') }}" class="dropdown-trigger"
+                data-target="dropdown-show">Shows
+                <i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a href="#" class="dropdown-trigger" data-target="dropdown-more">
+                More<i class="material-icons right">arrow_drop_down</i></a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="slide-out" class="sidenav z-depth-0">
+    <ul>
+        <li><a href="{{ url_for('main.index') }}">Home</a></li>
+        <li><div class="divider"></div></li>
+        <li><a href="{{ url_for('panelists.index') }}">Panelists</a></li>
+        <li><a href="{{ url_for('shows.index') }}">Shows</a></li>
+        <li><div class="divider"></div></li>
+        <li><a href="{{ api_url }}/docs/">API Docs</a></li>
+        <li><a href="{{ blog_url }}">Blog</a></li>
+        <li><a href="{{ blog_url }}/contact-me/">Contact Me</a></li>
+        <li><a href="{{ reports_url }}">Reports</a></li>
+        <li><a href="{{ stats_url }}">Stats Page</a></li>
+        <li><a href="{{ repo_url }}">GitHub</a></li>
+    </ul>
+</div>
+<!-- End Navigation -->
