@@ -76,7 +76,7 @@
   </url>
 {% for month in months %}
   <url>
-    <loc>{{ site_url }}{{ url_for("shows.counts_by_day_of_month", month=month) }}</loc>
+    <loc>{{ site_url }}{{ url_for("shows.counts_by_day_of_month_by_month", month=month) }}</loc>
     <changefreq>weekly</changefreq>
   </url>
 {% endfor %}

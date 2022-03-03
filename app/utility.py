@@ -8,7 +8,12 @@
 from datetime import datetime
 from dateutil import parser
 from flask import current_app
+from typing import Any, Dict, List
+import mysql.connector
 import pytz
+
+from wwdtm.panelist import Panelist
+from wwdtm.show import Show
 
 month_names = {
     1: "January",
@@ -64,6 +69,27 @@ def redirect_url(url: str, status_code: int = 302):
     response.headers["Expires"] = 0
     response.headers["Location"] = url
     return response
+
+
+def retrieve_panelists() -> List[Dict[str, Any]]:
+    """Retrieve information for all panelists"""
+    database_connection = mysql.connector.connect(**current_app.config["database"])
+    panelist = Panelist(database_connection=database_connection)
+    panelists = panelist.retrieve_all()
+    database_connection.close()
+    return panelists
+
+
+def retrieve_show_years(reverse_order: bool = True) -> List[int]:
+    """Retrieve a list of available show years"""
+    database_connection = mysql.connector.connect(**current_app.config["database"])
+    show = Show(database_connection=database_connection)
+    years = show.retrieve_years()
+    database_connection.close()
+    if years and reverse_order:
+        years.reverse()
+
+    return years
 
 
 def time_zone_parser(time_zone: str) -> pytz.timezone:
