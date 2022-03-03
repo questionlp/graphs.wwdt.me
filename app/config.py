@@ -30,7 +30,7 @@ def load_config(
         # with mysql.connector.connect()
         if "use_pool" in database_config and database_config["use_pool"]:
             if "pool_name" not in database_config or not database_config["pool_name"]:
-                database_config["pool_name"] = "wwdtm_stats"
+                database_config["pool_name"] = "wwdtm_graphs"
 
             if "pool_size" not in database_config or not database_config["pool_size"]:
                 database_config["pool_size"] = connection_pool_size

@@ -7,7 +7,7 @@
         "port": 3306,
         "raise_on_warnings": true,
         "autocommit": true,
-        "compress": true,
+        "compress": false,
         "charset": "utf8mb4",
         "collation": "utf8mb4_unicode_ci",
     },

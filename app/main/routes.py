@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2018-2022 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""Main Routes for Wait Wait Stats Page"""
+"""Main Routes for Wait Wait Graphs Site"""
 from os.path import exists, join
 from flask import Blueprint, Response, current_app, render_template, send_file
 
