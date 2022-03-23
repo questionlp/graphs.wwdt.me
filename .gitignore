@@ -13,7 +13,6 @@ uwsgi.service
 
 # Ignore local log directory
 _log/*
-_log/*
 
 # Ignore robots.txt
 app/static/robots.txt
