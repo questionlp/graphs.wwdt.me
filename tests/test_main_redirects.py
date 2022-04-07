@@ -11,6 +11,7 @@ def test_favicon(client):
     response = client.get("/favicon.ico")
     assert response.status_code == 302
     assert response.location
+    assert "/static/favicon.ico" in response.location
 
 
 def test_guest(client):
@@ -18,6 +19,7 @@ def test_guest(client):
     response = client.get("/panelist")
     assert response.status_code == 302
     assert response.location
+    assert "/panelists" in response.location
 
 
 def test_help(client):
@@ -25,10 +27,20 @@ def test_help(client):
     response = client.get("/show")
     assert response.status_code == 302
     assert response.location
+    assert "/shows" in response.location
 
 
-def test_host(client):
+def test_show_show_counts_by_year(client):
+    """Testing main_redirects.show_show_counts_by_year"""
+    response = client.get("/show/show-counts-by-year")
+    assert response.status_code == 302
+    assert response.location
+    assert "/shows/counts-by-year" in response.location
+
+
+def test_show_counts_by_year(client):
     """Testing main_redirects.shows_show_counts_by_year"""
     response = client.get("/shows/show-counts-by-year")
     assert response.status_code == 302
     assert response.location
+    assert "/shows/counts-by-year" in response.location

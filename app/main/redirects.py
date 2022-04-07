@@ -29,7 +29,13 @@ def show():
     return redirect_url(url_for("shows.index"))
 
 
+@blueprint.route("/show/show-counts-by-year")
+def show_show_counts_by_year():
+    """Redirect: /show/show-counts-by-year to /shows/counts-by-year"""
+    return redirect_url(url_for("shows.counts_by_year"))
+
+
 @blueprint.route("/shows/show-counts-by-year")
 def shows_show_counts_by_year():
-    """Redirect: /shows/show-counts-by-year to /show/counts-by-year"""
+    """Redirect: /shows/shows-counts-by-year to /shows/counts-by-year"""
     return redirect_url(url_for("shows.counts_by_year"))
