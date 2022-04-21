@@ -6,7 +6,7 @@
 
 - Replace (lib)wwdtm 1.2.x with wwdtm 2.0.5 (or higher)
 - Upgrade Flask from 2.0.1 to 2.1.1
-- Upgrade Materialize CSS framework from 1.0.0 to 1.1.0
+- Upgrade Materialize from 1.0.0 to 1.1.0
 - Upgrade Plotly JS from 2.4.2 to 2.11.1
 
 ### Application Changes
