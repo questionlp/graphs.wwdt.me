@@ -1,4 +1,4 @@
-# Wait Wait Don't Tell Me! Graphs Site
+# Wait Wait Don't Tell Me! Graphs
 
 ## Overview
 
