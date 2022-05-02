@@ -1,4 +1,10 @@
-# Wait Wait Don't Tell Me! Graphs Site
+# Wait Wait Don't Tell Me! Graphs
+
+## Note
+
+This version of the Wait Wait Graphs web application has been superceded by
+version 2. The repository for the new version of the web application is available
+at [graphs.wwdt.me_v2](https://github.com/questionlp/graphs.wwdt.me_v2).
 
 ## Overview
 
