@@ -1,5 +1,5 @@
 [Unit]
-Description=Wait Wait Graphs Shite Web Application
+Description=Wait Wait Graphs Site Web Application
 After=network.target
 
 [Service]
