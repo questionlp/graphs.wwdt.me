@@ -1,5 +1,11 @@
 # Changes
 
+## 2.0.1
+
+### Application Changes
+
+- Fixed typo in `500` error page
+
 ## 2.0.0
 
 ### Component Updates
