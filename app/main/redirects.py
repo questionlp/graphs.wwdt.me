@@ -18,14 +18,16 @@ def favicon():
 
 
 @blueprint.route("/panelist")
+@blueprint.route("/panelists")
 def panelist():
-    """Redirect: /panelist to /panelists"""
+    """Redirect: /panelist and /panelists to /panelists/"""
     return redirect_url(url_for("panelists.index"))
 
 
 @blueprint.route("/show")
+@blueprint.route("/shows")
 def show():
-    """Redirect: /show to /shows"""
+    """Redirect: /show and /shows to /shows/"""
     return redirect_url(url_for("shows.index"))
 
 
