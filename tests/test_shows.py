@@ -124,5 +124,5 @@ def test_panel_gender_mix(client: FlaskClient) -> None:
     assert response.status_code == 200
     assert b"Shows" in response.data
     assert b"Panel Gender Mix" in response.data
-    assert b"2F / 1M" in response.data
+    assert b"2W / 1M" in response.data
     assert b"Year" in response.data
