@@ -2,6 +2,8 @@
 
 ## 2.1.1
 
+### Application Change
+
 - Made changes to how gender is referenced in the dataset names for the Panel Gender Mix chart and update the corresponding test
 
 ## 2.1.0
