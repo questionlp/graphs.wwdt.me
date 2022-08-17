@@ -9,6 +9,10 @@
   - Upgrade NumPy from 1.22.3 to 1.23.2
   - Upgrade pytz from 2022.1 to 2022.2.1
 
+### Application Changes
+
+- Add an additional query that unsets `ONLY_FULL_GROUP_BY` flag and sets the appropriate flags for the session-level `sql_mode` for queries that return an error due to MySQL Server setting the `ONLY_FULL_GROUP_BY` flag by default. Queries and application logic for the respective functions will need to be rearchitected in a future release.
+
 ## 2.1.2
 
 ### Component Changes
