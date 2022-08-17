@@ -35,6 +35,17 @@ def build_all_scoring_dict() -> Dict:
     """Returns an dictionary that contains scoring dictionaries used to
     populate all panelist scoring data"""
     database_connection = mysql.connector.connect(**current_app.config["database"])
+
+    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
+    cursor = database_connection.cursor(dictionary=False)
+    query = (
+        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
+        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
+    )
+    cursor.execute(query)
+    _ = cursor.fetchall()
+    cursor.close()
+
     cursor = database_connection.cursor(named_tuple=True)
     query = (
         "SELECT DISTINCT YEAR(s.showdate) AS year "
@@ -67,6 +78,17 @@ def retrieve_monthly_aggregate_scores() -> Dict:
     """Retrieve aggregated panelist scores grouped by month for every
     available year"""
     database_connection = mysql.connector.connect(**current_app.config["database"])
+
+    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
+    cursor = database_connection.cursor(dictionary=False)
+    query = (
+        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
+        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
+    )
+    cursor.execute(query)
+    _ = cursor.fetchall()
+    cursor.close()
+
     cursor = database_connection.cursor(named_tuple=True)
     query = (
         "SELECT YEAR(s.showdate) AS year, "
@@ -101,6 +123,17 @@ def retrieve_monthly_average_scores() -> Dict:
     """Retrieve average panelist scores grouped by month
     for every available year"""
     database_connection = mysql.connector.connect(**current_app.config["database"])
+
+    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
+    cursor = database_connection.cursor(dictionary=False)
+    query = (
+        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
+        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
+    )
+    cursor.execute(query)
+    _ = cursor.fetchall()
+    cursor.close()
+
     cursor = database_connection.cursor(named_tuple=True)
     query = (
         "SELECT YEAR(s.showdate) AS year, "
