@@ -15,6 +15,17 @@ def retrieve_show_counts_by_year() -> Dict[int, int]:
     """Retrieve the number of Regular, Best Of, Repeat and Repeat/Best
     Of shows broken down by year"""
     database_connection = mysql.connector.connect(**current_app.config["database"])
+
+    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
+    cursor = database_connection.cursor(dictionary=False)
+    query = (
+        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
+        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
+    )
+    cursor.execute(query)
+    _ = cursor.fetchall()
+    cursor.close()
+
     years = []
     cursor = database_connection.cursor(named_tuple=True)
     query = (

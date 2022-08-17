@@ -35,6 +35,17 @@ def build_bluff_data_year_month_dict() -> List[Dict]:
     """Returns an dictionary that will be used to populate Bluff the
     Listener data for all years and months"""
     database_connection = mysql.connector.connect(**current_app.config["database"])
+
+    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
+    cursor = database_connection.cursor(dictionary=False)
+    query = (
+        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
+        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
+    )
+    cursor.execute(query)
+    _ = cursor.fetchall()
+    cursor.close()
+
     cursor = database_connection.cursor(named_tuple=True)
     query = (
         "SELECT date_format(s.showdate, '%b %Y') AS date "
@@ -67,6 +78,16 @@ def retrieve_all_bluff_counts():
     broken down by month"""
     bluff_data = build_bluff_data_year_month_dict()
     database_connection = mysql.connector.connect(**current_app.config["database"])
+
+    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
+    cursor = database_connection.cursor(dictionary=False)
+    query = (
+        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
+        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
+    )
+    cursor.execute(query)
+    _ = cursor.fetchall()
+    cursor.close()
 
     # Retrieve counts where listener contestant chose the
     # correct Bluff story
@@ -127,6 +148,16 @@ def retrieve_bluff_count_year(year: int) -> Dict:
     broken down by month"""
     bluff_data = build_bluff_data_dict()
     database_connection = mysql.connector.connect(**current_app.config["database"])
+
+    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
+    cursor = database_connection.cursor(dictionary=False)
+    query = (
+        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
+        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
+    )
+    cursor.execute(query)
+    _ = cursor.fetchall()
+    cursor.close()
 
     # Retrieve counts where listener contestant chose the
     # correct Bluff story
