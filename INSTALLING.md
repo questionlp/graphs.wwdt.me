@@ -33,7 +33,7 @@ Once started, open a browser and go to <http://127.0.0.1:8000/>. This should bri
 
 ## MySQL sql_mode Flags
 
-Earlier versions of the Reports Site application included SQL queries that were written to target MySQL 5.5 and MariaDB 10.x. Some of the queries may throw errors due to violation of the `sql_mode` flag `ONLY_FULL_GROUP_BY` on newer versions of MySQL. These SQL queries should already be updated to resolve such errors.
+Earlier versions of the Graphs Site application included SQL queries that were written to target MySQL 5.5 and MariaDB 10.x. Some of the queries may throw errors due to violation of the `sql_mode` flag `ONLY_FULL_GROUP_BY` on newer versions of MySQL. These SQL queries should already be updated to resolve such errors.
 
 In case these errors persist when running older versions of the Stats Page application, the `ONLY_FULL_GROUP_BY` flag needs to be removed from the global `sql_mode` variable. To verify which flags are currently set, you will first need to query the current value of `sql_mode` by running:
 
