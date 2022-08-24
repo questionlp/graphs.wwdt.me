@@ -1,5 +1,11 @@
 # Changes
 
+## 2.1.4
+
+### Bugfix
+
+- Fix an issue where an incorrect route was being referenced in `panelists.routes.core_breakdown_details()`, causing an unhandled error
+
 ## 2.1.3
 
 ### Component Changes
