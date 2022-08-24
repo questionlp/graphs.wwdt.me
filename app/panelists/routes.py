@@ -104,7 +104,7 @@ def score_breakdown_details(panelist: str):
     info = _panelist.retrieve_by_slug(panelist)
 
     if not info:
-        return redirect_url(url_for("panelists_score_breakdown_index"))
+        return redirect_url(url_for("panelists.score_breakdown"))
 
     _panelist_scores = PanelistScores(database_connection=database_connection)
     scores = _panelist_scores.retrieve_scores_grouped_list_by_slug(panelist)
