@@ -1,5 +1,11 @@
 # Changes
 
+## 2.1.7
+
+### Component Changes
+
+- Upgrade Plotly.js from 2.13.3 to 2.17.0
+
 ## 2.1.6
 
 ### Application Changes
@@ -26,8 +32,6 @@
 - Upgrade pycodestyle from 2.8.0 to 2.9.1
 - Upgrade pytest from 7.1.2 to 7.2.0
 - Upgrade black from 22.6.0 to 22.10.0
-
-## 5.1.4
 
 ## 2.1.5
 
@@ -58,7 +62,7 @@
 
 ### Component Changes
 
-- Upgrade Plotly JS from 2.12.1 to 2.13.3
+- Upgrade Plotly.js from 2.12.1 to 2.13.3
 
 ## 2.1.1
 
@@ -72,7 +76,7 @@
 
 - Upgrade Flask to 2.2.0
 - Upgrade Werkzeug from 2.1.2 to 2.2.1
-- Upgrade Plotly JS from 2.11.1 to 2.12.1
+- Upgrade Plotly.js from 2.11.1 to 2.12.1
 
 ### Application Changes
 
@@ -98,7 +102,7 @@
 - Replace (lib)wwdtm 1.2.x with wwdtm 2.0.5 (or higher)
 - Upgrade Flask from 2.0.1 to 2.1.1
 - Upgrade Materialize from 1.0.0 to 1.1.0
-- Upgrade Plotly JS from 2.4.2 to 2.11.1
+- Upgrade Plotly.js from 2.4.2 to 2.11.1
 
 ### Application Changes
 
