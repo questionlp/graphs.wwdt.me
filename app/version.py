@@ -3,6 +3,6 @@
 #
 # Copyright (c) 2018-2022 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""Version module for Wait Wait Graphs Site"""
+"""Application Version for Wait Wait Graphs Site"""
 
 APP_VERSION = "2.1.7"
