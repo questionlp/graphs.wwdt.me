@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # vim: set noai syntax=python ts=4 sw=4:
 #
-# Copyright (c) 2018-2022 Linh Pham
+# Copyright (c) 2018-2023 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
 """Application Version for Wait Wait Graphs Site"""
 
-APP_VERSION = "2.1.7"
+APP_VERSION = "2.2.0"

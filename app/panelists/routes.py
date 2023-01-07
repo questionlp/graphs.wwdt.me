@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: set noai syntax=python ts=4 sw=4:
 #
-# Copyright (c) 2018-2022 Linh Pham
+# Copyright (c) 2018-2023 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
 """Panelists Routes for Wait Wait Graphs Site"""
 import json
@@ -19,7 +19,7 @@ from wwdtm.panelist import (
 from app.reports.panel import aggregate_scores as agg
 from app.utility import redirect_url
 
-blueprint = Blueprint("panelists", __name__)
+blueprint = Blueprint("panelists", __name__, template_folder="templates")
 
 
 @blueprint.route("/")
