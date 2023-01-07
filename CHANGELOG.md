@@ -2,6 +2,10 @@
 
 ## 2.2.0
 
+### Component Changes
+
+- Upgrade Materialize from 1.1.0 to 1.2.1
+
 ### Application Changes
 
 - Restructuring template folder locations to match the structure used by the [Wait Wait Stats Page](https://github.com/questionlp/stats.wwdt.me_v5) and [Wait Wait Reports](https://github.com/questionlp/reports.wwdt.me_v2)
