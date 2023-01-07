@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: set noai syntax=python ts=4 sw=4:
 #
-# Copyright (c) 2018-2022 Linh Pham
+# Copyright (c) 2018-2023 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
 """Shows Routes for Wait Wait Graphs Site"""
 from flask import Blueprint, current_app, render_template, url_for
@@ -17,7 +17,7 @@ from app.reports.show import (
 )
 from app.utility import redirect_url, month_names
 
-blueprint = Blueprint("shows", __name__)
+blueprint = Blueprint("shows", __name__, template_folder="templates")
 
 
 def retrieve_show_years(reverse_order: bool = True):

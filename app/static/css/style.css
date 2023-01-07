@@ -1,3 +1,9 @@
+/*!
+ * graphs.wwdt.me (https://github.com/questionlp/graphs.wwdt.me_v2)
+ * Copyright 2018-2023 Linh Pham
+ * Apache License 2.0 (https://github.com/questionlp/graphs.wwdt.me_v2/blob/main/LICENSE)
+ */
+
 @media all {
     /* Comment out following two lines to disable sticky footer */
     body { display: flex; min-height: 100vh; flex-direction: column; }
