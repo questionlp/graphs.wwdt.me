@@ -1,5 +1,11 @@
 # Changes
 
+## 2.2.1
+
+### Application Changes
+
+- Fix issue with `stats_url` not being added to `app.jinja_env.globals` upon application startup
+
 ## 2.2.0
 
 ### Component Changes
