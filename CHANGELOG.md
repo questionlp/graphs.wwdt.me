@@ -1,5 +1,11 @@
 # Changes
 
+## 2.2.2
+
+### Component Changes
+
+- Upgrade Plotly.js from 2.17.0 to 2.18.1
+
 ## 2.2.1
 
 ### Application Changes
