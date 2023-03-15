@@ -1,5 +1,12 @@
 # Changes
 
+## 2.2.4
+
+### Component Changes
+
+- Upgrade Materialize from 1.2.1 to 1.2.2
+- Upgrade Plotly.js from 2.18.1 to 2.19.1
+
 ## 2.2.3
 
 ### Component Changes
