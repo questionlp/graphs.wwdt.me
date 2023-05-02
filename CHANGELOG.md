@@ -5,7 +5,11 @@
 ### Component Changes
 
 - Upgrade Flask from 2.2.3 to 2.3.2
-- Upgrade wwdtm from 2.0.8 to 2.1.0
+- Upgrade wwdtm from 2.0.8 to 2.1.0, which also includes the following changes:
+  - Upgrade MySQL Connector/Python from 8.0.31 to 8.0.33
+  - Upgrade NumPy from 1.23.4 to 1.24.2
+  - Upgrade python-slugify from 6.1.2 to 8.0.1
+  - Upgrade pytz from 2022.6 to 2023.3
 
 ### Development Changes
 
