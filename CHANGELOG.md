@@ -1,5 +1,20 @@
 # Changes
 
+## 2.2.5
+
+### Component Changes
+
+- Upgrade Flask from 2.2.3 to 2.3.2
+- Upgrade wwdtm from 2.0.8 to 2.1.0
+
+### Development Changes
+
+- Move pytest configuration from `pytest.ini` into `pyproject.toml`
+- Upgrade flake8 from 5.0.4 to 6.0.0
+- Upgrade pycodestyle from 2.9.1 to 2.10.0
+- Upgrade pytest from 7.2.0 to 7.3.1
+- Upgrade black from 22.10.0 to 23.3.0
+
 ## 2.2.4
 
 ### Component Changes
