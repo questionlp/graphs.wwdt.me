@@ -23,6 +23,9 @@ newrelic.ini
 # Deprecated files
 pytest.ini.old
 
+# Ignore plotly-latest.min.js
+app/static/js/plotly-latest.min.js
+
 # Ignore macOS DS_Store files
 .DS_Store
 

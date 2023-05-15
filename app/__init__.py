@@ -46,6 +46,7 @@ def create_app():
     app.jinja_env.globals["ga_property_code"] = _config["settings"].get(
         "ga_property_code", ""
     )
+    app.jinja_env.globals["plotly_latest"] = _config["settings"].get("plotly_latest", False)
     app.jinja_env.globals["api_url"] = _config["settings"].get("api_url", "")
     app.jinja_env.globals["blog_url"] = _config["settings"].get("blog_url", "")
     app.jinja_env.globals["repo_url"] = _config["settings"].get("repo_url", "")

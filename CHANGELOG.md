@@ -1,5 +1,12 @@
 # Changes
 
+## 2.2.TBD
+
+### Application Changes
+
+- Add configuration key `settings.plotly_latest` to switch from using a release version of Plotly.js to using a leading-edge version that is stored under `app/static/js/plotly-latest.min.js` (not included)
+- Update header template to use the selected version of Plotly.js
+
 ## 2.2.5
 
 ### Component Changes
