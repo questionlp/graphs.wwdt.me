@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% set page_title="Average Scores by Year Heatmap" %}
+{% block title %}{{ page_title }} | Panelists{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb hide-on-small-only">
+    <ul>
+        <li>
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li>
+            <a href="{{ url_for('panelists.index') }}">Panelists</a>
+        </li>
+        <li>
+            {{ page_title }}
+        </li>
+    </ul>
+</div>
+
+<h1>{{ page_title }}</h1>
+
+{% if years and panelists and averages %}
+<p>
+    This heatmap chart displays average scores, by year, for each panelist.
+</p>
+
+<div id="ww-chart-tall"></div>
+
+<script>
+    // Set default colors and font list
+    let axisColor = "#212121";
+    let backgroundColor = "#fff";
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
+
+    // Change colors if in dark mode
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        axisColor = "#f5f5f5";
+        backgroundColor = "#202124";
+    }
+
+    let panelists = {{ panelists| safe }};
+    let years = {{ years|safe }};
+    let averages = {{ averages|safe }};
+
+    let data = [
+        {
+            x: years,
+            y: panelists,
+            z: averages,
+            colorbar: {
+                tickfont: {
+                    color: axisColor,
+                    family: fontList,
+                    size: 16
+                }
+            },
+            colorscale: [
+                [0, "#000000"],
+                [0.75, "#7a2800"],
+                [0.875, "#f55000"],
+                [1, "#ff8a52"]
+            ],
+            hoverongaps: false,
+            hovertemplate: "%{y}<br>Year: %{y}<br>Average Score: %{z}<extra></extra>",
+            type: "heatmap",
+            zmin: 0,
+            zmax: Math.ceil(Math.max.apply(Math, averages)),
+            zsmooth: false
+        }
+    ];
+
+    let layout = {
+        font: { family: fontList },
+        height: 3200,
+        hoverlabel: {
+            font: {
+                family: fontList,
+                size: 16
+            },
+        },
+        margin: {
+            l: 128,
+            r: 64,
+            t: 64,
+            b: 64
+        },
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        showlegend: true,
+        title: {
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            text: "{{ page_title }}"
+        },
+        xaxis: {
+            color: axisColor,
+            tickfont: { size: 14 },
+            title: {
+                font: { size: 18 },
+                text: "Year"
+            },
+        },
+        yaxis: {
+            color: axisColor,
+            tickfont: { size: 14 },
+        }
+    };
+
+    let config = {
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "average-scores-by-year",
+            height: 3600,
+            scale: 1,
+            width: 1200
+        }
+    };
+
+    Plotly.newPlot("ww-chart-tall", data, layout, config);
+</script>
+{% else %}
+<p>
+    No scoring data available.
+</p>
+{% endif %}
+
+{% endblock %}
