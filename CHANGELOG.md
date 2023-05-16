@@ -1,5 +1,11 @@
 # Changes
 
+## 2.3.0
+
+### Application Changes
+
+- Adding Average Scores by Year charts under Panelists
+
 ## 2.2.5
 
 ### Component Changes
