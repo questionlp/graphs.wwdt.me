@@ -87,22 +87,35 @@ def appearances_by_year_details(panelist: str):
 def average_scores_by_year():
     """View: Average Scores by Year"""
     database_connection = mysql.connector.connect(**current_app.config["database"])
-    average_scores = avg.retrieve_panelist_yearly_average()
-    _show = Show(database_connection=database_connection)
-    years = _show.retrieve_years()
-    if average_scores and years:
-        panelists = [scores["name"] for scores in average_scores]
-        panelists.reverse()
-        averages = [list(scores["averages"].values()) for scores in average_scores]
-        averages.reverse()
+    _panelist = Panelist(database_connection=database_connection)
+    all_panelists = _panelist.retrieve_all()
+    database_connection.close()
+    return render_template(
+        "panelists/average-scores-by-year/index.html", panelists=all_panelists
+    )
+
+
+@blueprint.route("/average-scores-by-year/<string:panelist>")
+def average_scores_by_year_details(panelist: str):
+    """View: Average Scores by Year Details"""
+    averages_info = avg.retrieve_panelist_yearly_average(panelist)
+    if averages_info:
+        info = {
+            "name": averages_info["name"],
+            "slug": averages_info["slug"],
+        }
+        years = list(averages_info["averages"].keys())
+        average_scores = list(averages_info["averages"].values())
         return render_template(
-            "panelists/average-scores-by-year/graph.html",
-            averages=averages,
-            panelists=panelists,
+            "panelists/average-scores-by-year/details.html",
             years=years,
+            average_scores=average_scores,
+            info=info,
         )
     else:
-        return render_template("panelists/templates/average-scores-by-year/graph.html")
+        return render_template(
+            "panelists/templates/average-scores-by-year/details.html"
+        )
 
 
 @blueprint.route("/score-breakdown")
