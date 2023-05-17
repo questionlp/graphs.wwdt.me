@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% set page_title = "Average Scores by Year" %}
+{% block title %}{{ info.name }} | {{ page_title }} | Panelists{% endblock %}
+
+{% block content %}
+<div class="page-breadcrumb hide-on-small-only">
+    <ul>
+        <li>
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li>
+            <a href="{{ url_for('panelists.index') }}">Panelists</a>
+        </li>
+        <li>
+            <a href="{{ url_for('panelists.average_scores_by_year') }}">{{ page_title }}</a>
+        </li>
+        <li>
+            {{ info.name }}
+        </li>
+    </ul>
+</div>
+
+<h1>{{ info.name }}</h1>
+
+{% if average_scores %}
+<p>
+    This chart displays the average scores broken out by year. Scores from Best
+    Of and repeat shows are excluded; as well as, scores from the
+    <a href="{{ stats_url }}/shows/2018/10/27">2018-10-27</a> show due to the
+    show's unique scoring used.
+</p>
+
+<div id="ww-chart"></div>
+
+<script>
+    // Set default colors
+    let axisColor = "#212121";
+    let backgroundColor = "#fff";
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
+
+    // Change colors if in dark mode
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        axisColor = "#f5f5f5";
+        backgroundColor = "#202124";
+    }
+
+    // Set y-axis dtick value
+    let yAxisdTick = 2;
+    let averageScore = {{ average_scores|safe }};
+    let maxCount = Math.max.apply(Math, averageScore);
+    if (maxCount <= 3) {
+        yAxisdTick = 1;
+    }
+
+    let data = [
+        {
+            x: {{ years|safe }},
+            y: averageScore,
+            name: "Average Score",
+            showlegend: true,
+            type: "bar"
+        }
+    ];
+
+    let layout = {
+        autosize: true,
+        font: { family: fontList },
+        hoverlabel: {
+            font: {
+                family: fontList,
+                size: 16
+            },
+        },
+        hovermode: "x",
+        legend: {
+            font: {
+                color: axisColor,
+                family: fontList,
+                size: 16
+            },
+            orientation: "h",
+            y: 1.025,
+            x: 0,
+        },
+        margin: {
+            l: 60,
+            r: 40,
+            t: 48,
+            b: 68
+        },
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        title: {
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            text: "{{ page_title }} for {{ info.name|safe }}"
+        },
+        xaxis: {
+            color: axisColor,
+            showspikes: true,
+            spikecolor: axisColor,
+            spikedash: "dot",
+            spikemode: "across",
+            spikethickness: 1,
+            tickangle: -45,
+            tickfont: { size: 16 },
+            tickmode: "linear",
+            title: {
+                font: { size: 18 },
+                text: "Year"
+            }
+        },
+        yaxis: {
+            dtick: yAxisdTick,
+            color: axisColor,
+            fixedrange: true,
+            tickfont: { size: 16 },
+            title: {
+                font: { size: 18 },
+                text: "Average Score"
+            }
+        }
+    };
+
+    let config = {
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+            "zoomIn2d",
+            "zoomOut2d"
+        ],
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "average-score-by-year-{{ info.slug }}",
+            height: 800,
+            scale: 1,
+            width: 1200
+        }
+    };
+
+    Plotly.newPlot("ww-chart", data, layout, config);
+</script>
+{% else %}
+<p>
+    Not enough scoring data is available for {{ info.name }} to
+    generate a graph.
+</p>
+{% endif %}
+
+{% endblock %}
