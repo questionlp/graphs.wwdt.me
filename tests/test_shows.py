@@ -28,7 +28,7 @@ def test_all_scores(client: FlaskClient) -> None:
 
 @pytest.mark.parametrize("year", [2020])
 def test_all_scores_by_year(client: FlaskClient, year: int) -> None:
-    """Testing shows.all_scores_by_year_details"""
+    """Testing shows.all_scores_by_year"""
     response: TestResponse = client.get(f"/shows/all-scores/{year}")
     assert response.status_code == 200
     assert b"Shows" in response.data

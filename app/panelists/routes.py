@@ -16,10 +16,7 @@ from wwdtm.panelist import (
     PanelistScores,
 )
 
-from wwdtm.show import Show
-
 from app.reports.panel import aggregate_scores as agg
-from app.reports.panel import average_scores as avg
 from app.utility import redirect_url
 
 blueprint = Blueprint("panelists", __name__, template_folder="templates")
@@ -81,41 +78,6 @@ def appearances_by_year_details(panelist: str):
         years=years,
         count=count,
     )
-
-
-@blueprint.route("/average-scores-by-year")
-def average_scores_by_year():
-    """View: Average Scores by Year"""
-    database_connection = mysql.connector.connect(**current_app.config["database"])
-    _panelist = Panelist(database_connection=database_connection)
-    all_panelists = _panelist.retrieve_all()
-    database_connection.close()
-    return render_template(
-        "panelists/average-scores-by-year/index.html", panelists=all_panelists
-    )
-
-
-@blueprint.route("/average-scores-by-year/<string:panelist>")
-def average_scores_by_year_details(panelist: str):
-    """View: Average Scores by Year Details"""
-    averages_info = avg.retrieve_panelist_yearly_average(panelist)
-    if averages_info:
-        info = {
-            "name": averages_info["name"],
-            "slug": averages_info["slug"],
-        }
-        years = list(averages_info["averages"].keys())
-        average_scores = list(averages_info["averages"].values())
-        return render_template(
-            "panelists/average-scores-by-year/details.html",
-            years=years,
-            average_scores=average_scores,
-            info=info,
-        )
-    else:
-        return render_template(
-            "panelists/templates/average-scores-by-year/details.html"
-        )
 
 
 @blueprint.route("/score-breakdown")

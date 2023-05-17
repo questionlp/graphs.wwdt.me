@@ -37,34 +37,13 @@ def test_appearances_by_year(client: FlaskClient) -> None:
 
 @pytest.mark.parametrize("panelist_slug", ["adam-felber", "faith-salie"])
 def test_appearances_by_year_details(client: FlaskClient, panelist_slug: str) -> None:
-    """Testing main.appearances_by_year_details"""
+    """Testing main.appearances_by_year"""
     response: TestResponse = client.get(
         f"/panelists/appearances-by-year/{panelist_slug}"
     )
     assert response.status_code == 200
     assert b"Panelists" in response.data
     assert b"Appearances by Year for" in response.data
-
-
-def test_average_scores_by_year(client: FlaskClient) -> None:
-    """Testing main.average_scores_by_year"""
-    response: TestResponse = client.get("/panelists/average-scores-by-year")
-    assert response.status_code == 200
-    assert b"Panelists" in response.data
-    assert b"Average Scores by Year" in response.data
-
-
-@pytest.mark.parametrize("panelist_slug", ["adam-felber", "faith-salie"])
-def test_average_scores_by_year_details(
-    client: FlaskClient, panelist_slug: str
-) -> None:
-    """Testing main.average_scores_by_year_details"""
-    response: TestResponse = client.get(
-        f"/panelists/average-scores-by-year/{panelist_slug}"
-    )
-    assert response.status_code == 200
-    assert b"Panelists" in response.data
-    assert b"Average Scores by Year for" in response.data
 
 
 def test_score_breakdown(client: FlaskClient) -> None:
@@ -77,7 +56,7 @@ def test_score_breakdown(client: FlaskClient) -> None:
 
 @pytest.mark.parametrize("panelist_slug", ["adam-felber", "faith-salie"])
 def test_score_breakdown_details(client: FlaskClient, panelist_slug: str) -> None:
-    """Testing main.score_breakdown_details"""
+    """Testing main.score_breakdown"""
     response: TestResponse = client.get(f"/panelists/score-breakdown/{panelist_slug}")
     assert response.status_code == 200
     assert b"Panelists" in response.data
@@ -94,7 +73,7 @@ def test_scores_by_appearance(client: FlaskClient) -> None:
 
 @pytest.mark.parametrize("panelist_slug", ["adam-felber", "faith-salie"])
 def test_scores_by_appearance_details(client: FlaskClient, panelist_slug: str) -> None:
-    """Testing main.scores_by_appearance_details"""
+    """Testing main.scores_by_appearance"""
     response: TestResponse = client.get(
         f"/panelists/scores-by-appearance/{panelist_slug}"
     )
