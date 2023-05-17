@@ -17,10 +17,6 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>{{ site_url }}{{ url_for("panelists.average_scores_by_year") }}</loc>
-    <changefreq>weekly</changefreq>
-  </url>
-  <url>
     <loc>{{ site_url }}{{ url_for("panelists.score_breakdown") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
@@ -31,10 +27,6 @@
 {% for panelist in panelists %}
   <url>
     <loc>{{ site_url }}{{ url_for("panelists.appearances_by_year_details", panelist=panelist.slug) }}</loc>
-    <changefreq>weekly</changefreq>
-  </url>
-  <url>
-    <loc>{{ site_url }}{{ url_for("panelists.average_scores_by_year_details", panelist=panelist.slug) }}</loc>
     <changefreq>weekly</changefreq>
   </url>
   <url>

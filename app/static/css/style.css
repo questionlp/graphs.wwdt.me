@@ -35,7 +35,6 @@
     ul.footer-nav-links li { display: inline; margin: 0 0.5rem; padding: 0; }
     .traceback { border: 2px solid rgba(0, 0, 0, 0.25); font-size: 90%; overflow: scroll; padding: 1.5rem; width: 100%; }
     div#ww-chart { height: 65%; height: 65vh; }
-    div#ww-chart-tall { height: auto; }
 }
 
 @media (prefers-color-scheme: light) {

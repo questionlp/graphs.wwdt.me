@@ -1,10 +1,10 @@
 # Changes
 
-## 2.3.0
+## 2.2.6
 
-### Application Changes
+### Component Changes
 
-- Adding Average Scores by Year charts under Panelists
+- Upgrade Plotly.js from 2.20.0 to 2.23.1
 
 ## 2.2.5
 
