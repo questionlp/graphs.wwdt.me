@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2018-2021 Linh Pham
-# reports.wwdt.me is relased under the terms of the Apache License 2.0
+# Copyright (c) 2018-2023 Linh Pham
+# reports.wwdt.me is released under the terms of the Apache License 2.0
 """WWDTM Show Counts Retrieval Functions"""
 
 from collections import OrderedDict
