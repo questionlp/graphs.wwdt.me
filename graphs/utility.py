@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2018-2020 Linh Pham
-# graphs.wwdt.me is relased under the terms of the Apache License 2.0
+# Copyright (c) 2018-2023 Linh Pham
+# graphs.wwdt.me is released under the terms of the Apache License 2.0
 """Utility functions used by the Graphs Site"""
 
 from datetime import datetime
