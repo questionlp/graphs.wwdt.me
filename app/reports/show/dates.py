@@ -4,18 +4,16 @@
 # Copyright (c) 2018-2023 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
 """WWDTM Show Dates Retrieval Functions"""
-
 from typing import Dict
 
 from flask import current_app
-import mysql.connector
+from mysql.connector import connect
 
 
 def build_days_of_month_dict(month: int) -> Dict:
     """Returns an dictionary containing a key for each day for a given
     month, each containing an dictionary used to store counts by show
     type"""
-
     # Validate that the month number is valid
     if month not in range(1, 13):
         return None
@@ -45,17 +43,15 @@ def build_days_of_months_all_dict() -> Dict:
     months, each containing an dictionary used to store counts by show
     type"""
 
-    database_connection = mysql.connector.connect(**current_app.config["database"])
+    database_connection = connect(**current_app.config["database"])
+    query = """
+        SELECT DATE_FORMAT(showdate, '%d %b') AS date, bestof, repeatshowid
+        FROM ww_shows
+        WHERE showdate <= NOW()
+        ORDER BY MONTH(showdate) ASC, DAY(showdate) ASC;
+        """
     cursor = database_connection.cursor(dictionary=True)
-    query = (
-        "SELECT DATE_FORMAT(showdate, '%d %b') AS date, bestof, repeatshowid "
-        "FROM ww_shows "
-        "WHERE showdate <= NOW() "
-        "ORDER BY MONTH(showdate) ASC, DAY(showdate) ASC;"
-    )
-    cursor.execute(
-        query,
-    )
+    cursor.execute(query)
     results = cursor.fetchall()
     cursor.close()
     database_connection.close()
@@ -80,7 +76,6 @@ def retrieve_show_counts_by_month_day(month: int) -> Dict:
     """Retrieves an dictionary containing a count of regular shows, Best
     Of shows, repeat shows and repeat Best Of shows for each day of the
     requested month"""
-
     # Validate that the month number is valid
     if month not in range(1, 13):
         return None
@@ -89,14 +84,14 @@ def retrieve_show_counts_by_month_day(month: int) -> Dict:
     if not show_month:
         return None
 
-    database_connection = mysql.connector.connect(**current_app.config["database"])
+    database_connection = connect(**current_app.config["database"])
+    query = """
+        SELECT DAY(showdate) AS day, bestof, repeatshowid FROM ww_shows
+        WHERE MONTH(showdate) = %s
+        AND showdate <= NOW()
+        ORDER BY DAY(showdate) ASC;
+        """
     cursor = database_connection.cursor(dictionary=True)
-    query = (
-        "SELECT DAY(showdate) AS day, bestof, repeatshowid FROM ww_shows "
-        "WHERE MONTH(showdate) = %s "
-        "AND showdate <= NOW() "
-        "ORDER BY DAY(showdate) ASC;"
-    )
     cursor.execute(query, (month,))
     results = cursor.fetchall()
     cursor.close()
@@ -131,17 +126,15 @@ def retrieve_show_counts_by_month_day_all() -> Dict:
     if not shows:
         return None
 
-    database_connection = mysql.connector.connect(**current_app.config["database"])
+    database_connection = connect(**current_app.config["database"])
+    query = """
+        SELECT DATE_FORMAT(showdate, '%d %b') AS date, bestof, repeatshowid
+        FROM ww_shows
+        WHERE showdate <= NOW()
+        ORDER BY MONTH(showdate) ASC, DAY(showdate) ASC;
+        """
     cursor = database_connection.cursor(dictionary=True)
-    query = (
-        "SELECT DATE_FORMAT(showdate, '%d %b') AS date, bestof, repeatshowid "
-        "FROM ww_shows "
-        "WHERE showdate <= NOW() "
-        "ORDER BY MONTH(showdate) ASC, DAY(showdate) ASC;"
-    )
-    cursor.execute(
-        query,
-    )
+    cursor.execute(query)
     results = cursor.fetchall()
     cursor.close()
     database_connection.close()

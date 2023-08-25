@@ -4,17 +4,15 @@
 # Copyright (c) 2018-2023 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
 """WWDTM Show Bluff the Listener Data Retrieval Functions"""
-
 from typing import Dict, List
 
 from flask import current_app
-import mysql.connector
+from mysql.connector import connect
 
 
 def build_bluff_data_dict() -> Dict:
     """Returns an dictionary that will be used to populate Bluff the
     Listener data"""
-
     return {
         "Jan": {"correct": 0, "incorrect": 0},
         "Feb": {"correct": 0, "incorrect": 0},
@@ -31,34 +29,32 @@ def build_bluff_data_dict() -> Dict:
     }
 
 
-def build_bluff_data_year_month_dict() -> List[Dict]:
+def build_bluff_data_year_month_dict() -> Dict:
     """Returns an dictionary that will be used to populate Bluff the
     Listener data for all years and months"""
-    database_connection = mysql.connector.connect(**current_app.config["database"])
+    database_connection = connect(**current_app.config["database"])
 
     # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
-    cursor = database_connection.cursor(dictionary=False)
     query = (
         "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
         "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
     )
+    cursor = database_connection.cursor()
     cursor.execute(query)
     _ = cursor.fetchall()
     cursor.close()
 
+    query = """
+        SELECT date_format(s.showdate, '%b %Y') AS date
+        FROM ww_shows s
+        JOIN ww_showbluffmap blm ON blm.showid = s.showid
+        WHERE blm.correctbluffpnlid IS NOT NULL
+        OR blm.chosenbluffpnlid IS NOT NULL
+        GROUP BY YEAR(s.showdate), MONTH(s.showdate)
+        ORDER BY s.showdate ASC;
+        """
     cursor = database_connection.cursor(named_tuple=True)
-    query = (
-        "SELECT date_format(s.showdate, '%b %Y') AS date "
-        "FROM ww_shows s "
-        "JOIN ww_showbluffmap blm ON blm.showid = s.showid "
-        "WHERE blm.correctbluffpnlid IS NOT NULL "
-        "OR blm.chosenbluffpnlid IS NOT NULL "
-        "GROUP BY YEAR(s.showdate), MONTH(s.showdate) "
-        "ORDER BY s.showdate ASC;"
-    )
-    cursor.execute(
-        query,
-    )
+    cursor.execute(query)
     result = cursor.fetchall()
     cursor.close()
     database_connection.close()
@@ -73,59 +69,59 @@ def build_bluff_data_year_month_dict() -> List[Dict]:
     return year_month
 
 
-def retrieve_all_bluff_counts():
+def retrieve_all_bluff_counts() -> Dict:
     """Retrieve an dictionary containing Bluff the Listener all counts
     broken down by month"""
     bluff_data = build_bluff_data_year_month_dict()
-    database_connection = mysql.connector.connect(**current_app.config["database"])
+    database_connection = connect(**current_app.config["database"])
 
     # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
-    cursor = database_connection.cursor(dictionary=False)
     query = (
         "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
         "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
     )
+    cursor = database_connection.cursor()
     cursor.execute(query)
     _ = cursor.fetchall()
     cursor.close()
 
     # Retrieve counts where listener contestant chose the
     # correct Bluff story
+    query = """
+        SELECT date_format(s.showdate, '%b %Y') AS date,
+        COUNT(s.showdate) AS correct
+        FROM ww_showbluffmap blm
+        JOIN ww_shows s ON s.showid = blm.showid
+        WHERE s.repeatshowid IS NULL
+        AND chosenbluffpnlid IS NOT NULL
+        AND correctbluffpnlid IS NOT NULL
+        AND ((s.bestof = 0) OR
+             (s.bestof = 1 AND s.bestofuniquebluff = 1))
+        AND chosenbluffpnlid = correctbluffpnlid
+        GROUP BY year(s.showdate), month(s.showdate)
+        ORDER BY s.showdate ASC;
+        """
     cursor = database_connection.cursor(named_tuple=True)
-    query = (
-        "SELECT date_format(s.showdate, '%b %Y') AS date, "
-        "COUNT(s.showdate) AS correct "
-        "FROM ww_showbluffmap blm "
-        "JOIN ww_shows s ON s.showid = blm.showid "
-        "WHERE s.repeatshowid IS NULL "
-        "AND chosenbluffpnlid IS NOT NULL "
-        "AND correctbluffpnlid IS NOT NULL "
-        "AND ((s.bestof = 0) OR "
-        "     (s.bestof = 1 AND s.bestofuniquebluff = 1)) "
-        "AND chosenbluffpnlid = correctbluffpnlid "
-        "GROUP BY year(s.showdate), month(s.showdate) "
-        "ORDER BY s.showdate ASC"
-    )
     cursor.execute(query)
     correct_result = cursor.fetchall()
 
     # Retrieve counts where listener contestant chose the
     # incorrect Bluff story
+    query = """
+        SELECT date_format(s.showdate, '%b %Y') AS date,
+        COUNT(s.showdate) AS incorrect
+        FROM ww_showbluffmap blm
+        JOIN ww_shows s ON s.showid = blm.showid
+        WHERE s.repeatshowid IS NULL
+        AND chosenbluffpnlid IS NOT NULL
+        AND correctbluffpnlid IS NOT NULL
+        AND ((s.bestof = 0) OR
+             (s.bestof = 1 AND s.bestofuniquebluff = 1))
+        AND chosenbluffpnlid <> correctbluffpnlid
+        GROUP BY year(s.showdate), month(s.showdate)
+        ORDER BY s.showdate ASC
+        """
     cursor = database_connection.cursor(named_tuple=True)
-    query = (
-        "SELECT date_format(s.showdate, '%b %Y') AS date, "
-        "COUNT(s.showdate) AS incorrect "
-        "FROM ww_showbluffmap blm "
-        "JOIN ww_shows s ON s.showid = blm.showid "
-        "WHERE s.repeatshowid IS NULL "
-        "AND chosenbluffpnlid IS NOT NULL "
-        "AND correctbluffpnlid IS NOT NULL "
-        "AND ((s.bestof = 0) OR "
-        "     (s.bestof = 1 AND s.bestofuniquebluff = 1)) "
-        "AND chosenbluffpnlid <> correctbluffpnlid "
-        "GROUP BY year(s.showdate), month(s.showdate) "
-        "ORDER BY s.showdate ASC"
-    )
     cursor.execute(query)
     incorrect_result = cursor.fetchall()
     cursor.close()
@@ -147,59 +143,59 @@ def retrieve_bluff_count_year(year: int) -> Dict:
     """Retrieve an dictionary containing Bluff the Listener counts
     broken down by month"""
     bluff_data = build_bluff_data_dict()
-    database_connection = mysql.connector.connect(**current_app.config["database"])
+    database_connection = connect(**current_app.config["database"])
 
     # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
-    cursor = database_connection.cursor(dictionary=False)
     query = (
         "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
         "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
     )
+    cursor = database_connection.cursor()
     cursor.execute(query)
     _ = cursor.fetchall()
     cursor.close()
 
     # Retrieve counts where listener contestant chose the
     # correct Bluff story
+    query = """
+        SELECT YEAR(s.showdate) as year,
+        DATE_FORMAT(s.showdate, '%b') AS month,
+        COUNT(s.showdate) AS correct
+        FROM ww_showbluffmap blm
+        JOIN ww_shows s ON s.showid = blm.showid
+        WHERE YEAR(s.showdate) = %s
+        AND s.repeatshowid IS NULL
+        AND chosenbluffpnlid IS NOT NULL
+        AND correctbluffpnlid IS NOT NULL
+        AND ((s.bestof = 0) OR
+             (s.bestof = 1 AND s.bestofuniquebluff = 1))
+        AND chosenbluffpnlid = correctbluffpnlid
+        GROUP BY YEAR (s.showdate), MONTH(s.showdate)
+        ORDER BY s.showdate ASC;
+        """
     cursor = database_connection.cursor(named_tuple=True)
-    query = (
-        "SELECT YEAR(s.showdate) as year, "
-        "DATE_FORMAT(s.showdate, '%b') AS month, "
-        "COUNT(s.showdate) AS correct "
-        "FROM ww_showbluffmap blm "
-        "JOIN ww_shows s ON s.showid = blm.showid "
-        "WHERE YEAR(s.showdate) = %s "
-        "AND s.repeatshowid IS NULL "
-        "AND chosenbluffpnlid IS NOT NULL "
-        "AND correctbluffpnlid IS NOT NULL "
-        "AND ((s.bestof = 0) OR "
-        "     (s.bestof = 1 AND s.bestofuniquebluff = 1)) "
-        "AND chosenbluffpnlid = correctbluffpnlid "
-        "GROUP BY YEAR (s.showdate), MONTH(s.showdate) "
-        "ORDER BY s.showdate ASC;"
-    )
     cursor.execute(query, (year,))
     correct_result = cursor.fetchall()
 
     # Retrieve counts where listener contestant chose the
     # incorrect Bluff story
+    query = """
+        SELECT YEAR(s.showdate) as year,
+        DATE_FORMAT(s.showdate, '%b') AS month,
+        COUNT(s.showdate) AS incorrect
+        FROM ww_showbluffmap blm
+        JOIN ww_shows s ON s.showid = blm.showid
+        WHERE YEAR(s.showdate) = %s
+        AND s.repeatshowid IS NULL
+        AND chosenbluffpnlid IS NOT NULL
+        AND correctbluffpnlid IS NOT NULL
+        AND ((s.bestof = 0) OR
+             (s.bestof = 1 AND s.bestofuniquebluff = 1))
+        AND chosenbluffpnlid <> correctbluffpnlid
+        GROUP BY YEAR (s.showdate), MONTH(s.showdate)
+        ORDER BY s.showdate ASC;
+        """
     cursor = database_connection.cursor(named_tuple=True)
-    query = (
-        "SELECT YEAR(s.showdate) as year, "
-        "DATE_FORMAT(s.showdate, '%b') AS month, "
-        "COUNT(s.showdate) AS incorrect "
-        "FROM ww_showbluffmap blm "
-        "JOIN ww_shows s ON s.showid = blm.showid "
-        "WHERE YEAR(s.showdate) = %s "
-        "AND s.repeatshowid IS NULL "
-        "AND chosenbluffpnlid IS NOT NULL "
-        "AND correctbluffpnlid IS NOT NULL "
-        "AND ((s.bestof = 0) OR "
-        "     (s.bestof = 1 AND s.bestofuniquebluff = 1)) "
-        "AND chosenbluffpnlid <> correctbluffpnlid "
-        "GROUP BY YEAR (s.showdate), MONTH(s.showdate) "
-        "ORDER BY s.showdate ASC;"
-    )
     cursor.execute(query, (year,))
     incorrect_result = cursor.fetchall()
     cursor.close()

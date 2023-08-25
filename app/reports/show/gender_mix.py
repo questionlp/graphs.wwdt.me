@@ -4,22 +4,22 @@
 # Copyright (c) 2018-2023 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
 """WWDTM Panel Gender Mix Data Retrieval and Reporting Functions"""
-
 from typing import Dict, List
 
 from flask import current_app
-import mysql.connector
+from mysql.connector import connect
 
 
 def retrieve_show_years() -> List[int]:
     """Retrieve a list of show years available in the database"""
-    database_connection = mysql.connector.connect(**current_app.config["database"])
+    database_connection = connect(**current_app.config["database"])
     years = []
+    query = """
+        SELECT DISTINCT YEAR(s.showdate)
+        FROM ww_shows s
+        ORDER BY YEAR(s.showdate) ASC;
+        """
     cursor = database_connection.cursor()
-    query = (
-        "SELECT DISTINCT YEAR(s.showdate) FROM ww_shows s "
-        "ORDER BY YEAR(s.showdate) ASC;"
-    )
     cursor.execute(query)
     result = cursor.fetchall()
     cursor.close()
@@ -36,25 +36,25 @@ def retrieve_show_years() -> List[int]:
 def retrieve_panel_gender_count_by_year(year: int, gender: str) -> int:
     """Get a count of shows for the requested year that has the
     requested number of panelists of a given gender"""
-    database_connection = mysql.connector.connect(**current_app.config["database"])
+    database_connection = connect(**current_app.config["database"])
 
     # panelistgender field only contains a single letter
     gender_tag = gender[0].upper()
 
     counts = {}
-    cursor = database_connection.cursor()
     for gender_count in range(0, 4):
-        query = (
-            "SELECT s.showdate FROM ww_showpnlmap pm "
-            "JOIN ww_shows s ON s.showid = pm.showid "
-            "JOIN ww_panelists p ON p.panelistid = pm.panelistid "
-            "WHERE s.bestof = 0 AND s.repeatshowid IS NULL "
-            "AND p.panelistgender = %s "
-            "AND year(s.showdate) = %s "
-            "AND s.showdate <> '2018-10-27' "  # Exclude 25th anniversary special
-            "GROUP BY s.showdate "
-            "HAVING COUNT(p.panelistgender) = %s;"
-        )
+        query = """
+            SELECT s.showdate FROM ww_showpnlmap pm
+            JOIN ww_shows s ON s.showid = pm.showid
+            JOIN ww_panelists p ON p.panelistid = pm.panelistid
+            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
+            AND p.panelistgender = %s
+            AND year(s.showdate) = %s
+            AND s.showdate <> '2018-10-27' -- Exclude 25th anniversary special
+            GROUP BY s.showdate
+            HAVING COUNT(p.panelistgender) = %s;
+            """
+        cursor = database_connection.cursor(named_tuple=True)
         cursor.execute(
             query,
             (
@@ -63,7 +63,8 @@ def retrieve_panel_gender_count_by_year(year: int, gender: str) -> int:
                 gender_count,
             ),
         )
-        cursor.fetchall()
+        _ = cursor.fetchall()
+
         counts["{}{}".format(gender_count, gender_tag)] = cursor.rowcount
 
     cursor.close()
