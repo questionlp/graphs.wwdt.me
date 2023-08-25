@@ -58,6 +58,15 @@ def load_config(
     settings_config["time_zone"] = time_zone_string
     database_config["time_zone"] = time_zone_string
 
+    # Read in setting on whether to use latest included version of Plotly JS
+    settings_config["use_latest_plotly"] = bool(
+        settings_config.get("use_latest_plotly", False)
+    )
+    # Read in setting on whether to use decimal scores
+    settings_config["use_decimal_scores"] = bool(
+        settings_config.get("use_decimal_scores", False)
+    )
+
     return {
         "database": database_config,
         "settings": settings_config,

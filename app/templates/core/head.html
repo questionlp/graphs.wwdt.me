@@ -18,4 +18,8 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
 <!-- Plotly.js -->
-<script src="{{ url_for('static', filename='js/plotly.min.js') }}"></script>
+{% if use_latest_plotly %}
+<script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/plotly-stable.min.js') }}"></script>
+{% endif %}

@@ -9,7 +9,7 @@ from datetime import datetime
 from dateutil import parser
 from flask import current_app
 from typing import Any, Dict, List
-import mysql.connector
+from mysql.connector import connect, DatabaseError
 import pytz
 
 from wwdtm.panelist import Panelist
@@ -73,7 +73,7 @@ def redirect_url(url: str, status_code: int = 302):
 
 def retrieve_panelists() -> List[Dict[str, Any]]:
     """Retrieve information for all panelists"""
-    database_connection = mysql.connector.connect(**current_app.config["database"])
+    database_connection = connect(**current_app.config["database"])
     panelist = Panelist(database_connection=database_connection)
     panelists = panelist.retrieve_all()
     database_connection.close()
@@ -82,7 +82,7 @@ def retrieve_panelists() -> List[Dict[str, Any]]:
 
 def retrieve_show_years(reverse_order: bool = True) -> List[int]:
     """Retrieve a list of available show years"""
-    database_connection = mysql.connector.connect(**current_app.config["database"])
+    database_connection = connect(**current_app.config["database"])
     show = Show(database_connection=database_connection)
     years = show.retrieve_years()
     database_connection.close()
@@ -105,3 +105,22 @@ def time_zone_parser(time_zone: str) -> pytz.timezone:
         time_zone_string = time_zone_object.zone
 
     return time_zone_object, time_zone_string
+
+
+def panelist_decimal_score_exists(database_settings: Dict) -> bool:
+    """Checks to see if the panelistscore_decimal column exists in the
+    ww_showpnlmap table in the Wait Wait Stats Database and returns
+    a bool reflecting the results"""
+    try:
+        database_connection = connect(**database_settings)
+        cursor = database_connection.cursor()
+        query = "SHOW COLUMNS FROM ww_showpnlmap WHERE Field = 'panelistscore_decimal'"
+        cursor.execute(query)
+        result = cursor.fetchone()
+        cursor.close()
+        if result:
+            return True
+        else:
+            return False
+    except DatabaseError:
+        return False

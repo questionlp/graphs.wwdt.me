@@ -22,16 +22,12 @@
 
 <h1>{{ info.name }}</h1>
 
-{% if scores and aggregate_scores.scores %}
+{% if scores %}
 <p>
     This chart displays the count of how many times
     <a href="{{ stats_url }}/panelists/{{ info.slug }}">{{ info.name }}</a>
     earned a specific number of points at the end of each show (excluding Best
     Ofs and repeats).
-</p>
-<p>The orange line represents
-    <a href="{{ url_for('panelists.aggregate_scores') }}">aggregate score
-    breakdown</a> for all panelists.
 </p>
 
 <div id="ww-chart"></div>
@@ -62,13 +58,6 @@
             y: scoreCounts,
             name: "Count",
             type: "bar"
-        },
-        {
-            x: {{ scores.score|safe }},
-            y: {{ aggregate_scores.counts|safe }},
-            name: "Aggregrate Count",
-            type: "scatter",
-            yaxis: "y2"
         }
     ];
 
@@ -130,22 +119,6 @@
             title: {
                 font: { size: 18 },
                 text: "Appearances"
-            }
-        },
-        yaxis2: {
-            color: axisColor,
-            overlaying: "y",
-            rangemode: "tozero",
-            showgrid: false,
-            side: "right",
-            tickfont: {
-             size: 16
-            },
-            title: {
-                font: {
-                    size: 18
-                },
-                text: "Aggregate Count"
             }
         }
     };
