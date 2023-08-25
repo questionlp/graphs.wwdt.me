@@ -4,7 +4,7 @@
 
 ### Application Changes
 
-- Add support for displaying panelist decimal scores stored in a new table column in the Wait Wait Stats Database instead of the standard than integer scores. This is handled via version 2.2.0 of the `wwdtm` library and a new `use_decimal_scores` setting in the `config.json` application configuration file. By default, the value will be set to `false` and must be changed to `true` and the appropriate changes deployed to the Wait Wait Stats Database.
+- Add support for displaying panelist decimal scores stored in a new table column in the Wait Wait Stats Database instead of the standard integer scores. This is handled via version 2.2.0 of the `wwdtm` library and a new `use_decimal_scores` setting in the `config.json` application configuration file. By default, the value will be set to `false` and must be changed to `true` and the appropriate changes deployed to the Wait Wait Stats Database.
 - Increase digits after the decimal point in the "Monthly Average Score Heatmap" from 4 to 5 for consistency
 - Removed Aggregate Count plot from the "Panelist: Score Breakdown" chart
 - Add a new `use_latest_plotly` setting in the `config.json` application configuration file to set whether or not to use the stable version symlinked as `plotly-stable.min.js` or the latest version symlinked as `plotly-latest.min.js`. For backwards compatibility, `plotly.min.js` is a symlink that points to `plotly-stable.min.js`
