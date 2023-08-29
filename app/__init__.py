@@ -56,6 +56,17 @@ def create_app():
     app.jinja_env.globals["mastodon_user"] = _config["settings"].get(
         "mastodon_user", ""
     )
+    app.jinja_env.globals["use_latest_plotly"] = _config["settings"][
+        "use_latest_plotly"
+    ]
+    app.jinja_env.globals["use_decimal_scores"] = _config["settings"][
+        "use_decimal_scores"
+    ]
+
+    # Check to see if panelistscore_decimal column exists and set a flag
+    app.config["app_settings"][
+        "has_decimal_scores_column"
+    ] = utility.panelist_decimal_score_exists(database_settings=app.config["database"])
 
     # Register application blueprints
     app.register_blueprint(main_bp)

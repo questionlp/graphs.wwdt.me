@@ -5,7 +5,7 @@
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
 """Shows Routes for Wait Wait Graphs Site"""
 from flask import Blueprint, current_app, render_template, url_for
-import mysql.connector
+from mysql.connector import connect
 from wwdtm.show import Show
 
 from app.reports.show import (
@@ -22,7 +22,7 @@ blueprint = Blueprint("shows", __name__, template_folder="templates")
 
 def retrieve_show_years(reverse_order: bool = True):
     """Retrieve a list of available show years"""
-    database_connection = mysql.connector.connect(**current_app.config["database"])
+    database_connection = connect(**current_app.config["database"])
     show = Show(database_connection=database_connection)
     years = show.retrieve_years()
     database_connection.close()
@@ -57,9 +57,12 @@ def all_scores_by_year(year: int):
     if year not in show_years:
         return redirect_url(url_for("shows_all_scores"))
 
-    database_connection = mysql.connector.connect(**current_app.config["database"])
-    show = Show(database_connection=database_connection)
-    all_scores = show.retrieve_scores_by_year(year)
+    database_connection = connect(**current_app.config["database"])
+    _show = Show(database_connection=database_connection)
+    all_scores = _show.retrieve_scores_by_year(
+        year,
+        use_decimal_scores=current_app.config["app_settings"]["use_decimal_scores"],
+    )
     database_connection.close()
 
     if not all_scores:
@@ -71,9 +74,14 @@ def all_scores_by_year(year: int):
     scores_3 = []
     for show in all_scores:
         shows.append(show[0])
-        scores_1.append(show[1])
-        scores_2.append(show[2])
-        scores_3.append(show[3])
+        if current_app.config["app_settings"]["use_decimal_scores"]:
+            scores_1.append(float(show[1]))
+            scores_2.append(float(show[2]))
+            scores_3.append(float(show[3]))
+        else:
+            scores_1.append(show[1])
+            scores_2.append(show[2])
+            scores_3.append(show[3])
 
     return render_template(
         "shows/all-scores/details.html",
@@ -257,7 +265,9 @@ def counts_by_year():
 @blueprint.route("/monthly-aggregate-score-heatmap")
 def monthly_aggregate_score_heatmap():
     """View: Monthly Aggregate Score Heatmap"""
-    all_scores = show_scores.retrieve_monthly_aggregate_scores()
+    all_scores = show_scores.retrieve_monthly_aggregate_scores(
+        use_decimal_scores=current_app.config["app_settings"]["use_decimal_scores"]
+    )
 
     if not all_scores:
         return render_template(
@@ -279,7 +289,9 @@ def monthly_aggregate_score_heatmap():
 @blueprint.route("/monthly-average-score-heatmap")
 def monthly_average_score_heatmap():
     """View: Monthly Average Score Heatmap"""
-    all_scores = show_scores.retrieve_monthly_average_scores()
+    all_scores = show_scores.retrieve_monthly_average_scores(
+        use_decimal_scores=current_app.config["app_settings"]["use_decimal_scores"]
+    )
 
     if not all_scores:
         return render_template(
