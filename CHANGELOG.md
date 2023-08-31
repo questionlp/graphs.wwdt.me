@@ -1,5 +1,11 @@
 # Changes
 
+## 2.3.1
+
+### Application Changes
+
+- Fix a bug with Panelists: Scores by Appearance route where panelists who have appearances on the show, but do not have corresponding scores, causes an error.
+
 ## 2.3.0
 
 ### Application Changes
