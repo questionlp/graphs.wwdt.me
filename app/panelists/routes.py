@@ -166,8 +166,8 @@ def scores_by_appearance_details(panelist: str):
     if not info:
         return redirect_url(url_for("panelists.scores_by_appearance"))
 
-    shows_json = json.dumps(scores["shows"])
     if scores:
+        shows_json = json.dumps(scores["shows"])
         if current_app.config["app_settings"]["use_decimal_scores"]:
             scores_float = []
             for score in scores["scores"]:
