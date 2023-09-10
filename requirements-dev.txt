@@ -6,4 +6,4 @@ black==23.7.0
 Flask==2.3.2
 gunicorn==20.1.0
 
-wwdtm==2.2.0
+wwdtm==2.4.0
