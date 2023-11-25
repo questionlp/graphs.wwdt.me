@@ -1,5 +1,25 @@
 # Changes
 
+## 2.6.0
+
+**Starting with version 2.6.0, support for all versions of Python prior to 3.10 have been deprecated.**
+
+### Application Changes
+
+- Replace `dateutil.parser.parse` with `datetime.datetime.strptime`
+
+### Component Changes
+
+- Upgrade wwdtm from 2.4.1 to 2.5.0, which drops supports for Python versions prior to 3.10 and includes:
+  - Upgrade MySQL Connector/Python from 8.0.33 to 8.2.0
+  - Upgrade numpy from 1.24.4 to 1.26.0
+
+### Development Changes
+
+- Upgrade black from 23.10.1 to 23.11.0
+- Remove `py38` and `py39` from `tool.black` in `pyproject.toml`
+- Bump minimum pytest version from 7.0 to 7.4 in `pyproject.toml`
+
 ## 2.5.0
 
 ### Component Changes
