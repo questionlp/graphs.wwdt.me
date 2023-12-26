@@ -1,5 +1,11 @@
 # Changes
 
+## 2.7.1
+
+### Component Changes
+
+- Upgrade wwdtm from 2.6.0 to 2.6.1
+
 ## 2.7.0
 
 ### Component Changes
