@@ -1,19 +1,17 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""WWDTM Panel Aggregate Scores Data Retrieval Functions"""
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""WWDTM Panel Aggregate Scores Data Retrieval Functions."""
 from math import floor
-from typing import Dict
 
 from flask import current_app
 from mysql.connector import connect
 
 
-def empty_score_spread(use_decimal_scores: bool = False) -> Dict:
-    """Generate an empty score spread dictionary of scores as keys
-    and a zero value for each key"""
+def empty_score_spread(use_decimal_scores: bool = False) -> dict | None:
+    """Generate an empty score spread dictionary."""
     if (
         use_decimal_scores
         and not current_app.config["app_settings"]["has_decimal_scores_column"]
@@ -31,7 +29,7 @@ def empty_score_spread(use_decimal_scores: bool = False) -> Dict:
     result = cursor.fetchone()
 
     if not result:
-        None
+        return None
 
     min_score = result.min
     max_score = result.max
@@ -50,9 +48,8 @@ def empty_score_spread(use_decimal_scores: bool = False) -> Dict:
     return score_spread
 
 
-def retrieve_score_spread(use_decimal_scores: bool = False) -> Dict:
-    """Retrieve a dictionary of grouped panelist scores from non-Best Of
-    and non-Repeat shows"""
+def retrieve_score_spread(use_decimal_scores: bool = False) -> dict | None:
+    """Retrieve a dictionary of grouped panelist scores from regular shows."""
     if (
         use_decimal_scores
         and not current_app.config["app_settings"]["has_decimal_scores_column"]

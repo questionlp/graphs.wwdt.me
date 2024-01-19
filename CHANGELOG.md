@@ -1,5 +1,22 @@
 # Changes
 
+## 2.8.0
+
+### Application Changes
+
+- General code cleanup and fixing typos
+- Add support for Patreon link in the side pop-out nav, dropdown nav menu and in the footer by way of the `settings.patreon_url` config key
+- Upgrade Plotly.js latest version from 2.26.0 to 2.28.0
+
+### Component Changes
+
+- Upgrade wwdtm from 2.6.1 to 2.8.0
+
+### Development Changes
+
+- Switch to Ruff for code linting and formatting (with the help of Black)
+- Upgrade black from 23.11.0 to 23.12.1
+
 ## 2.7.1
 
 ### Component Changes

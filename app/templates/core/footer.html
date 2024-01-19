@@ -8,6 +8,9 @@
                     <li><a href="{{ reports_url }}">Reports</a></li>
                     <li><a href="{{ stats_url }}">Stats Page</a></li>
                     <li><a href="{{ repo_url }}">GitHub</a></li>
+                    {% if patreon_url %}
+                    <li><a href="{{ patreon_url }}">Patreon</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

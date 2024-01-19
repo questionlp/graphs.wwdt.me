@@ -1,19 +1,15 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""WWDTM Show Scores Retrieval Functions"""
-from curses import use_default_colors
-from typing import Dict
-
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""WWDTM Show Scores Retrieval Functions."""
 from flask import current_app
 from mysql.connector import connect
 
 
-def build_year_scoring_dict() -> Dict:
-    """Returns an dictionary that will be used to populate panelist
-    scoring data"""
+def build_year_scoring_dict() -> dict:
+    """Return a dictionary that will be used to populate panelist scoring data."""
     return {
         "Jan": 0,
         "Feb": 0,
@@ -30,9 +26,8 @@ def build_year_scoring_dict() -> Dict:
     }
 
 
-def build_all_scoring_dict(use_decimal_scores: bool = False) -> Dict:
-    """Returns an dictionary that contains scoring dictionaries used to
-    populate all panelist scoring data"""
+def build_all_scoring_dict(use_decimal_scores: bool = False) -> dict | None:
+    """Return a dictionary used to populate all panelist scoring data."""
     if (
         use_decimal_scores
         and not current_app.config["app_settings"]["has_decimal_scores_column"]
@@ -87,9 +82,8 @@ def build_all_scoring_dict(use_decimal_scores: bool = False) -> Dict:
     return all_scores_dict
 
 
-def retrieve_monthly_aggregate_scores(use_decimal_scores: bool = False) -> Dict:
-    """Retrieve aggregated panelist scores grouped by month for every
-    available year"""
+def retrieve_monthly_aggregate_scores(use_decimal_scores: bool = False) -> dict | None:
+    """Retrieve aggregated panelist scores grouped by month for every available year."""
     if (
         use_decimal_scores
         and not current_app.config["app_settings"]["has_decimal_scores_column"]
@@ -151,9 +145,8 @@ def retrieve_monthly_aggregate_scores(use_decimal_scores: bool = False) -> Dict:
     return all_scores_dict
 
 
-def retrieve_monthly_average_scores(use_decimal_scores: bool = False) -> Dict:
-    """Retrieve average panelist scores grouped by month
-    for every available year"""
+def retrieve_monthly_average_scores(use_decimal_scores: bool = False) -> dict | None:
+    """Retrieve average panelist scores grouped by month for every available year."""
     if (
         use_decimal_scores
         and not current_app.config["app_settings"]["has_decimal_scores_column"]

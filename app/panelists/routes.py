@@ -1,15 +1,14 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""Panelists Routes for Wait Wait Graphs Site"""
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""Panelists Routes for Wait Wait Graphs Site."""
 import json
 
-from flask import Blueprint, current_app, render_template, url_for
+from flask import Blueprint, Response, current_app, render_template, url_for
 from mysql.connector import connect
 from slugify import slugify
-
 from wwdtm.panelist import (
     Panelist,
     PanelistAppearances,
@@ -24,14 +23,14 @@ blueprint = Blueprint("panelists", __name__, template_folder="templates")
 
 
 @blueprint.route("/")
-def index():
-    """View: Panelists Index"""
+def index() -> str:
+    """View: Panelists Index."""
     return render_template("panelists/index.html")
 
 
 @blueprint.route("/aggregate-scores")
-def aggregate_scores():
-    """View: Aggregate Scores"""
+def aggregate_scores() -> str:
+    """View: Aggregate Scores."""
     _aggregate_scores = agg.retrieve_score_spread(
         use_decimal_scores=current_app.config["app_settings"]["use_decimal_scores"]
     )
@@ -41,8 +40,8 @@ def aggregate_scores():
 
 
 @blueprint.route("/appearances-by-year")
-def appearances_by_year():
-    """View: Appearances by Year"""
+def appearances_by_year() -> str:
+    """View: Appearances by Year."""
     database_connection = connect(**current_app.config["database"])
     _panelist = Panelist(database_connection=database_connection)
     all_panelists = _panelist.retrieve_all()
@@ -53,8 +52,8 @@ def appearances_by_year():
 
 
 @blueprint.route("/appearances-by-year/<string:panelist>")
-def appearances_by_year_details(panelist: str):
-    """View: Appearances by Year Details"""
+def appearances_by_year_details(panelist: str) -> Response | str:
+    """View: Appearances by Year Details."""
     panelist_slug = slugify(panelist)
     if panelist and panelist != panelist_slug:
         return redirect_url(
@@ -84,8 +83,8 @@ def appearances_by_year_details(panelist: str):
 
 
 @blueprint.route("/score-breakdown")
-def score_breakdown():
-    """View: Score Breakdown"""
+def score_breakdown() -> str:
+    """View: Score Breakdown."""
     database_connection = connect(**current_app.config["database"])
     _panelist = Panelist(database_connection=database_connection)
     panelists = _panelist.retrieve_all()
@@ -94,8 +93,8 @@ def score_breakdown():
 
 
 @blueprint.route("/score-breakdown/<string:panelist>")
-def score_breakdown_details(panelist: str):
-    """View: Score Breakdown Details"""
+def score_breakdown_details(panelist: str) -> Response | str:
+    """View: Score Breakdown Details."""
     panelist_slug = slugify(panelist)
     if panelist and panelist != panelist_slug:
         return redirect_url(
@@ -128,8 +127,8 @@ def score_breakdown_details(panelist: str):
 
 
 @blueprint.route("/scores-by-appearance")
-def scores_by_appearance():
-    """View: Scores by Appearances"""
+def scores_by_appearance() -> str:
+    """View: Scores by Appearances."""
     database_connection = connect(**current_app.config["database"])
     _panelist = Panelist(database_connection=database_connection)
     panelists = _panelist.retrieve_all()
@@ -140,8 +139,8 @@ def scores_by_appearance():
 
 
 @blueprint.route("/scores-by-appearance/<string:panelist>")
-def scores_by_appearance_details(panelist: str):
-    """View: Scores by Appearances"""
+def scores_by_appearance_details(panelist: str) -> Response | str:
+    """View: Scores by Appearances."""
     panelist_slug = slugify(panelist)
     if panelist and panelist != panelist_slug:
         return redirect_url(

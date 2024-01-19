@@ -21,6 +21,9 @@
         "reports_url": "",
         "site_url": "",
         "time_zone": "UTC",
+        "mastodon_url": "",
+        "mastodon_user": "",
+        "patreon_url": "",
         "use_latest_plotly": false,
         "use_decimal_scores": false
     }

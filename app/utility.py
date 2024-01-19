@@ -1,16 +1,15 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""Utility functions used by the Graphs Site"""
-
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""Utility functions used by the Graphs Site."""
 from datetime import datetime
-from flask import current_app
-from typing import Any, Dict, List
-from mysql.connector import connect, DatabaseError
-import pytz
+from typing import Any
 
+import pytz
+from flask import current_app
+from mysql.connector import DatabaseError, connect
 from wwdtm.panelist import Panelist
 from wwdtm.show import Show
 
@@ -30,33 +29,35 @@ month_names = {
 }
 
 
-def current_year(time_zone: pytz.timezone = pytz.timezone("UTC")) -> str:
-    """Return the current year"""
-    now = datetime.now(time_zone)
+def current_year(time_zone: str = "UTC") -> str:
+    """Return the current year."""
+    _time_zone = pytz.timezone(time_zone)
+    now = datetime.now(_time_zone)
     return now.strftime("%Y")
 
 
-def date_string_to_date(**kwargs) -> datetime:
-    """Used to convert an ISO-style date string into a datetime object"""
+def date_string_to_date(**kwargs) -> datetime | None:
+    """Used to convert an ISO-style date string into a datetime object."""
     if "date_string" in kwargs and kwargs["date_string"]:
         try:
-            date_object = datetime.datetime.strptime(kwargs["date_string"], "%Y-%m-%d")
-            return date_object
-
+            date_object = datetime.strptime(kwargs["date_string"], "%Y-%m-%d")
         except ValueError:
             return None
+
+        return date_object
 
     return None
 
 
-def generate_date_time_stamp(time_zone: pytz.timezone = pytz.timezone("UTC")) -> str:
-    """Generate a current date/timestamp string"""
-    now = datetime.now(time_zone)
+def generate_date_time_stamp(time_zone: str = "UTC") -> str:
+    """Generate a current date/timestamp string."""
+    _time_zone = pytz.timezone(time_zone)
+    now = datetime.now(_time_zone)
     return now.strftime("%Y-%m-%d %H:%M:%S %Z")
 
 
 def redirect_url(url: str, status_code: int = 302):
-    """Returns a redirect response for a given URL"""
+    """Returns a redirect response for a given URL."""
     # Use a custom response class to force set response headers
     # and handle the redirect to prevent browsers from caching redirect
     response = current_app.response_class(
@@ -70,8 +71,8 @@ def redirect_url(url: str, status_code: int = 302):
     return response
 
 
-def retrieve_panelists() -> List[Dict[str, Any]]:
-    """Retrieve information for all panelists"""
+def retrieve_panelists() -> list[dict[str, Any]]:
+    """Retrieve information for all panelists."""
     database_connection = connect(**current_app.config["database"])
     panelist = Panelist(database_connection=database_connection)
     panelists = panelist.retrieve_all()
@@ -79,8 +80,8 @@ def retrieve_panelists() -> List[Dict[str, Any]]:
     return panelists
 
 
-def retrieve_show_years(reverse_order: bool = True) -> List[int]:
-    """Retrieve a list of available show years"""
+def retrieve_show_years(reverse_order: bool = True) -> list[int]:
+    """Retrieve a list of available show years."""
     database_connection = connect(**current_app.config["database"])
     show = Show(database_connection=database_connection)
     years = show.retrieve_years()
@@ -95,7 +96,8 @@ def time_zone_parser(time_zone: str) -> pytz.timezone:
     """Parses a time zone name into a pytz.timezone object.
 
     Returns pytz.timezone object and string if time_zone is valid.
-    Otherwise, returns UTC if time zone is not a valid tz value."""
+    Otherwise, returns UTC if time zone is not a valid tz value.
+    """
     try:
         time_zone_object = pytz.timezone(time_zone)
         time_zone_string = time_zone_object.zone
@@ -106,10 +108,8 @@ def time_zone_parser(time_zone: str) -> pytz.timezone:
     return time_zone_object, time_zone_string
 
 
-def panelist_decimal_score_exists(database_settings: Dict) -> bool:
-    """Checks to see if the panelistscore_decimal column exists in the
-    ww_showpnlmap table in the Wait Wait Stats Database and returns
-    a bool reflecting the results"""
+def panelist_decimal_score_exists(database_settings: dict) -> bool:
+    """Validates that panelist decimal score column exists."""
     try:
         database_connection = connect(**database_settings)
         cursor = database_connection.cursor()
@@ -117,9 +117,6 @@ def panelist_decimal_score_exists(database_settings: Dict) -> bool:
         cursor.execute(query)
         result = cursor.fetchone()
         cursor.close()
-        if result:
-            return True
-        else:
-            return False
+        return bool(result)
     except DatabaseError:
         return False
