@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""Testing Main Redirects Module and Blueprint Views"""
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""Testing Main Redirects Module and Blueprint Views."""
 from flask.testing import FlaskClient
 from werkzeug.test import TestResponse
 
 
 def test_favicon(client: FlaskClient) -> None:
-    """Testing main_redirects.favicon"""
+    """Testing main_redirects.favicon."""
     response: TestResponse = client.get("/favicon.ico")
     assert response.status_code == 302
     assert response.location
@@ -17,7 +17,7 @@ def test_favicon(client: FlaskClient) -> None:
 
 
 def test_guest(client: FlaskClient) -> None:
-    """Testing main_redirects.panelist"""
+    """Testing main_redirects.panelist."""
     response: TestResponse = client.get("/panelist")
     assert response.status_code == 302
     assert response.location
@@ -30,7 +30,7 @@ def test_guest(client: FlaskClient) -> None:
 
 
 def test_help(client: FlaskClient) -> None:
-    """Testing main_redirects.show"""
+    """Testing main_redirects.show."""
     response: TestResponse = client.get("/show")
     assert response.status_code == 302
     assert response.location
@@ -43,7 +43,7 @@ def test_help(client: FlaskClient) -> None:
 
 
 def test_show_show_counts_by_year(client: FlaskClient) -> None:
-    """Testing main_redirects.show_show_counts_by_year"""
+    """Testing main_redirects.show_show_counts_by_year."""
     response: TestResponse = client.get("/show/show-counts-by-year")
     assert response.status_code == 302
     assert response.location
@@ -51,7 +51,7 @@ def test_show_show_counts_by_year(client: FlaskClient) -> None:
 
 
 def test_show_counts_by_year(client: FlaskClient) -> None:
-    """Testing main_redirects.shows_show_counts_by_year"""
+    """Testing main_redirects.shows_show_counts_by_year."""
     response: TestResponse = client.get("/shows/show-counts-by-year")
     assert response.status_code == 302
     assert response.location

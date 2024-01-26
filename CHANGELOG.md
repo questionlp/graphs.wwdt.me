@@ -1,5 +1,11 @@
 # Changes
 
+## 2.8.1
+
+### Application Changes
+
+- Additional code cleanup and fixing typos
+
 ## 2.8.0
 
 ### Application Changes
