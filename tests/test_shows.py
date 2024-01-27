@@ -1,16 +1,16 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""Testing Shows Module and Blueprint Views"""
-from flask.testing import FlaskClient
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""Testing Shows Module and Blueprint Views."""
 import pytest
+from flask.testing import FlaskClient
 from werkzeug.test import TestResponse
 
 
 def test_index(client: FlaskClient) -> None:
-    """Testing shows.index"""
+    """Testing shows.index."""
     response: TestResponse = client.get("/shows/")
     assert response.status_code == 200
     assert b"Shows" in response.data
@@ -19,7 +19,7 @@ def test_index(client: FlaskClient) -> None:
 
 
 def test_all_scores(client: FlaskClient) -> None:
-    """Testing shows.all_scores"""
+    """Testing shows.all_scores."""
     response: TestResponse = client.get("/shows/all-scores")
     assert response.status_code == 200
     assert b"Shows" in response.data
@@ -28,7 +28,7 @@ def test_all_scores(client: FlaskClient) -> None:
 
 @pytest.mark.parametrize("year", [2020])
 def test_all_scores_by_year(client: FlaskClient, year: int) -> None:
-    """Testing shows.all_scores_by_year"""
+    """Testing shows.all_scores_by_year."""
     response: TestResponse = client.get(f"/shows/all-scores/{year}")
     assert response.status_code == 200
     assert b"Shows" in response.data
@@ -36,7 +36,7 @@ def test_all_scores_by_year(client: FlaskClient, year: int) -> None:
 
 
 def test_bluff_counts(client: FlaskClient) -> None:
-    """Testing shows.bluff_counts"""
+    """Testing shows.bluff_counts."""
     response: TestResponse = client.get("/shows/bluff-counts")
     assert response.status_code == 200
     assert b"Shows" in response.data
@@ -44,7 +44,7 @@ def test_bluff_counts(client: FlaskClient) -> None:
 
 
 def test_bluff_counts_all(client: FlaskClient) -> None:
-    """Testing shows.bluff_counts_all"""
+    """Testing shows.bluff_counts_all."""
     response: TestResponse = client.get("/shows/bluff-counts/all")
     assert response.status_code == 200
     assert b"Shows" in response.data
@@ -54,7 +54,7 @@ def test_bluff_counts_all(client: FlaskClient) -> None:
 
 @pytest.mark.parametrize("year", [2020])
 def test_bluff_counts_by_year(client: FlaskClient, year: int) -> None:
-    """Testing shows.bluff_counts_by_year"""
+    """Testing shows.bluff_counts_by_year."""
     response: TestResponse = client.get(f"/shows/bluff-counts/{year}")
     assert response.status_code == 200
     assert b"Shows" in response.data
@@ -63,7 +63,7 @@ def test_bluff_counts_by_year(client: FlaskClient, year: int) -> None:
 
 
 def test_counts_by_day_of_month(client: FlaskClient) -> None:
-    """Testing shows.counts_by_day_of_month"""
+    """Testing shows.counts_by_day_of_month."""
     response: TestResponse = client.get("/shows/counts-by-day-month")
     assert response.status_code == 200
     assert b"Shows" in response.data
@@ -71,7 +71,7 @@ def test_counts_by_day_of_month(client: FlaskClient) -> None:
 
 
 def test_counts_by_day_of_month_all(client: FlaskClient) -> None:
-    """Testing shows.counts_by_day_of_month_all"""
+    """Testing shows.counts_by_day_of_month_all."""
     response: TestResponse = client.get("/shows/counts-by-day-month/all")
     assert response.status_code == 200
     assert b"Shows" in response.data
@@ -81,7 +81,7 @@ def test_counts_by_day_of_month_all(client: FlaskClient) -> None:
 
 @pytest.mark.parametrize("month", [8])
 def test_counts_by_day_of_month_by_month(client: FlaskClient, month: int) -> None:
-    """Testing shows.counts_by_day_of_month_by_month"""
+    """Testing shows.counts_by_day_of_month_by_month."""
     response: TestResponse = client.get(f"/shows/counts-by-day-month/{month}")
     assert response.status_code == 200
     assert b"Shows" in response.data
@@ -90,7 +90,7 @@ def test_counts_by_day_of_month_by_month(client: FlaskClient, month: int) -> Non
 
 
 def test_counts_by_year(client) -> None:
-    """Testing shows.counts_by_year"""
+    """Testing shows.counts_by_year."""
     response: TestResponse = client.get("/shows/counts-by-year")
     assert response.status_code == 200
     assert b"Shows" in response.data
@@ -99,7 +99,7 @@ def test_counts_by_year(client) -> None:
 
 
 def test_monthly_aggregate_score_heatmap(client: FlaskClient) -> None:
-    """Testing shows.monthly_aggregate_score_heatmap"""
+    """Testing shows.monthly_aggregate_score_heatmap."""
     response: TestResponse = client.get("/shows/monthly-aggregate-score-heatmap")
     assert response.status_code == 200
     assert b"Shows" in response.data
@@ -109,7 +109,7 @@ def test_monthly_aggregate_score_heatmap(client: FlaskClient) -> None:
 
 
 def test_monthly_average_score_heatmap(client: FlaskClient) -> None:
-    """Testing shows.monthly_average_score_heatmap"""
+    """Testing shows.monthly_average_score_heatmap."""
     response: TestResponse = client.get("/shows/monthly-average-score-heatmap")
     assert response.status_code == 200
     assert b"Shows" in response.data
@@ -119,7 +119,7 @@ def test_monthly_average_score_heatmap(client: FlaskClient) -> None:
 
 
 def test_panel_gender_mix(client: FlaskClient) -> None:
-    """Testing shows.panel_gender_mix"""
+    """Testing shows.panel_gender_mix."""
     response: TestResponse = client.get("/shows/panel-gender-mix")
     assert response.status_code == 200
     assert b"Shows" in response.data

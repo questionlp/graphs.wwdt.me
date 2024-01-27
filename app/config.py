@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""Configuration Loading and Parsing for Wait Wait Graphs Site"""
-
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""Configuration Loading and Parsing for Wait Wait Graphs Site."""
 import json
-from typing import Any, Dict
-import pytz
+from pathlib import Path
+from typing import Any
 
 from app import utility
 
@@ -17,8 +16,9 @@ def load_config(
     connection_pool_size: int = 12,
     connection_pool_name: str = "wwdtm_graphs",
     app_time_zone: str = "UTC",
-) -> Dict[str, Dict[str, Any]]:
-    with open(config_file_path, "r") as config_file:
+) -> dict[str, dict[str, Any]]:
+    _config_file_path = Path(config_file_path)
+    with _config_file_path.open(mode="r", encoding="utf-8") as config_file:
         app_config = json.load(config_file)
 
     database_config = app_config.get("database", None)

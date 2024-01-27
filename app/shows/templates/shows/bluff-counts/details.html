@@ -43,16 +43,19 @@
     }
 
     let showMonths = {{ months|safe }};
+    let correct = {{ correct|safe }};
+    let incorrect = {{ incorrect|safe }};
+    let max_height = Math.ceil(Math.max.apply(Math, correct, incorrect));
     let data = [
         {
             x: showMonths,
-            y: {{ correct|safe }},
+            y: correct,
             name: "Correct",
             type: "bar"
         },
         {
             x: showMonths,
-            y: {{ incorrect|safe }},
+            y: incorrect,
             name: "Incorrect",
             type: "bar"
         }
@@ -119,7 +122,7 @@
             color: axisColor,
             dtick: 1,
             fixedrange: true,
-            range: [0, 6],
+            range: [0, max_height],
             tickfont: { size: 16 },
             title: {
                 font: { size: 18 },

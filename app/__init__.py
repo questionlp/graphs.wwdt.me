@@ -1,20 +1,19 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""Core Application for Wait Wait Graphs Site"""
-
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""Core Application for Wait Wait Graphs Site."""
 from flask import Flask
 from wwdtm import VERSION as WWDTM_VERSION
 
 from app import config, utility
 from app.errors import handlers
-from app.main.routes import blueprint as main_bp
 from app.main.redirects import blueprint as redirects_bp
+from app.main.routes import blueprint as main_bp
 from app.panelists.routes import blueprint as panelists_bp
-from app.sitemaps.routes import blueprint as sitemaps_bp
 from app.shows.routes import blueprint as shows_bp
+from app.sitemaps.routes import blueprint as sitemaps_bp
 from app.version import APP_VERSION
 
 
@@ -42,7 +41,7 @@ def create_app():
     app.jinja_env.globals["date_string_to_date"] = utility.date_string_to_date
     app.jinja_env.globals["current_year"] = utility.current_year
     app.jinja_env.globals["rendered_at"] = utility.generate_date_time_stamp
-    app.jinja_env.globals["time_zone"] = app.config["app_settings"]["app_time_zone"]
+    app.jinja_env.globals["time_zone"] = app.config["app_settings"]["time_zone"]
     app.jinja_env.globals["ga_property_code"] = _config["settings"].get(
         "ga_property_code", ""
     )
@@ -56,6 +55,7 @@ def create_app():
     app.jinja_env.globals["mastodon_user"] = _config["settings"].get(
         "mastodon_user", ""
     )
+    app.jinja_env.globals["patreon_url"] = _config["settings"].get("patreon_url", "")
     app.jinja_env.globals["use_latest_plotly"] = _config["settings"][
         "use_latest_plotly"
     ]

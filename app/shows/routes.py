@@ -1,27 +1,21 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""Shows Routes for Wait Wait Graphs Site"""
-from flask import Blueprint, current_app, render_template, url_for
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""Shows Routes for Wait Wait Graphs Site."""
+from flask import Blueprint, Response, current_app, render_template, url_for
 from mysql.connector import connect
 from wwdtm.show import Show
 
-from app.reports.show import (
-    bluff_count as bluff,
-    dates,
-    gender_mix,
-    scores as show_scores,
-    show_counts,
-)
-from app.utility import redirect_url, month_names
+from app.reports.show import bluff_count, dates, gender_mix, scores, show_counts
+from app.utility import month_names, redirect_url
 
 blueprint = Blueprint("shows", __name__, template_folder="templates")
 
 
-def retrieve_show_years(reverse_order: bool = True):
-    """Retrieve a list of available show years"""
+def retrieve_show_years(reverse_order: bool = True) -> list[int]:
+    """Retrieve a list of available show years."""
     database_connection = connect(**current_app.config["database"])
     show = Show(database_connection=database_connection)
     years = show.retrieve_years()
@@ -34,14 +28,14 @@ def retrieve_show_years(reverse_order: bool = True):
 
 
 @blueprint.route("/")
-def index():
-    """View: Shows Index"""
+def index() -> str:
+    """View: Shows Index."""
     return render_template("shows/index.html")
 
 
 @blueprint.route("/all-scores")
-def all_scores():
-    """View: All Scores"""
+def all_scores() -> Response | str:
+    """View: All Scores."""
     show_years = retrieve_show_years()
 
     if not show_years:
@@ -51,8 +45,8 @@ def all_scores():
 
 
 @blueprint.route("/all-scores/<int:year>")
-def all_scores_by_year(year: int):
-    """View: All Scores by Year"""
+def all_scores_by_year(year: int) -> Response | str:
+    """View: All Scores by Year."""
     show_years = retrieve_show_years()
     if year not in show_years:
         return redirect_url(url_for("shows_all_scores"))
@@ -94,8 +88,8 @@ def all_scores_by_year(year: int):
 
 
 @blueprint.route("/bluff-counts")
-def bluff_counts():
-    """View: Bluff the Listener Counts"""
+def bluff_counts() -> Response | str:
+    """View: Bluff the Listener Counts."""
     show_years = retrieve_show_years()
     if not show_years:
         return redirect_url(url_for("shows.index"))
@@ -104,9 +98,9 @@ def bluff_counts():
 
 
 @blueprint.route("/bluff-counts/all")
-def bluff_counts_all():
-    """View: All Bluff the Listener Counts"""
-    bluff_data = bluff.retrieve_all_bluff_counts()
+def bluff_counts_all() -> Response | str:
+    """View: All Bluff the Listener Counts."""
+    bluff_data = bluff_count.retrieve_all_bluff_counts()
 
     if not bluff_data:
         return redirect_url(url_for("shows_bluff_counts"))
@@ -127,13 +121,13 @@ def bluff_counts_all():
 
 
 @blueprint.route("/bluff-counts/<int:year>")
-def bluff_counts_by_year(year: int):
-    """View: Bluff the Listener Counts by Year"""
+def bluff_counts_by_year(year: int) -> Response | str:
+    """View: Bluff the Listener Counts by Year."""
     show_years = retrieve_show_years()
     if year not in show_years:
         return redirect_url(url_for("shows_bluff_counts"))
 
-    bluff_data = bluff.retrieve_bluff_count_year(year=year)
+    bluff_data = bluff_count.retrieve_bluff_count_year(year=year)
 
     if not bluff_data:
         return render_template(
@@ -161,14 +155,14 @@ def bluff_counts_by_year(year: int):
 
 
 @blueprint.route("/counts-by-day-month")
-def counts_by_day_of_month():
-    """View: Counts by Day of Month"""
+def counts_by_day_of_month() -> str:
+    """View: Counts by Day of Month."""
     return render_template("shows/counts-by-day-month/index.html", months=month_names)
 
 
 @blueprint.route("/counts-by-day-month/all")
-def counts_by_day_of_month_all():
-    """View: All Counts by Day of Month"""
+def counts_by_day_of_month_all() -> Response | str:
+    """View: All Counts by Day of Month."""
     days_info = dates.retrieve_show_counts_by_month_day_all()
 
     if not days_info:
@@ -197,8 +191,8 @@ def counts_by_day_of_month_all():
 
 
 @blueprint.route("/counts-by-day-month/<int:month>")
-def counts_by_day_of_month_by_month(month: int):
-    """View: Counts by Day of Month by Month"""
+def counts_by_day_of_month_by_month(month: int) -> Response | str:
+    """View: Counts by Day of Month by Month."""
     # Validate that the month number is valid
     if month not in range(1, 13):
         return redirect_url(url_for("shows.counts_by_day_of_month"))
@@ -232,8 +226,8 @@ def counts_by_day_of_month_by_month(month: int):
 
 
 @blueprint.route("/counts-by-year")
-def counts_by_year():
-    """View: Show Counts by Year"""
+def counts_by_year() -> Response | str:
+    """View: Show Counts by Year."""
     counts = show_counts.retrieve_show_counts_by_year()
 
     if not counts:
@@ -263,9 +257,9 @@ def counts_by_year():
 
 
 @blueprint.route("/monthly-aggregate-score-heatmap")
-def monthly_aggregate_score_heatmap():
-    """View: Monthly Aggregate Score Heatmap"""
-    all_scores = show_scores.retrieve_monthly_aggregate_scores(
+def monthly_aggregate_score_heatmap() -> str:
+    """View: Monthly Aggregate Score Heatmap."""
+    all_scores = scores.retrieve_monthly_aggregate_scores(
         use_decimal_scores=current_app.config["app_settings"]["use_decimal_scores"]
     )
 
@@ -287,9 +281,9 @@ def monthly_aggregate_score_heatmap():
 
 
 @blueprint.route("/monthly-average-score-heatmap")
-def monthly_average_score_heatmap():
-    """View: Monthly Average Score Heatmap"""
-    all_scores = show_scores.retrieve_monthly_average_scores(
+def monthly_average_score_heatmap() -> str:
+    """View: Monthly Average Score Heatmap."""
+    all_scores = scores.retrieve_monthly_average_scores(
         use_decimal_scores=current_app.config["app_settings"]["use_decimal_scores"]
     )
 
@@ -311,8 +305,8 @@ def monthly_average_score_heatmap():
 
 
 @blueprint.route("/panel-gender-mix")
-def panel_gender_mix():
-    """View: Panel Gender Mix"""
+def panel_gender_mix() -> Response | str:
+    """View: Panel Gender Mix."""
     panel_mix = gender_mix.panel_gender_mix_breakdown(gender="female")
 
     if not panel_mix:

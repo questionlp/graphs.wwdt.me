@@ -1,19 +1,15 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""WWDTM Show Dates Retrieval Functions"""
-from typing import Dict
-
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""WWDTM Show Dates Retrieval Functions."""
 from flask import current_app
 from mysql.connector import connect
 
 
-def build_days_of_month_dict(month: int) -> Dict:
-    """Returns an dictionary containing a key for each day for a given
-    month, each containing an dictionary used to store counts by show
-    type"""
+def build_days_of_month_dict(month: int) -> dict:
+    """Return a dictionary used to store counts by show type."""
     # Validate that the month number is valid
     if month not in range(1, 13):
         return None
@@ -38,11 +34,8 @@ def build_days_of_month_dict(month: int) -> Dict:
     return month
 
 
-def build_days_of_months_all_dict() -> Dict:
-    """Returns an dictionary containing a key for each day for all
-    months, each containing an dictionary used to store counts by show
-    type"""
-
+def build_days_of_months_all_dict() -> dict | None:
+    """Return a dictionary used to store counts by show type."""
     database_connection = connect(**current_app.config["database"])
     query = """
         SELECT DATE_FORMAT(showdate, '%d %b') AS date, bestof, repeatshowid
@@ -72,10 +65,8 @@ def build_days_of_months_all_dict() -> Dict:
     return days
 
 
-def retrieve_show_counts_by_month_day(month: int) -> Dict:
-    """Retrieves an dictionary containing a count of regular shows, Best
-    Of shows, repeat shows and repeat Best Of shows for each day of the
-    requested month"""
+def retrieve_show_counts_by_month_day(month: int) -> dict | None:
+    """Retrieve a dictionary containing a count of show types."""
     # Validate that the month number is valid
     if month not in range(1, 13):
         return None
@@ -117,10 +108,8 @@ def retrieve_show_counts_by_month_day(month: int) -> Dict:
     return show_month
 
 
-def retrieve_show_counts_by_month_day_all() -> Dict:
-    """Retrieves an dictionary containing a count of regular shows, Best
-    Of shows, repeat shows and repeat Best Of shows by day for all
-    calendar months"""
+def retrieve_show_counts_by_month_day_all() -> dict | None:
+    """Retrieve a dictionary containing a count of show types."""
     shows = build_days_of_months_all_dict()
 
     if not shows:
