@@ -7,6 +7,7 @@
 - General code cleanup and fixing typos
 - Add support for Patreon link in the side pop-out nav, dropdown nav menu and in the footer by way of the `settings.patreon_url` config key
 - Upgrade Plotly.js latest version from 2.26.0 to 2.28.0
+- Calculate the appropriate value for the max y-axis range for the Bluff the Listeners Counts chart
 
 ### Component Changes
 
