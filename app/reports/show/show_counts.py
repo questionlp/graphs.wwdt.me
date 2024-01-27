@@ -1,18 +1,15 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""WWDTM Show Counts Retrieval Functions"""
-from typing import Dict
-
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""WWDTM Show Counts Retrieval Functions."""
 from flask import current_app
 from mysql.connector import connect
 
 
-def retrieve_show_counts_by_year() -> Dict[int, int]:
-    """Retrieve the number of Regular, Best Of, Repeat and Repeat/Best
-    Of shows broken down by year"""
+def retrieve_show_counts_by_year() -> dict[int, int] | None:
+    """Retrieve the number of Regular, Best Of, Repeat and Repeat/Best Of shows broken down by year."""
     database_connection = connect(**current_app.config["database"])
 
     # Override session SQL mode value to unset ONLY_FULL_GROUP_BY

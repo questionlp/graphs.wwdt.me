@@ -1,17 +1,15 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""WWDTM Panel Gender Mix Data Retrieval and Reporting Functions"""
-from typing import Dict, List
-
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""WWDTM Panel Gender Mix Data Retrieval and Reporting Functions."""
 from flask import current_app
 from mysql.connector import connect
 
 
-def retrieve_show_years() -> List[int]:
-    """Retrieve a list of show years available in the database"""
+def retrieve_show_years() -> list[int] | None:
+    """Retrieve a list of show years available in the database."""
     database_connection = connect(**current_app.config["database"])
     years = []
     query = """
@@ -33,9 +31,8 @@ def retrieve_show_years() -> List[int]:
     return years
 
 
-def retrieve_panel_gender_count_by_year(year: int, gender: str) -> int:
-    """Get a count of shows for the requested year that has the
-    requested number of panelists of a given gender"""
+def retrieve_panel_gender_count_by_year(year: int, gender: str) -> dict:
+    """Retrieve a count of shows with panelists of a given gender."""
     database_connection = connect(**current_app.config["database"])
 
     # panelistgender field only contains a single letter
@@ -65,7 +62,7 @@ def retrieve_panel_gender_count_by_year(year: int, gender: str) -> int:
         )
         _ = cursor.fetchall()
 
-        counts["{}{}".format(gender_count, gender_tag)] = cursor.rowcount
+        counts[f"{gender_count}{gender_tag}"] = cursor.rowcount
 
     cursor.close()
     total = sum(counts.values())
@@ -73,9 +70,8 @@ def retrieve_panel_gender_count_by_year(year: int, gender: str) -> int:
     return counts
 
 
-def panel_gender_mix_breakdown(gender: str) -> Dict:
-    """Calculate the panel gender breakdown for all show years and
-    return an dictionary containing count for each year"""
+def panel_gender_mix_breakdown(gender: str) -> dict:
+    """Retrieve a gender mix breakdown for a given gender."""
     show_years = retrieve_show_years()
 
     gender_mix_breakdown = {}

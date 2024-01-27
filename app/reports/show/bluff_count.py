@@ -1,18 +1,15 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""WWDTM Show Bluff the Listener Data Retrieval Functions"""
-from typing import Dict, List
-
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""WWDTM Show Bluff the Listener Data Retrieval Functions."""
 from flask import current_app
 from mysql.connector import connect
 
 
-def build_bluff_data_dict() -> Dict:
-    """Returns an dictionary that will be used to populate Bluff the
-    Listener data"""
+def build_bluff_data_dict() -> dict:
+    """Return a dictionary used to populate Bluff the Listener data."""
     return {
         "Jan": {"correct": 0, "incorrect": 0},
         "Feb": {"correct": 0, "incorrect": 0},
@@ -29,9 +26,8 @@ def build_bluff_data_dict() -> Dict:
     }
 
 
-def build_bluff_data_year_month_dict() -> Dict:
-    """Returns an dictionary that will be used to populate Bluff the
-    Listener data for all years and months"""
+def build_bluff_data_year_month_dict() -> dict | None:
+    """Return a dictionary used to populate Bluff the Listener data."""
     database_connection = connect(**current_app.config["database"])
 
     # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
@@ -69,9 +65,8 @@ def build_bluff_data_year_month_dict() -> Dict:
     return year_month
 
 
-def retrieve_all_bluff_counts() -> Dict:
-    """Retrieve an dictionary containing Bluff the Listener all counts
-    broken down by month"""
+def retrieve_all_bluff_counts() -> dict | None:
+    """Retrieve a dictionary containing Bluff the Listener all counts broken down by month."""
     bluff_data = build_bluff_data_year_month_dict()
     database_connection = connect(**current_app.config["database"])
 
@@ -139,9 +134,8 @@ def retrieve_all_bluff_counts() -> Dict:
     return bluff_data
 
 
-def retrieve_bluff_count_year(year: int) -> Dict:
-    """Retrieve an dictionary containing Bluff the Listener counts
-    broken down by month"""
+def retrieve_bluff_count_year(year: int) -> dict | None:
+    """Retrieve a dictionary containing Bluff the Listener counts broken down by month."""
     bluff_data = build_bluff_data_dict()
     database_connection = connect(**current_app.config["database"])
 

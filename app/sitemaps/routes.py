@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""Sitemap Routes for Wait Wait Graphs Site"""
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""Sitemap Routes for Wait Wait Graphs Site."""
 from flask import Blueprint, Response, render_template
 
 from app.utility import month_names, retrieve_panelists, retrieve_show_years
@@ -12,8 +12,8 @@ blueprint = Blueprint("sitemaps", __name__)
 
 
 @blueprint.route("/sitemap.xml")
-def primary():
-    """Site: Primary Sitemap XML"""
+def primary() -> Response:
+    """Site: Primary Sitemap XML."""
     panelists = retrieve_panelists()
     years = retrieve_show_years()
     sitemap = render_template(

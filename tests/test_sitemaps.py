@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
-# vim: set noai syntax=python ts=4 sw=4:
-#
-# Copyright (c) 2018-2023 Linh Pham
+# Copyright (c) 2018-2024 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
-"""Testing Sitemaps Module and Blueprint Views"""
+# SPDX-License-Identifier: Apache-2.0
+#
+# vim: set noai syntax=python ts=4 sw=4:
+"""Testing Sitemaps Module and Blueprint Views."""
 from flask.testing import FlaskClient
 from werkzeug.test import TestResponse
 
 
 def test_primary(client: FlaskClient) -> None:
-    """Testing sitemaps.primary"""
+    """Testing sitemaps.primary."""
     response: TestResponse = client.get("/sitemap.xml")
     assert response.status_code == 200
     assert "Content-Type" in response.headers
