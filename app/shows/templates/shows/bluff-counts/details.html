@@ -45,7 +45,7 @@
     let showMonths = {{ months|safe }};
     let correct = {{ correct|safe }};
     let incorrect = {{ incorrect|safe }};
-    let max_height = Math.ceil(Math.max.apply(Math, correct, incorrect));
+    let max_height = Math.ceil(Math.max.apply(Math, correct) + Math.max.apply(Math, incorrect));
     let data = [
         {
             x: showMonths,
