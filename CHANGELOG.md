@@ -1,5 +1,13 @@
 # Changes
 
+## 2.8.1
+
+### Application Changes
+
+- Add support for GitHub sponsorship link in the side pop-out nav, dropdown nav menu and in the footer by way of the `settings.github_sponsor_url` config key
+- Change link color to match that of the Wait Wait Stats Page link color
+- Change the how render and version information is rendered on screens with a width less than 1200px to align left rather than right
+
 ## 2.8.0
 
 ### Application Changes

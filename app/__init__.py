@@ -56,6 +56,9 @@ def create_app():
         "mastodon_user", ""
     )
     app.jinja_env.globals["patreon_url"] = _config["settings"].get("patreon_url", "")
+    app.jinja_env.globals["github_sponsor_url"] = _config["settings"].get(
+        "github_sponsor_url", ""
+    )
     app.jinja_env.globals["use_latest_plotly"] = _config["settings"][
         "use_latest_plotly"
     ]
