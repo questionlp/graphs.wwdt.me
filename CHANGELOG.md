@@ -1,5 +1,11 @@
 # Changes
 
+## 2.8.2
+
+### Development Changes
+
+- Upgrade black from 23.12.1 to 24.3.0
+
 ## 2.8.1
 
 ### Application Changes
