@@ -1,5 +1,18 @@
 # Changes
 
+## 2.8.3
+
+### Component Changes
+
+- Upgrade wwdtm from 2.8.0 to 2.8.2
+- Upgrade flask from 3.0.0 to 3.0.3
+- Upgrade gunicorn from 21.2.0 to 22.0.0
+
+### Development Changes
+
+- Upgrade ruff from 0.1.13 to 0.3.6
+- Upgrade pytest from 7.4.4 to 8.1.1
+
 ## 2.8.2
 
 ### Development Changes

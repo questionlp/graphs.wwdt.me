@@ -67,9 +67,9 @@ def create_app():
     ]
 
     # Check to see if panelistscore_decimal column exists and set a flag
-    app.config["app_settings"][
-        "has_decimal_scores_column"
-    ] = utility.panelist_decimal_score_exists(database_settings=app.config["database"])
+    app.config["app_settings"]["has_decimal_scores_column"] = (
+        utility.panelist_decimal_score_exists(database_settings=app.config["database"])
+    )
 
     # Register application blueprints
     app.register_blueprint(main_bp)
