@@ -1,5 +1,11 @@
 # Changes
 
+## 2.8.4
+
+### Component Changes
+
+- Upgrade wwdtm from 2.8.2 to 2.10.0, which requires Wait Wait Stats Database version 4.7 or higher
+
 ## 2.8.3
 
 ### Component Changes
