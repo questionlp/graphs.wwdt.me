@@ -1,5 +1,11 @@
 # Changes
 
+## 2.8.5
+
+### Application Changes
+
+- Change the footer font color to remove alpha transparency to improve readability
+
 ## 2.8.4
 
 ### Component Changes
