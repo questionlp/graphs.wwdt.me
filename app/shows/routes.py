@@ -53,20 +53,20 @@ def all_scores_by_year(year: int) -> Response | str:
 
     database_connection = connect(**current_app.config["database"])
     _show = Show(database_connection=database_connection)
-    all_scores = _show.retrieve_scores_by_year(
+    _all_scores = _show.retrieve_scores_by_year(
         year,
         use_decimal_scores=current_app.config["app_settings"]["use_decimal_scores"],
     )
     database_connection.close()
 
-    if not all_scores:
+    if not _all_scores:
         return render_template("shows/all-scores/details.html", year=year, shows=None)
 
     shows = []
     scores_1 = []
     scores_2 = []
     scores_3 = []
-    for show in all_scores:
+    for show in _all_scores:
         shows.append(show[0])
         if current_app.config["app_settings"]["use_decimal_scores"]:
             scores_1.append(float(show[1]))
@@ -259,19 +259,19 @@ def counts_by_year() -> Response | str:
 @blueprint.route("/monthly-aggregate-score-heatmap")
 def monthly_aggregate_score_heatmap() -> str:
     """View: Monthly Aggregate Score Heatmap."""
-    all_scores = scores.retrieve_monthly_aggregate_scores(
+    _all_scores = scores.retrieve_monthly_aggregate_scores(
         use_decimal_scores=current_app.config["app_settings"]["use_decimal_scores"]
     )
 
-    if not all_scores:
+    if not _all_scores:
         return render_template(
             "shows/monthly-aggregate-score-heatmap/graph.html", years=None, scores=None
         )
 
     scores_list = []
-    years = list(all_scores.keys())
-    for year in all_scores:
-        scores_list.append(list(all_scores[year].values()))
+    years = list(_all_scores.keys())
+    for year in _all_scores:
+        scores_list.append(list(_all_scores[year].values()))
 
     return render_template(
         "shows/monthly-aggregate-score-heatmap/graph.html",
@@ -283,19 +283,19 @@ def monthly_aggregate_score_heatmap() -> str:
 @blueprint.route("/monthly-average-score-heatmap")
 def monthly_average_score_heatmap() -> str:
     """View: Monthly Average Score Heatmap."""
-    all_scores = scores.retrieve_monthly_average_scores(
+    _all_scores = scores.retrieve_monthly_average_scores(
         use_decimal_scores=current_app.config["app_settings"]["use_decimal_scores"]
     )
 
-    if not all_scores:
+    if not _all_scores:
         return render_template(
             "shows/monthly-average-score-heatmap/graph.html", years=None, scores=None
         )
 
     scores_list = []
-    years = list(all_scores.keys())
-    for year in all_scores:
-        scores_list.append(list(all_scores[year].values()))
+    years = list(_all_scores.keys())
+    for year in _all_scores:
+        scores_list.append(list(_all_scores[year].values()))
 
     return render_template(
         "shows/monthly-average-score-heatmap/graph.html",
