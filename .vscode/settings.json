@@ -7,6 +7,9 @@
             "source.fixAll": "explicit",
             "source.sortImports": "explicit",
         },
-        "editor.defaultFormatter": "ms-python.black-formatter"
-    }
+        "editor.defaultFormatter": "ms-python.black-formatter",
+    },
+    "pylint.args": [
+        "--disable=C0206"
+    ],
 }

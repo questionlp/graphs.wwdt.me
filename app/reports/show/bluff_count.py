@@ -7,6 +7,8 @@
 from flask import current_app
 from mysql.connector import connect
 
+from app.reports.show.scores import month_mapping_dict
+
 
 def build_bluff_data_dict() -> dict:
     """Return a dictionary used to populate Bluff the Listener data."""
@@ -30,24 +32,14 @@ def build_bluff_data_year_month_dict() -> dict | None:
     """Return a dictionary used to populate Bluff the Listener data."""
     database_connection = connect(**current_app.config["database"])
 
-    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
-    query = (
-        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
-        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
-    )
-    cursor = database_connection.cursor()
-    cursor.execute(query)
-    _ = cursor.fetchall()
-    cursor.close()
-
     query = """
-        SELECT date_format(s.showdate, '%b %Y') AS date
+        SELECT MONTH(s.showdate) AS month, YEAR(s.showdate) AS year
         FROM ww_shows s
         JOIN ww_showbluffmap blm ON blm.showid = s.showid
         WHERE blm.correctbluffpnlid IS NOT NULL
         OR blm.chosenbluffpnlid IS NOT NULL
         GROUP BY YEAR(s.showdate), MONTH(s.showdate)
-        ORDER BY s.showdate ASC;
+        ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
         """
     cursor = database_connection.cursor(named_tuple=True)
     cursor.execute(query)
@@ -58,9 +50,11 @@ def build_bluff_data_year_month_dict() -> dict | None:
     if not result:
         return None
 
+    _months = month_mapping_dict()
     year_month = {}
+
     for row in result:
-        year_month[row.date] = {"correct": 0, "incorrect": 0}
+        year_month[f"{_months[row.month]} {row.year}"] = {"correct": 0, "incorrect": 0}
 
     return year_month
 
@@ -70,31 +64,23 @@ def retrieve_all_bluff_counts() -> dict | None:
     bluff_data = build_bluff_data_year_month_dict()
     database_connection = connect(**current_app.config["database"])
 
-    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
-    query = (
-        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
-        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
-    )
-    cursor = database_connection.cursor()
-    cursor.execute(query)
-    _ = cursor.fetchall()
-    cursor.close()
-
     # Retrieve counts where listener contestant chose the
     # correct Bluff story
     query = """
-        SELECT date_format(s.showdate, '%b %Y') AS date,
+        SELECT MONTH(s.showdate) AS month, YEAR(s.showdate) AS year,
         COUNT(s.showdate) AS correct
         FROM ww_showbluffmap blm
         JOIN ww_shows s ON s.showid = blm.showid
         WHERE s.repeatshowid IS NULL
         AND chosenbluffpnlid IS NOT NULL
         AND correctbluffpnlid IS NOT NULL
-        AND ((s.bestof = 0) OR
-             (s.bestof = 1 AND s.bestofuniquebluff = 1))
+        AND (
+            (s.bestof = 0) OR
+            (s.bestof = 1 AND s.bestofuniquebluff = 1)
+        )
         AND chosenbluffpnlid = correctbluffpnlid
         GROUP BY year(s.showdate), month(s.showdate)
-        ORDER BY s.showdate ASC;
+        ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
         """
     cursor = database_connection.cursor(named_tuple=True)
     cursor.execute(query)
@@ -103,18 +89,20 @@ def retrieve_all_bluff_counts() -> dict | None:
     # Retrieve counts where listener contestant chose the
     # incorrect Bluff story
     query = """
-        SELECT date_format(s.showdate, '%b %Y') AS date,
+        SELECT MONTH(s.showdate) AS month, YEAR(s.showdate) AS year,
         COUNT(s.showdate) AS incorrect
         FROM ww_showbluffmap blm
         JOIN ww_shows s ON s.showid = blm.showid
         WHERE s.repeatshowid IS NULL
         AND chosenbluffpnlid IS NOT NULL
         AND correctbluffpnlid IS NOT NULL
-        AND ((s.bestof = 0) OR
-             (s.bestof = 1 AND s.bestofuniquebluff = 1))
+        AND (
+            (s.bestof = 0) OR
+            (s.bestof = 1 AND s.bestofuniquebluff = 1)
+        )
         AND chosenbluffpnlid <> correctbluffpnlid
         GROUP BY year(s.showdate), month(s.showdate)
-        ORDER BY s.showdate ASC
+        ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
         """
     cursor = database_connection.cursor(named_tuple=True)
     cursor.execute(query)
@@ -125,11 +113,12 @@ def retrieve_all_bluff_counts() -> dict | None:
     if not correct_result and not incorrect_result:
         return None
 
+    _months = month_mapping_dict()
     for row in correct_result:
-        bluff_data[row.date]["correct"] = row.correct
+        bluff_data[f"{_months[row.month]} {row.year}"]["correct"] = row.correct
 
     for row in incorrect_result:
-        bluff_data[row.date]["incorrect"] = row.incorrect
+        bluff_data[f"{_months[row.month]} {row.year}"]["incorrect"] = row.incorrect
 
     return bluff_data
 
@@ -139,21 +128,10 @@ def retrieve_bluff_count_year(year: int) -> dict | None:
     bluff_data = build_bluff_data_dict()
     database_connection = connect(**current_app.config["database"])
 
-    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
-    query = (
-        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
-        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
-    )
-    cursor = database_connection.cursor()
-    cursor.execute(query)
-    _ = cursor.fetchall()
-    cursor.close()
-
     # Retrieve counts where listener contestant chose the
     # correct Bluff story
     query = """
-        SELECT YEAR(s.showdate) as year,
-        DATE_FORMAT(s.showdate, '%b') AS month,
+        SELECT YEAR(s.showdate) as year, MONTH(s.showdate) AS month,
         COUNT(s.showdate) AS correct
         FROM ww_showbluffmap blm
         JOIN ww_shows s ON s.showid = blm.showid
@@ -161,11 +139,13 @@ def retrieve_bluff_count_year(year: int) -> dict | None:
         AND s.repeatshowid IS NULL
         AND chosenbluffpnlid IS NOT NULL
         AND correctbluffpnlid IS NOT NULL
-        AND ((s.bestof = 0) OR
-             (s.bestof = 1 AND s.bestofuniquebluff = 1))
+        AND (
+            (s.bestof = 0) OR
+            (s.bestof = 1 AND s.bestofuniquebluff = 1)
+        )
         AND chosenbluffpnlid = correctbluffpnlid
-        GROUP BY YEAR (s.showdate), MONTH(s.showdate)
-        ORDER BY s.showdate ASC;
+        GROUP BY YEAR(s.showdate), MONTH(s.showdate)
+        ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
         """
     cursor = database_connection.cursor(named_tuple=True)
     cursor.execute(query, (year,))
@@ -174,8 +154,7 @@ def retrieve_bluff_count_year(year: int) -> dict | None:
     # Retrieve counts where listener contestant chose the
     # incorrect Bluff story
     query = """
-        SELECT YEAR(s.showdate) as year,
-        DATE_FORMAT(s.showdate, '%b') AS month,
+        SELECT YEAR(s.showdate) as year, MONTH(s.showdate) AS month,
         COUNT(s.showdate) AS incorrect
         FROM ww_showbluffmap blm
         JOIN ww_shows s ON s.showid = blm.showid
@@ -183,11 +162,13 @@ def retrieve_bluff_count_year(year: int) -> dict | None:
         AND s.repeatshowid IS NULL
         AND chosenbluffpnlid IS NOT NULL
         AND correctbluffpnlid IS NOT NULL
-        AND ((s.bestof = 0) OR
-             (s.bestof = 1 AND s.bestofuniquebluff = 1))
+        AND (
+            (s.bestof = 0) OR
+            (s.bestof = 1 AND s.bestofuniquebluff = 1)
+        )
         AND chosenbluffpnlid <> correctbluffpnlid
         GROUP BY YEAR (s.showdate), MONTH(s.showdate)
-        ORDER BY s.showdate ASC;
+        ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
         """
     cursor = database_connection.cursor(named_tuple=True)
     cursor.execute(query, (year,))
@@ -198,10 +179,11 @@ def retrieve_bluff_count_year(year: int) -> dict | None:
     if not correct_result and not incorrect_result:
         return None
 
+    _months = month_mapping_dict()
     for row in correct_result:
-        bluff_data[row.month]["correct"] = row.correct
+        bluff_data[_months[row.month]]["correct"] = row.correct
 
     for row in incorrect_result:
-        bluff_data[row.month]["incorrect"] = row.incorrect
+        bluff_data[_months[row.month]]["incorrect"] = row.incorrect
 
     return bluff_data
