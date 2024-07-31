@@ -8,6 +8,24 @@ from flask import current_app
 from mysql.connector import connect
 
 
+def month_mapping_dict() -> dict:
+    """Return a dictionary with month number as key and abbreviation as value."""
+    return {
+        1: "Jan",
+        2: "Feb",
+        3: "Mar",
+        4: "Apr",
+        5: "May",
+        6: "Jun",
+        7: "Jul",
+        8: "Aug",
+        9: "Sep",
+        10: "Oct",
+        11: "Nov",
+        12: "Dec",
+    }
+
+
 def build_year_scoring_dict() -> dict:
     """Return a dictionary that will be used to populate panelist scoring data."""
     return {
@@ -35,16 +53,6 @@ def build_all_scoring_dict(use_decimal_scores: bool = False) -> dict | None:
         return None
 
     database_connection = connect(**current_app.config["database"])
-
-    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
-    query = (
-        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
-        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
-    )
-    cursor = database_connection.cursor()
-    cursor.execute(query)
-    _ = cursor.fetchall()
-    cursor.close()
 
     if use_decimal_scores:
         query = """
@@ -92,42 +100,27 @@ def retrieve_monthly_aggregate_scores(use_decimal_scores: bool = False) -> dict 
 
     database_connection = connect(**current_app.config["database"])
 
-    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
-
-    query = (
-        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
-        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
-    )
-    cursor = database_connection.cursor()
-    cursor.execute(query)
-    _ = cursor.fetchall()
-    cursor.close()
-
     if use_decimal_scores:
         query = """
-            SELECT YEAR(s.showdate) AS year,
-            DATE_FORMAT(s.showdate, '%b') AS month,
+            SELECT YEAR(s.showdate) AS year, MONTH(s.showdate) AS month,
             SUM(pm.panelistscore_decimal) AS total
             FROM ww_showpnlmap pm
             JOIN ww_shows s ON s.showid = pm.showid
-            WHERE s.bestof = 0
-            AND s.repeatshowid IS NULL
+            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
             GROUP BY YEAR(s.showdate), MONTH(s.showdate)
             HAVING SUM(pm.panelistscore_decimal) IS NOT NULL
-            ORDER BY YEAR(s.showdate), MONTH(s.showdate);
+            ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
             """
     else:
         query = """
-            SELECT YEAR(s.showdate) AS year,
-            DATE_FORMAT(s.showdate, '%b') AS month,
+            SELECT YEAR(s.showdate) AS year, MONTH(s.showdate) AS month,
             SUM(pm.panelistscore) AS total
             FROM ww_showpnlmap pm
             JOIN ww_shows s ON s.showid = pm.showid
-            WHERE s.bestof = 0
-            AND s.repeatshowid IS NULL
+            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
             GROUP BY YEAR(s.showdate), MONTH(s.showdate)
             HAVING SUM(pm.panelistscore) IS NOT NULL
-            ORDER BY YEAR(s.showdate), MONTH(s.showdate);
+            ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
             """
     cursor = database_connection.cursor(named_tuple=True)
     cursor.execute(query)
@@ -138,9 +131,10 @@ def retrieve_monthly_aggregate_scores(use_decimal_scores: bool = False) -> dict 
     if not result:
         return None
 
+    _months = month_mapping_dict()
     all_scores_dict = build_all_scoring_dict()
     for row in result:
-        all_scores_dict[row.year][row.month] = int(row.total)
+        all_scores_dict[row.year][_months[row.month]] = int(row.total)
 
     return all_scores_dict
 
@@ -155,41 +149,27 @@ def retrieve_monthly_average_scores(use_decimal_scores: bool = False) -> dict | 
 
     database_connection = connect(**current_app.config["database"])
 
-    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
-    query = (
-        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
-        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
-    )
-    cursor = database_connection.cursor()
-    cursor.execute(query)
-    _ = cursor.fetchall()
-    cursor.close()
-
     if use_decimal_scores:
         query = """
-            SELECT YEAR(s.showdate) AS year,
-            DATE_FORMAT(s.showdate, '%b') AS month,
+            SELECT YEAR(s.showdate) AS year, MONTH(s.showdate) AS month,
             AVG(pm.panelistscore_decimal) AS average
             FROM ww_showpnlmap pm
             JOIN ww_shows s ON s.showid = pm.showid
-            WHERE s.bestof = 0
-            AND s.repeatshowid IS NULL
+            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
             GROUP BY YEAR(s.showdate), MONTH(s.showdate)
             HAVING AVG(pm.panelistscore_decimal) IS NOT NULL
-            ORDER BY YEAR(s.showdate), MONTH(s.showdate);
+            ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
             """
     else:
         query = """
-            SELECT YEAR(s.showdate) AS year,
-            DATE_FORMAT(s.showdate, '%b') AS month,
+            SELECT YEAR(s.showdate) AS year, MONTH(s.showdate) AS month,
             AVG(pm.panelistscore) AS average
             FROM ww_showpnlmap pm
             JOIN ww_shows s ON s.showid = pm.showid
-            WHERE s.bestof = 0
-            AND s.repeatshowid IS NULL
+            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
             GROUP BY YEAR(s.showdate), MONTH(s.showdate)
             HAVING AVG(pm.panelistscore) IS NOT NULL
-            ORDER BY YEAR(s.showdate), MONTH(s.showdate);
+            ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
             """
     cursor = database_connection.cursor(named_tuple=True)
     cursor.execute(
@@ -202,8 +182,9 @@ def retrieve_monthly_average_scores(use_decimal_scores: bool = False) -> dict | 
     if not result:
         return None
 
+    _months = month_mapping_dict()
     all_scores_dict = build_all_scoring_dict()
     for row in result:
-        all_scores_dict[row.year][row.month] = float(row.average)
+        all_scores_dict[row.year][_months[row.month]] = float(row.average)
 
     return all_scores_dict

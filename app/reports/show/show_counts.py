@@ -9,23 +9,16 @@ from mysql.connector import connect
 
 
 def retrieve_show_counts_by_year() -> dict[int, int] | None:
-    """Retrieve the number of Regular, Best Of, Repeat and Repeat/Best Of shows broken down by year."""
-    database_connection = connect(**current_app.config["database"])
+    """Retrieve the number of shows broken down by year.
 
-    # Override session SQL mode value to unset ONLY_FULL_GROUP_BY
-    query = (
-        "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,"
-        "NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';"
-    )
-    cursor = database_connection.cursor()
-    cursor.execute(query)
-    _ = cursor.fetchall()
-    cursor.close()
+    Breakdown includes Regular, Best Of, Repeat and Repeat/Best Of shows.
+    """
+    database_connection = connect(**current_app.config["database"])
 
     query = """
         SELECT DISTINCT YEAR(showdate) AS 'year'
         FROM ww_shows
-        ORDER BY showdate ASC;
+        ORDER BY YEAR(showdate) ASC;
         """
     cursor = database_connection.cursor(named_tuple=True)
     cursor.execute(query)
@@ -43,18 +36,26 @@ def retrieve_show_counts_by_year() -> dict[int, int] | None:
     for year in years:
         query = """
             SELECT
-            (SELECT COUNT(showid) FROM ww_shows
-             WHERE YEAR(showdate) = %s AND showdate <= NOW()
-             AND bestof = 0 AND repeatshowid IS NULL) AS 'regular',
-            (SELECT COUNT(showid) FROM ww_shows
-             WHERE YEAR(showdate) = %s AND showdate <= NOW()
-             AND bestof = 1 AND repeatshowid IS NULL) AS 'bestof',
-            (SELECT COUNT(showid) FROM ww_shows
-             WHERE YEAR(showdate) = %s AND showdate <= NOW()
-             AND bestof = 0 AND repeatshowid IS NOT NULL) AS 'repeat',
-            (SELECT COUNT(showid) FROM ww_shows
-             WHERE YEAR(showdate) = %s AND showdate <= NOW()
-             AND bestof = 1 AND repeatshowid IS NOT NULL) AS 'repeat_bestof';
+            (
+                SELECT COUNT(showid) FROM ww_shows
+                WHERE YEAR(showdate) = %s AND showdate <= NOW()
+                AND bestof = 0 AND repeatshowid IS NULL
+            ) AS 'regular',
+            (
+                SELECT COUNT(showid) FROM ww_shows
+                WHERE YEAR(showdate) = %s AND showdate <= NOW()
+                AND bestof = 1 AND repeatshowid IS NULL
+            ) AS 'bestof',
+            (
+                SELECT COUNT(showid) FROM ww_shows
+                WHERE YEAR(showdate) = %s AND showdate <= NOW()
+                AND bestof = 0 AND repeatshowid IS NOT NULL
+            ) AS 'repeat',
+            (
+                SELECT COUNT(showid) FROM ww_shows
+                WHERE YEAR(showdate) = %s AND showdate <= NOW()
+                AND bestof = 1 AND repeatshowid IS NOT NULL
+            ) AS 'repeat_bestof';
             """
         cursor = database_connection.cursor(named_tuple=True)
         cursor.execute(
