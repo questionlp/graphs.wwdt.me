@@ -16,6 +16,14 @@
         "api_url": "",
         "blog_url": "",
         "ga_property_code": null,
+        "umami_analytics": {
+            "_enabled": false,
+            "url": "",
+            "data_website_id": "",
+            "data_domains": "",
+            "data_host_url": "",
+            "data_auto_track": true
+        },
         "graphs_url": "",
         "repo_url": "https://github.com/questionlp/graphs.wwdt.me_v2",
         "reports_url": "",
