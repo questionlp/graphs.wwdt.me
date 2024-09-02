@@ -1,46 +1,40 @@
 {% extends "base.html" %}
-{% set page_title = "Scores by Appearance" %}
-{% block title %}{{ info.name }} | {{ page_title }} | Panelists{% endblock %}
+{% block title %}{{ info.name }} | Scores by Appearance | Panelists{% endblock %}
 
 {% block content %}
-<div class="page-breadcrumb hide-on-small-only">
-    <ul>
-        <li>
-            <a href="{{ url_for('main.index') }}">Home</a>
-        </li>
-        <li>
-            <a href="{{ url_for('panelists.index') }}">Panelists</a>
-        </li>
-        <li>
-            <a href="{{ url_for('panelists.scores_by_appearance') }}">{{ page_title }}</a>
-        </li>
-        <li>
-            {{ info.name }}
-        </li>
-    </ul>
-</div>
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('panelists.index') }}">Panelists</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('panelists.scores_by_appearance') }}">Scores by Appearance</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ info.name }}</li>
+    </ol>
+</nav>
 
-<h1>{{ info.name }}</h1>
+<h2>Scores by Appearance</h2>
 
 {% if shows and scores %}
 <p>
     This chart displays scores for all of
-    <a href="{{ stats_url }}/panelists/{{ info.slug }}">{{ info.name }}</a>'s
+    <a href="{{ stats_url }}/panelists/{{ info.slug }}">{{ info.name }}'s</a>
     appearances, excluding Best Of and repeat shows.
 </p>
 
-<div id="ww-chart"></div>
+<div class="info py-2">
+    <div id="ww-chart"></div>
+</div>
 
 <script>
     // Set default colors
-    let axisColor = "#212121";
+    let axisColor = "#000";
     let backgroundColor = "#fff";
+    let markerColor = "#0043ce";
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        axisColor = "#f5f5f5";
-        backgroundColor = "#202124";
+        axisColor = "#fff";
+        backgroundColor = "#161616";
+        markerColor = "#78a9ff";
     }
 
     let data = [
@@ -49,7 +43,10 @@
             y: {{ scores|safe }},
             name: "Score",
             showlegend: true,
-            type: "bar"
+            type: "bar",
+            marker: {
+                color: markerColor
+            }
         }
     ];
 
@@ -86,7 +83,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }} for {{ info.name|safe }}"
+            text: "Scores by Appearance for {{ info.name|safe }}"
         },
         xaxis: {
             color: axisColor,

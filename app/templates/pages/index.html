@@ -2,7 +2,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Wait Wait Don't Tell Me! Graphs</h1>
+<h2 id="welcome">Wait Wait Don't Tell Me! Graphs</h2>
 <p>
     This site provides a charts and graphs that represent information
     based on the data stored in the
@@ -17,51 +17,55 @@
     page.
 </p>
 
-<ul class="collection with-header">
-    <li class="collection-header">
-        <h2>Panelists</h2>
-    </li>
-    <li class="collection-item">
-        <a href="{{ url_for('panelists.aggregate_scores') }}">Aggregate Scores</a>
-    </li>
-    <li class="collection-item">
-        <a href="{{ url_for('panelists.appearances_by_year') }}">Appearances by Year</a>
-    </li>
-    <li class="collection-item">
-        <a href="{{ url_for('panelists.score_breakdown') }}">Score Breakdown</a>
-    </li>
-    <li class="collection-item">
-        <a href="{{ url_for('panelists.scores_by_appearance') }}">Scores by Appearance</a>
-    </li>
-</ul>
+<div class="info">
+    <div class="pages">
+        <ul class="list-group page-list">
+            <li class="list-group-item">
+                <h3>Panelists</h3>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('panelists.aggregate_scores') }}">Aggregate Scores</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('panelists.appearances_by_year') }}">Appearances by Year</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('panelists.score_breakdown') }}">Score Breakdown</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('panelists.scores_by_appearance') }}">Scores by Appearance</a>
+            </li>
+        </ul>
+    </div>
 
-<br>
-
-<ul class="collection with-header">
-    <li class="collection-header">
-        <h2>Shows</h2>
-    </li>
-    <li class="collection-item">
-        <a href="{{ url_for('shows.all_scores') }}">All Scores</a>
-    </li>
-    <li class="collection-item">
-        <a href="{{ url_for('shows.bluff_counts') }}">Bluff the Listener Counts</a>
-    </li>
-    <li class="collection-item">
-        <a href="{{ url_for('shows.counts_by_day_of_month') }}">Counts by Day of Month</a>
-    </li>
-    <li class="collection-item">
-        <a href="{{ url_for('shows.counts_by_year') }}">Counts by Year</a>
-    </li>
-    <li class="collection-item">
-        <a href="{{ url_for('shows.monthly_aggregate_score_heatmap') }}">Monthly Aggregate Score Heatmap</a>
-    </li>
-    <li class="collection-item">
-        <a href="{{ url_for('shows.monthly_average_score_heatmap') }}">Monthly Average Score Heatmap</a>
-    </li>
-    <li class="collection-item">
-        <a href="{{ url_for('shows.panel_gender_mix') }}">Panel Gender Mix</a>
-    </li>
-</ul>
+    <div class="pages">
+        <ul class="list-group page-list">
+            <li class="list-group-item">
+                <h3>Shows</h3>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('shows.all_scores') }}">All Scores</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('shows.bluff_counts') }}">Bluff the Listener Counts</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('shows.counts_by_day_of_month') }}">Counts by Day of Month</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('shows.counts_by_year') }}">Counts by Year</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('shows.monthly_aggregate_score_heatmap') }}">Monthly Aggregate Score Heatmap</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('shows.monthly_average_score_heatmap') }}">Monthly Average Score Heatmap</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('shows.panel_gender_mix') }}">Panel Gender Mix</a>
+            </li>
+        </ul>
+    </div>
+</div>
 
 {% endblock %}
