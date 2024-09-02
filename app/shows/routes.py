@@ -318,6 +318,7 @@ def panel_gender_mix() -> Response | str:
     panel_2f = []
     panel_3f = []
 
+    # pylint: disable=C0206
     for year in panel_mix:
         years.append(year)
         panel_0f.append(panel_mix[year]["0F"])
