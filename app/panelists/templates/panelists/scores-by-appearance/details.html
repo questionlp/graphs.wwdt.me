@@ -39,8 +39,8 @@
 
     let data = [
         {
-            x: {{ shows|safe }},
-            y: {{ scores|safe }},
+            x: {{ shows | safe }},
+            y: {{ scores | safe }},
             name: "Score",
             showlegend: true,
             type: "bar",
@@ -83,7 +83,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Scores by Appearance for {{ info.name|safe }}"
+            text: "Scores by Appearance for {{ info.name | safe }}"
         },
         xaxis: {
             color: axisColor,

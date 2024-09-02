@@ -40,7 +40,7 @@
 
     // Set y-axis dtick value
     let yAxisdTick = 2;
-    let scoreCounts = {{ scores.count|safe }};
+    let scoreCounts = {{ scores.count | safe }};
     let maxCount = Math.max.apply(Math, scoreCounts);
     if (maxCount <= 3) {
         yAxisdTick = 1;
@@ -48,7 +48,7 @@
 
     let data = [
         {
-            x: {{ scores.score|safe }},
+            x: {{ scores.score | safe }},
             y: scoreCounts,
             name: "Count",
             type: "bar",
@@ -92,7 +92,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Score Breakdown for {{ info.name|safe }}"
+            text: "Score Breakdown for {{ info.name | safe }}"
         },
         xaxis: {
             color: axisColor,

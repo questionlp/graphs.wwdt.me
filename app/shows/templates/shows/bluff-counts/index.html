@@ -1,37 +1,34 @@
 {% extends "base.html" %}
 {% set page_title="Bluff the Listener Counts" %}
-{% block title %}{{ page_title }} | Shows{% endblock %}
+{% block title %}Bluff the Listener Counts | Shows{% endblock %}
 
 {% block content %}
-<div class="page-breadcrumb hide-on-small-only">
-    <ul>
-        <li>
-            <a href="{{ url_for('main.index') }}">Home</a>
-        </li>
-        <li>
-            <a href="{{ url_for('shows.index') }}">Shows</a>
-        </li>
-        <li>
-            {{ page_title }}
-        </li>
-    </ul>
-</div>
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Bluff the Listener Counts</li>
+    </ol>
+</nav>
 
-<h1>{{ page_title }}</h1>
+<h2>Bluff the Listener Counts</h2>
 <p>
     Choose from one of the years below to view the available Bluff the Listener
     counts data for that year.
 </p>
 
-<ul class="collection">
-    <li class="collection-item">
-        <a href="{{ url_for('shows.bluff_counts_all') }}">All</a>
-    </li>
-    {% for year in show_years %}
-    <li class="collection-item">
-        <a href="{{ url_for('shows.bluff_counts_by_year', year=year) }}">{{ year }}</a>
-    </li>
-    {% endfor %}
-</ul>
+<div class="info">
+    <div class="pages">
+        <ul class="list-group page-list">
+            <li class="list-group-item">
+                <a href="{{ url_for('shows.bluff_counts_all') }}">All</a>
+            </li>
+            {% for year in show_years %}
+            <li class="list-group-item">
+                <a href="{{ url_for('shows.bluff_counts_by_year', year=year) }}">{{ year }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 
 {% endblock %}

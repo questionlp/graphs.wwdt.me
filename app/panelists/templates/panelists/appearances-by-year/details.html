@@ -40,7 +40,7 @@
 
     // Set y-axis dtick value
     let yAxisdTick = 2;
-    let appearanceCounts = {{ count|safe }};
+    let appearanceCounts = {{ count | safe }};
     let maxCount = Math.max.apply(Math, appearanceCounts);
     if (maxCount <= 3) {
         yAxisdTick = 1;
@@ -48,7 +48,7 @@
 
     let data = [
         {
-            x: {{ years|safe }},
+            x: {{ years | safe }},
             y: appearanceCounts,
             name: "Appearances",
             showlegend: true,
@@ -92,7 +92,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }} for {{ info.name|safe }}"
+            text: "{{ page_title }} for {{ info.name | safe }}"
         },
         xaxis: {
             color: axisColor,
