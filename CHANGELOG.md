@@ -22,6 +22,7 @@
 - Replace Materialize CSS 1.2.2 with Bootstrap 5.3.3
   - Existing Materialize CSS and JS files will be preserved to prevent cached versions of the application from breaking
   - Materialize-related files will be removed in a future minor release
+- Upgrade Plotly.js from 2.25.2 to 2.28.0 (stable) and from 2.28.0 to 2.35.0 (latest)
 
 ## 2.10.1
 
