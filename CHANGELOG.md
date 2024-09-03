@@ -13,6 +13,7 @@
   - Change the behavior of the main navigation to combine navigation links into a single list that are listed in the top navbar on `xl` screen size or in an off-canvas side nav on smaller screens
   - Improve legibility and readability in font size changes and increased color contrast when using the dark mode color theme
   - Include a color theme toggle in the main navigation to allow the reader to switch the theme on-the-fly
+    - **Note**: When switching color themes on a page that contains a chart, you will need to reload the page in order to render the chart in a matching color theme.
 - Fix warnings and errors reported by pylint
 - Add an experimental `block_ai_scrapers` config key that will block known AI scraping and crawling bots (default: false)
 
