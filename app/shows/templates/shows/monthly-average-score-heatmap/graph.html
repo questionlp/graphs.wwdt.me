@@ -1,23 +1,16 @@
 {% extends "base.html" %}
 {% set page_title="Monthly Average Score Heatmap" %}
-{% block title %}{{ page_title }} | Shows{% endblock %}
+{% block title %}Monthly Average Score Heatmap | Shows{% endblock %}
 
 {% block content %}
-<div class="page-breadcrumb hide-on-small-only">
-    <ul>
-        <li>
-            <a href="{{ url_for('main.index') }}">Home</a>
-        </li>
-        <li>
-            <a href="{{ url_for('shows.index') }}">Shows</a>
-        </li>
-        <li>
-            {{ page_title }}
-        </li>
-    </ul>
-</div>
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Monthly Average Score Heatmap</li>
+    </ol>
+</nav>
 
-<h1>{{ page_title }}</h1>
+<h2>{{ page_title }}</h2>
 
 {% if years and scores %}
 <p>
@@ -25,18 +18,20 @@
     basis.
 </p>
 
-<div id="ww-chart"></div>
+<div class="info py-2">
+    <div id="ww-chart"></div>
+</div>
 
 <script>
     // Set default colors and font list
-    let axisColor = "#212121";
+    let axisColor = "#000";
     let backgroundColor = "#fff";
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        axisColor = "#f5f5f5";
-        backgroundColor = "#202124";
+        axisColor = "#fff";
+        backgroundColor = "#161616";
     }
 
     let months = [
@@ -53,8 +48,8 @@
         "November",
         "December"
     ];
-    let years = {{ years|safe }};
-    let scores = {{ scores|safe }};
+    let years = {{ years | safe }};
+    let scores = {{ scores | safe }};
 
     let data = [
         {
@@ -69,9 +64,9 @@
                 }
             },
             colorscale: [
-                [0, "#000000"],
+                [0, "#000"],
                 [0.5, "#7a2800"],
-                [0.875, "#f55000"],
+                [0.75, "#f55000"],
                 [1, "#ff8a52"]
             ],
             hoverongaps: false,
@@ -105,7 +100,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }}"
+            text: "Monthly Average Score Heatmap"
         },
         xaxis: {
             color: axisColor,
