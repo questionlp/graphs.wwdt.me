@@ -9,7 +9,6 @@
 
     const getStoredTheme = () => localStorage.getItem('theme')
     const setStoredTheme = theme => localStorage.setItem('theme', theme)
-    const wwChart = document.querySelector("#ww-chart");
 
     const getPreferredTheme = () => {
         const storedTheme = getStoredTheme()
@@ -23,10 +22,8 @@
     const setTheme = theme => {
         if (theme === 'auto') {
             document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
-            wwChart.setAttribute("theme", theme);
         } else {
             document.documentElement.setAttribute('data-bs-theme', theme)
-            wwChart.setAttribute("theme", theme);
         }
     }
 
