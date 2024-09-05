@@ -1,35 +1,32 @@
 {% extends "base.html" %}
 {% set page_title = "Scores by Appearance" %}
-{% block title %}{{ page_title }} | Panelists{% endblock %}
+{% block title %}Scores by Appearance | Panelists{% endblock %}
 
 {% block content %}
-<div class="page-breadcrumb hide-on-small-only">
-    <ul>
-        <li>
-            <a href="{{ url_for('main.index') }}">Home</a>
-        </li>
-        <li>
-            <a href="{{ url_for('panelists.index') }}">Panelists</a>
-        </li>
-        <li>
-            {{ page_title }}
-        </li>
-    </ul>
-</div>
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('panelists.index') }}">Panelists</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Scores by Appearance</li>
+    </ol>
+</nav>
 
-<h1>{{ page_title }}</h1>
+<h2>Scores by Appearance</h2>
 <p>
     Choose from one of the panelists below to view a chart displaying
     their scores for each of their appearances (excluding Best Of and repeat
     shows).
 </p>
 
-<ul class="collection">
-    {% for panelist in panelists %}
-    <li class="collection-item">
-        <a href="{{ url_for('panelists.scores_by_appearance_details', panelist=panelist.slug) }}">{{ panelist.name }}</a>
-    </li>
-    {% endfor %}
-</ul>
+<div class="info">
+    <div class="panelists">
+        <ul class="list-group name-list">
+            {% for panelist in panelists %}
+            <li class="list-group-item">
+                <a href="{{ url_for('panelists.scores_by_appearance_details', panelist=panelist.slug) }}">{{ panelist.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 
 {% endblock %}

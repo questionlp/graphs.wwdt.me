@@ -31,6 +31,8 @@ If you would like to help sponsor the continued development and maintenance of t
 
 ## License
 
-This web application is licensed under the terms of the [Apache License 2.0](./LICENSE).
+This web application is licensed under the terms of the [Apache License 2.0](./LICENSE), unless otherwise noted.
 
-Original version of the Apache License 2.0 can also be found at: <http://www.apache.org/licenses/LICENSE-2.0>.
+[Bootstrap](https://github.com/twbs/bootstrap) and [Bootstrap Icons](https://github.com/twbs/icons) are both licensed under the terms of the [MIT License](https://github.com/twbs/bootstrap/blob/main/LICENSE).
+
+[IBM Plex](https://github.com/IBM/plex/) is licensed under the terms of the [SIL Open Font License Version 1.1](https://github.com/IBM/plex/blob/master/LICENSE.txt).
