@@ -1,50 +1,49 @@
 {% extends "base.html" %}
-{% set page_title = "Aggregate Scores" %}
-{% block title %}{{ page_title }} | Panelists{% endblock %}
+{% block title %}Aggregate Scores | Panelists{% endblock %}
 
 {% block content %}
-<div class="page-breadcrumb hide-on-small-only">
-    <ul>
-        <li>
-            <a href="{{ url_for('main.index') }}">Home</a>
-        </li>
-        <li>
-            <a href="{{ url_for('panelists.index') }}">Panelists</a>
-        </li>
-        <li>
-            {{ page_title }}
-        </li>
-    </ul>
-</div>
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('panelists.index') }}">Panelists</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Aggregate Scores</li>
+    </ol>
+</nav>
 
-<h1>{{ page_title }}</h1>
+<h2>Aggregate Scores</h2>
 
 {% if aggregate_scores.scores %}
 <p>
     This chart displays the score breakdown for all panelists scores.
 </p>
 
-<div id="ww-chart"></div>
+<div class="info py-2">
+    <div id="ww-chart"></div>
+</div>
 
 <script>
     // Set default colors
-    let axisColor = "#212121";
+    let axisColor = "#000";
     let backgroundColor = "#fff";
+    let markerColor = "#0043ce";
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        axisColor = "#f5f5f5";
-        backgroundColor = "#202124";
+        axisColor = "#fff";
+        backgroundColor = "#161616";
+        markerColor = "#78a9ff";
     }
 
     let data = [
         {
-            x: {{ aggregate_scores.scores|safe }},
-            y: {{ aggregate_scores.counts|safe }},
+            x: {{ aggregate_scores.scores | safe }},
+            y: {{ aggregate_scores.counts | safe }},
             name: "Count",
             showlegend: true,
-            type: "bar"
+            type: "bar",
+            marker: {
+                color: markerColor
+            }
         }
     ];
 
@@ -81,7 +80,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }} Breakdown"
+            text: "Aggregate Scores Breakdown"
         },
         xaxis: {
             color: axisColor,

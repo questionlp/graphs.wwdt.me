@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{% block title %}{% endblock %} | Wait Wait Don't Tell Me! Graphs Site</title>
+    <title>{% block title %}{% endblock %} | Wait Wait Don't Tell Me! Stats Page</title>
     {% include "errors/head.html" with context %}
 
     {% if ga_property_code %}
@@ -15,10 +15,10 @@
     </script>
     {% endif %}
 
-    {%- if umami_analytics -%}
+    {% if umami_analytics %}
     <!-- Umami Analytics -->
-    {{ umami_analytics|safe }}
-    {%- endif -%}
+    {{ umami_analytics | safe }}
+    {% endif %}
 </head>
 <body>
 <main>

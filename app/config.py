@@ -17,6 +17,7 @@ def load_config(
     connection_pool_name: str = "wwdtm_graphs",
     app_time_zone: str = "UTC",
 ) -> dict[str, dict[str, Any]]:
+    """Read configuration and database settings."""
     _config_file_path = Path(config_file_path)
     with _config_file_path.open(mode="r", encoding="utf-8") as config_file:
         app_config = json.load(config_file)
@@ -57,15 +58,6 @@ def load_config(
     settings_config["app_time_zone"] = time_zone_object
     settings_config["time_zone"] = time_zone_string
     database_config["time_zone"] = time_zone_string
-
-    # Read in setting on whether to use latest included version of Plotly JS
-    settings_config["use_latest_plotly"] = bool(
-        settings_config.get("use_latest_plotly", False)
-    )
-    # Read in setting on whether to use decimal scores
-    settings_config["use_decimal_scores"] = bool(
-        settings_config.get("use_decimal_scores", False)
-    )
 
     return {
         "database": database_config,

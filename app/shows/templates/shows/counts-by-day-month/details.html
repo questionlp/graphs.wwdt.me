@@ -1,26 +1,16 @@
 {% extends "base.html" %}
-{% set page_title="Counts by Day of Month" %}
-{% block title %}{{ month }} | {{ page_title }} | Shows{% endblock %}
+{% block title %}{{ month }} | Counts by Day of Month | Shows{% endblock %}
 
 {% block content %}
-<div class="page-breadcrumb hide-on-small-only">
-    <ul>
-        <li>
-            <a href="{{ url_for('main.index') }}">Home</a>
-        </li>
-        <li>
-            <a href="{{ url_for('shows.index') }}">Shows</a>
-        </li>
-        <li>
-            <a href="{{ url_for('shows.counts_by_day_of_month') }}">{{ page_title }}</a>
-        </li>
-        <li>
-            {{ month }}
-        </li>
-    </ul>
-</div>
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.counts_by_day_of_month') }}">Counts by Day of Month</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ month }}</li>
+    </ol>
+</nav>
 
-<h1>Counts by Day of Month for {{ month }}</h1>
+<h2>Counts by Day of Month for {{ month }}</h2>
 
 {% if days and regular_shows %}
 <p>
@@ -29,25 +19,39 @@
     repeat Best Of shows.
 </p>
 
-<div id="ww-chart"></div>
+<div class="info py-2">
+    <div id="ww-chart"></div>
+</div>
 
 <script>
     // Set default colors and font list
-    let axisColor = "#212121";
+    let axisColor = "#000";
     let backgroundColor = "#fff";
+    let colorway = [
+        "#0043ce",
+        "#ffc000",
+        "#ff7f0e",
+        "#198038"
+    ];
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        axisColor = "#f5f5f5";
-        backgroundColor = "#202124";
+        axisColor = "#fff";
+        backgroundColor = "#161616";
+        colorway = [
+            "#78a9ff",
+            "#ffc000",
+            "#ff7f0e",
+            "#6fdc8c"
+        ];
     }
 
-    let days = {{ days|safe }};
-    let regular_shows = {{ regular_shows|safe }};
-    let best_of_shows = {{ best_of_shows|safe }};
-    let repeat_shows = {{ repeat_shows|safe }};
-    let repeat_best_of_shows = {{ repeat_best_of_shows|safe }};
+    let days = {{ days | safe }};
+    let regular_shows = {{ regular_shows | safe }};
+    let best_of_shows = {{ best_of_shows | safe }};
+    let repeat_shows = {{ repeat_shows | safe }};
+    let repeat_best_of_shows = {{ repeat_best_of_shows | safe }};
 
     let data = [
         {
@@ -79,12 +83,7 @@
     let layout = {
         autosize: true,
         barmode: "stack",
-        colorway: [
-            "#1f77b4",
-            "#ffc000",
-            "#ff7f0e",
-            "#70ad47"
-        ],
+        colorway: colorway,
         font: { family: fontList },
         hoverlabel: {
             font: {
@@ -118,7 +117,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }} for {{ month }}"
+            text: "Counts by Day of Month for {{ month }}"
         },
         xaxis: {
             color: axisColor,

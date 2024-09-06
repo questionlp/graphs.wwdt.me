@@ -1,26 +1,17 @@
 {% extends "base.html" %}
 {% set page_title = "All Scores" %}
-{% block title %}{{ year }} | {{ page_title }} | Shows{% endblock %}
+{% block title %}{{ year }} | All Scores | Shows{% endblock %}
 
 {% block content %}
-<div class="page-breadcrumb hide-on-small-only">
-    <ul>
-        <li>
-            <a href="{{ url_for('main.index') }}">Home</a>
-        </li>
-        <li>
-            <a href="{{ url_for('shows.index') }}">Shows</a>
-        </li>
-        <li>
-            <a href="{{ url_for('shows.all_scores') }}">{{ page_title }}</a>
-        </li>
-        <li>
-            {{ year }}
-        </li>
-    </ul>
-</div>
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.all_scores') }}">All Scores</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ year }}</li>
+    </ol>
+</nav>
 
-<h1>{{ page_title }} for {{ year }}</h1>
+<h2>{{ page_title }} for {{ year }}</h2>
 
 {% if shows %}
 <p>
@@ -28,38 +19,50 @@
     excluding Best Ofs and Repeat shows.
 </p>
 
-<div id="ww-chart"></div>
+<div class="info py-2">
+    <div id="ww-chart"></div>
+</div>
 
 <script>
     // Set default colors
-    let axisColor = "#212121";
+    let axisColor = "#000";
     let backgroundColor = "#fff";
+    let colorway = [
+        "#0043ce",
+        "#ff7f0e",
+        "#525252"
+    ];
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        axisColor = "#f5f5f5";
-        backgroundColor = "#202124";
+        axisColor = "#fff";
+        backgroundColor = "#161616";
+        colorway = [
+            "#78a9ff",
+            "#ff7f0e",
+            "#f4f4f4"
+        ];
     }
 
-    let shows = {{ shows|safe }};
+    let shows = {{ shows | safe }};
 
     let data = [
         {
             x: shows,
-            y: {{ scores_1|safe }},
+            y: {{ scores_1 | safe }},
             name: "Panelist 1",
             type: "bar"
         },
         {
             x: shows,
-            y: {{ scores_2|safe }},
+            y: {{ scores_2 | safe }},
             name: "Panelist 2",
             type: "bar"
         },
         {
             x: shows,
-            y: {{ scores_3|safe }},
+            y: {{ scores_3 | safe }},
             name: "Panelist 3",
             type: "bar"
         }
@@ -68,11 +71,7 @@
     let layout = {
         autosize: true,
         barmode: "stack",
-        colorway: [
-            "#1f77b4",
-            "#ff7f0e",
-            "#a3acb9"
-        ],
+        colorway: colorway,
         font: { family: fontList },
         hoverlabel: {
             font: {
@@ -105,7 +104,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }} for {{ year }}"
+            text: "All Scores for {{ year }}"
         },
         xaxis: {
             color: axisColor,

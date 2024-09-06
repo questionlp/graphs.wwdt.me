@@ -66,12 +66,18 @@ def create_app():
     app.jinja_env.globals["github_sponsor_url"] = _config["settings"].get(
         "github_sponsor_url", ""
     )
-    app.jinja_env.globals["use_latest_plotly"] = _config["settings"][
-        "use_latest_plotly"
-    ]
-    app.jinja_env.globals["use_decimal_scores"] = _config["settings"][
-        "use_decimal_scores"
-    ]
+    app.jinja_env.globals["use_latest_plotly"] = bool(
+        _config["settings"].get("use_latest_plotly", False)
+    )
+    app.jinja_env.globals["block_ai_scrapers"] = bool(
+        _config["settings"].get("block_ai_scrapers", False)
+    )
+    app.jinja_env.globals["use_minified_css"] = bool(
+        _config["settings"].get("use_minified_css", False)
+    )
+    app.jinja_env.globals["use_decimal_scores"] = bool(
+        _config["settings"].get("use_decimal_scores", False)
+    )
 
     # Check to see if panelistscore_decimal column exists and set a flag
     app.config["app_settings"]["has_decimal_scores_column"] = (

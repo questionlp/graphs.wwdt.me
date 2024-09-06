@@ -125,7 +125,7 @@ def bluff_counts_by_year(year: int) -> Response | str:
     """View: Bluff the Listener Counts by Year."""
     show_years = retrieve_show_years()
     if year not in show_years:
-        return redirect_url(url_for("shows_bluff_counts"))
+        return redirect_url(url_for("shows.bluff_counts"))
 
     bluff_data = bluff_count.retrieve_bluff_count_year(year=year)
 
@@ -318,6 +318,7 @@ def panel_gender_mix() -> Response | str:
     panel_2f = []
     panel_3f = []
 
+    # pylint: disable=C0206
     for year in panel_mix:
         years.append(year)
         panel_0f.append(panel_mix[year]["0F"])

@@ -1,66 +1,72 @@
 {% extends "base.html" %}
-{% set page_title="Panel Gender Mix" %}
-{% block title %}{{ page_title }} | Shows{% endblock %}
+{% block title %}Panel Gender Mix | Shows{% endblock %}
 
 {% block content %}
-<div class="page-breadcrumb hide-on-small-only">
-    <ul>
-        <li>
-            <a href="{{ url_for('main.index') }}">Home</a>
-        </li>
-        <li>
-            <a href="{{ url_for('shows.index') }}">Shows</a>
-        </li>
-        <li>
-            {{ page_title }}
-        </li>
-    </ul>
-</div>
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Panel Gender Mix</li>
+    </ol>
+</nav>
 
-<h1>{{ page_title }}</h1>
+<h2>{{ page_title }}</h2>
 
 {% if years %}
 <p>
     This chart displays the gender mix of the panels broken out by year.
 </p>
 
-<div id="ww-chart"></div>
+<div class="info py-2">
+    <div id="ww-chart"></div>
+</div>
 
 <script>
     // Set default colors and font list
-    let axisColor = "#212121";
+    let axisColor = "#000";
     let backgroundColor = "#fff";
+    let colorway = [
+        "#0043ce",
+        "#ffc000",
+        "#ff7f0e",
+        "#198038"
+    ];
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        axisColor = "#f5f5f5";
-        backgroundColor = "#202124";
+        axisColor = "#fff";
+        backgroundColor = "#161616";
+        colorway = [
+            "#78a9ff",
+            "#ffc000",
+            "#ff7f0e",
+            "#6fdc8c"
+        ];
     }
 
-    let showYears = {{ years|safe }};
+    let showYears = {{ years | safe }};
     let data = [
         {
             x: showYears,
-            y: {{ panel_0f|safe }},
+            y: {{ panel_0f | safe }},
             name: "0W / 3M",
             type: "bar"
         },
         {
             x: showYears,
-            y: {{ panel_1f|safe }},
+            y: {{ panel_1f | safe }},
             name: "1W / 2M",
             type: "bar"
         },
         {
             x: showYears,
-            y: {{ panel_2f|safe }},
+            y: {{ panel_2f | safe }},
             name: "2W / 1M",
             type: "bar"
         },
         {
             x: showYears,
-            y: {{ panel_3f|safe }},
+            y: {{ panel_3f | safe }},
             name: "3W / 0M",
             type: "bar"
         }
@@ -69,12 +75,7 @@
     let layout = {
         autosize: true,
         barmode: "stack",
-        colorway: [
-            "#ffc000",
-            "#1f77b4",
-            "#ff7f0e",
-            "#70ad47"
-        ],
+        colorway: colorway,
         font: { family: fontList },
         hoverlabel: {
             font: {
@@ -108,7 +109,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }}"
+            text: "Panel Gender Mix"
         },
         xaxis: {
             color: axisColor,

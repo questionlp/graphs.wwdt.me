@@ -1,26 +1,17 @@
 {% extends "base.html" %}
 {% set page_title = "Appearances by Year" %}
-{% block title %}{{ info.name }} | {{ page_title }} | Panelists{% endblock %}
+{% block title %}{{ info.name }} | Appearances by Year | Panelists{% endblock %}
 
 {% block content %}
-<div class="page-breadcrumb hide-on-small-only">
-    <ul>
-        <li>
-            <a href="{{ url_for('main.index') }}">Home</a>
-        </li>
-        <li>
-            <a href="{{ url_for('panelists.index') }}">Panelists</a>
-        </li>
-        <li>
-            <a href="{{ url_for('panelists.appearances_by_year') }}">{{ page_title }}</a>
-        </li>
-        <li>
-            {{ info.name }}
-        </li>
-    </ul>
-</div>
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('panelists.index') }}">Panelists</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('panelists.appearances_by_year') }}">Appearances by Year</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ info.name }}</li>
+    </ol>
+</nav>
 
-<h1>{{ info.name }}</h1>
+<h2>{{ info.name }}</h2>
 
 {% if years %}
 <p>
@@ -29,23 +20,27 @@
     has made an appearance on the show, broken down by year.
 </p>
 
-<div id="ww-chart"></div>
+<div class="info py-2">
+    <div id="ww-chart"></div>
+</div>
 
 <script>
     // Set default colors
-    let axisColor = "#212121";
+    let axisColor = "#000";
     let backgroundColor = "#fff";
+    let markerColor = "#0043ce";
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        axisColor = "#f5f5f5";
-        backgroundColor = "#202124";
+        axisColor = "#fff";
+        backgroundColor = "#161616";
+        markerColor = "#78a9ff";
     }
 
     // Set y-axis dtick value
     let yAxisdTick = 2;
-    let appearanceCounts = {{ count|safe }};
+    let appearanceCounts = {{ count | safe }};
     let maxCount = Math.max.apply(Math, appearanceCounts);
     if (maxCount <= 3) {
         yAxisdTick = 1;
@@ -53,11 +48,14 @@
 
     let data = [
         {
-            x: {{ years|safe }},
+            x: {{ years | safe }},
             y: appearanceCounts,
             name: "Appearances",
             showlegend: true,
-            type: "bar"
+            type: "bar",
+            marker: {
+                color: markerColor
+            }
         }
     ];
 
@@ -94,7 +92,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }} for {{ info.name|safe }}"
+            text: "{{ page_title }} for {{ info.name | safe }}"
         },
         xaxis: {
             color: axisColor,
