@@ -1,5 +1,11 @@
 # Changes
 
+## 3.0.2
+
+### Application Notes
+
+- Add missing Umami Analytics config logic update
+
 ## 3.0.1
 
 ### Application Notes

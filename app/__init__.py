@@ -48,10 +48,7 @@ def create_app():
     app.jinja_env.globals["ga_property_code"] = _config["settings"].get(
         "ga_property_code", ""
     )
-    umami = _config["settings"].get("umami_analytics", None)
-    app.jinja_env.globals["umami_analytics"] = format_umami_analytics(
-        umami_analytics=umami
-    )
+    app.jinja_env.globals["umami"] = _config["settings"]["umami"]
     app.jinja_env.globals["api_url"] = _config["settings"].get("api_url", "")
     app.jinja_env.globals["blog_url"] = _config["settings"].get("blog_url", "")
     app.jinja_env.globals["repo_url"] = _config["settings"].get("repo_url", "")
