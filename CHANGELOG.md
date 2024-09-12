@@ -1,5 +1,11 @@
 # Changes
 
+## 3.0.1
+
+### Application Notes
+
+- Add missing Umami Analytics template file
+
 ## 3.0.0-post0
 
 ### Application Changes
