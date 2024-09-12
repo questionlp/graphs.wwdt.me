@@ -1,5 +1,15 @@
 # Changes
 
+## 3.0.0-post0
+
+### Application Changes
+
+- This non-release does not include any application changes. The version number presented by the application will still be [3.0.0](https://github.com/questionlp/graphs.wwdt.me/releases/tag/v3.0.0).
+
+### Development Changes
+
+- Removal of the `serve` NPM package as it is not used and one of its dependencies requires a package that has a [high severity vulnerability](https://github.com/advisories/GHSA-9wv6-86v2-598j).
+
 ## 3.0.0
 
 ### Application Changes
