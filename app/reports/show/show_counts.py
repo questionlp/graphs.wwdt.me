@@ -20,7 +20,7 @@ def retrieve_show_counts_by_year() -> dict[int, int] | None:
         FROM ww_shows
         ORDER BY YEAR(showdate) ASC;
         """
-    cursor = database_connection.cursor(named_tuple=True)
+    cursor = database_connection.cursor(dictionary=True)
     cursor.execute(query)
     result = cursor.fetchall()
     cursor.close()
@@ -30,7 +30,7 @@ def retrieve_show_counts_by_year() -> dict[int, int] | None:
 
     years = []
     for row in result:
-        years.append(int(row.year))
+        years.append(int(row["year"]))
 
     show_counts = {}
     for year in years:
@@ -57,7 +57,7 @@ def retrieve_show_counts_by_year() -> dict[int, int] | None:
                 AND bestof = 1 AND repeatshowid IS NOT NULL
             ) AS 'repeat_bestof';
             """
-        cursor = database_connection.cursor(named_tuple=True)
+        cursor = database_connection.cursor(dictionary=True)
         cursor.execute(
             query,
             (
@@ -74,14 +74,14 @@ def retrieve_show_counts_by_year() -> dict[int, int] | None:
             show_counts[year] = None
         else:
             counts = {
-                "regular": result.regular,
-                "best_of": result.bestof,
-                "repeat": result.repeat,
-                "repeat_best_of": result.repeat_bestof,
-                "total": result.regular
-                + result.bestof
-                + result.repeat
-                + result.repeat_bestof,
+                "regular": result["regular"],
+                "best_of": result["bestof"],
+                "repeat": result["repeat"],
+                "repeat_best_of": result["repeat_bestof"],
+                "total": result["regular"]
+                + result["bestof"]
+                + result["repeat"]
+                + result["repeat_bestof"],
             }
             show_counts[year] = counts
 

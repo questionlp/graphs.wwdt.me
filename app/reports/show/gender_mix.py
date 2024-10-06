@@ -51,7 +51,7 @@ def retrieve_panel_gender_count_by_year(year: int, gender: str) -> dict:
             GROUP BY s.showdate
             HAVING COUNT(p.panelistgender) = %s;
             """
-        cursor = database_connection.cursor(named_tuple=True)
+        cursor = database_connection.cursor(dictionary=True)
         cursor.execute(
             query,
             (

@@ -74,7 +74,7 @@ def build_all_scoring_dict(use_decimal_scores: bool = False) -> dict | None:
             HAVING SUM(pm.panelistscore) IS NOT NULL
             ORDER BY YEAR(s.showdate);
             """
-    cursor = database_connection.cursor(named_tuple=True)
+    cursor = database_connection.cursor(dictionary=True)
     cursor.execute(query)
     result = cursor.fetchall()
     cursor.close()
@@ -85,7 +85,7 @@ def build_all_scoring_dict(use_decimal_scores: bool = False) -> dict | None:
 
     all_scores_dict = {}
     for row in result:
-        all_scores_dict[row.year] = build_year_scoring_dict()
+        all_scores_dict[row["year"]] = build_year_scoring_dict()
 
     return all_scores_dict
 
@@ -122,7 +122,7 @@ def retrieve_monthly_aggregate_scores(use_decimal_scores: bool = False) -> dict 
             HAVING SUM(pm.panelistscore) IS NOT NULL
             ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
             """
-    cursor = database_connection.cursor(named_tuple=True)
+    cursor = database_connection.cursor(dictionary=True)
     cursor.execute(query)
     result = cursor.fetchall()
     cursor.close()
@@ -134,7 +134,7 @@ def retrieve_monthly_aggregate_scores(use_decimal_scores: bool = False) -> dict 
     _months = month_mapping_dict()
     all_scores_dict = build_all_scoring_dict()
     for row in result:
-        all_scores_dict[row.year][_months[row.month]] = int(row.total)
+        all_scores_dict[row["year"]][_months[row["month"]]] = int(row["total"])
 
     return all_scores_dict
 
@@ -171,7 +171,7 @@ def retrieve_monthly_average_scores(use_decimal_scores: bool = False) -> dict | 
             HAVING AVG(pm.panelistscore) IS NOT NULL
             ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
             """
-    cursor = database_connection.cursor(named_tuple=True)
+    cursor = database_connection.cursor(dictionary=True)
     cursor.execute(
         query,
     )
@@ -185,6 +185,6 @@ def retrieve_monthly_average_scores(use_decimal_scores: bool = False) -> dict | 
     _months = month_mapping_dict()
     all_scores_dict = build_all_scoring_dict()
     for row in result:
-        all_scores_dict[row.year][_months[row.month]] = float(row.average)
+        all_scores_dict[row["year"]][_months[row["month"]]] = float(row["average"])
 
     return all_scores_dict

@@ -1,4 +1,4 @@
 Flask==3.0.3
 gunicorn==23.0.0
 
-wwdtm==2.10.1
+wwdtm==2.12.1.post0

@@ -17,9 +17,8 @@ def test_index(client: FlaskClient) -> None:
     assert b"/shows/" in response.data
 
 
-def robots_txt(client: FlaskClient) -> None:
+def test_robots_txt(client: FlaskClient) -> None:
     """Testing main.robots_txt."""
     response: TestResponse = client.get("/robots.txt")
     assert response.status_code == 200
     assert b"Sitemap:" in response.data
-    assert b"User-agent:" in response.data

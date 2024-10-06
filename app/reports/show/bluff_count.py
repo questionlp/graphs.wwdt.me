@@ -41,7 +41,7 @@ def build_bluff_data_year_month_dict() -> dict | None:
         GROUP BY YEAR(s.showdate), MONTH(s.showdate)
         ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
         """
-    cursor = database_connection.cursor(named_tuple=True)
+    cursor = database_connection.cursor(dictionary=True)
     cursor.execute(query)
     result = cursor.fetchall()
     cursor.close()
@@ -54,7 +54,10 @@ def build_bluff_data_year_month_dict() -> dict | None:
     year_month = {}
 
     for row in result:
-        year_month[f"{_months[row.month]} {row.year}"] = {"correct": 0, "incorrect": 0}
+        year_month[f"{_months[row["month"]]} {row["year"]}"] = {
+            "correct": 0,
+            "incorrect": 0,
+        }
 
     return year_month
 
@@ -82,7 +85,7 @@ def retrieve_all_bluff_counts() -> dict | None:
         GROUP BY year(s.showdate), month(s.showdate)
         ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
         """
-    cursor = database_connection.cursor(named_tuple=True)
+    cursor = database_connection.cursor(dictionary=True)
     cursor.execute(query)
     correct_result = cursor.fetchall()
 
@@ -104,7 +107,7 @@ def retrieve_all_bluff_counts() -> dict | None:
         GROUP BY year(s.showdate), month(s.showdate)
         ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
         """
-    cursor = database_connection.cursor(named_tuple=True)
+    cursor = database_connection.cursor(dictionary=True)
     cursor.execute(query)
     incorrect_result = cursor.fetchall()
     cursor.close()
@@ -115,10 +118,12 @@ def retrieve_all_bluff_counts() -> dict | None:
 
     _months = month_mapping_dict()
     for row in correct_result:
-        bluff_data[f"{_months[row.month]} {row.year}"]["correct"] = row.correct
+        bluff_data[f"{_months[row["month"]]} {row["year"]}"]["correct"] = row["correct"]
 
     for row in incorrect_result:
-        bluff_data[f"{_months[row.month]} {row.year}"]["incorrect"] = row.incorrect
+        bluff_data[f"{_months[row["month"]]} {row["year"]}"]["incorrect"] = row[
+            "incorrect"
+        ]
 
     return bluff_data
 
@@ -147,7 +152,7 @@ def retrieve_bluff_count_year(year: int) -> dict | None:
         GROUP BY YEAR(s.showdate), MONTH(s.showdate)
         ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
         """
-    cursor = database_connection.cursor(named_tuple=True)
+    cursor = database_connection.cursor(dictionary=True)
     cursor.execute(query, (year,))
     correct_result = cursor.fetchall()
 
@@ -170,7 +175,7 @@ def retrieve_bluff_count_year(year: int) -> dict | None:
         GROUP BY YEAR (s.showdate), MONTH(s.showdate)
         ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
         """
-    cursor = database_connection.cursor(named_tuple=True)
+    cursor = database_connection.cursor(dictionary=True)
     cursor.execute(query, (year,))
     incorrect_result = cursor.fetchall()
     cursor.close()
@@ -181,9 +186,9 @@ def retrieve_bluff_count_year(year: int) -> dict | None:
 
     _months = month_mapping_dict()
     for row in correct_result:
-        bluff_data[_months[row.month]]["correct"] = row.correct
+        bluff_data[_months[row["month"]]]["correct"] = row["correct"]
 
     for row in incorrect_result:
-        bluff_data[_months[row.month]]["incorrect"] = row.incorrect
+        bluff_data[_months[row["month"]]]["incorrect"] = row["incorrect"]
 
     return bluff_data
