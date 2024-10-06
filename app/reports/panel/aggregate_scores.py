@@ -24,15 +24,15 @@ def empty_score_spread(use_decimal_scores: bool = False) -> dict | None:
         "MAX(pm.panelistscore_decimal) AS max "
         "FROM ww_showpnlmap pm;"
     )
-    cursor = database_connection.cursor(named_tuple=True)
+    cursor = database_connection.cursor(dictionary=True)
     cursor.execute(query)
     result = cursor.fetchone()
 
     if not result:
         return None
 
-    min_score = result.min
-    max_score = result.max
+    min_score = result["min"]
+    max_score = result["max"]
 
     if use_decimal_scores:
         score_spread = {}
@@ -78,7 +78,7 @@ def retrieve_score_spread(use_decimal_scores: bool = False) -> dict | None:
             GROUP BY pm.panelistscore
             ORDER BY pm.panelistscore ASC;
             """
-    cursor = database_connection.cursor(named_tuple=True)
+    cursor = database_connection.cursor(dictionary=True)
     cursor.execute(query)
     result = cursor.fetchall()
     cursor.close()
@@ -89,6 +89,9 @@ def retrieve_score_spread(use_decimal_scores: bool = False) -> dict | None:
 
     score_spread = empty_score_spread(use_decimal_scores=use_decimal_scores)
     for row in result:
-        score_spread[row.score] = row.count
+        score_spread[row["score"]] = row["count"]
 
-    return {"scores": list(score_spread.keys()), "counts": list(score_spread.values())}
+    return {
+        "scores": list(score_spread.keys()),
+        "counts": list(score_spread.values()),
+    }
