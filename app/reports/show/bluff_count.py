@@ -54,7 +54,7 @@ def build_bluff_data_year_month_dict() -> dict | None:
     year_month = {}
 
     for row in result:
-        year_month[f"{_months[row["month"]]} {row["year"]}"] = {
+        year_month[f"{_months[row['month']]} {row['year']}"] = {
             "correct": 0,
             "incorrect": 0,
         }
@@ -118,10 +118,10 @@ def retrieve_all_bluff_counts() -> dict | None:
 
     _months = month_mapping_dict()
     for row in correct_result:
-        bluff_data[f"{_months[row["month"]]} {row["year"]}"]["correct"] = row["correct"]
+        bluff_data[f"{_months[row['month']]} {row['year']}"]["correct"] = row["correct"]
 
     for row in incorrect_result:
-        bluff_data[f"{_months[row["month"]]} {row["year"]}"]["incorrect"] = row[
+        bluff_data[f"{_months[row['month']]} {row['year']}"]["incorrect"] = row[
             "incorrect"
         ]
 
