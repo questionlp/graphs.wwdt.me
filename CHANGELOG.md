@@ -1,5 +1,20 @@
 # Changes
 
+## 3.2.0
+
+### Application Changes
+
+- Remove responsive font sizing for `:root` in `wwdtm-theme`.
+
+### Component Changes
+
+- Upgrade wwdtm from 2.12.1.post0 to 2.14.0
+
+### Development Changes
+
+- Upgrade ruff from 0.6.9 to 0.7.4
+- Upgrade black from 24.8.0 to 24.10.0
+
 ## 3.1.0
 
 ### Application Changes
