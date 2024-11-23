@@ -1,5 +1,11 @@
 # Changes
 
+## 3.2.1
+
+### Application Changes
+
+- Re-add responsive font sizing for `:root` in `wwdtm-theme` with a range of 14px and 16.5px
+
 ## 3.2.0
 
 ### Application Changes
