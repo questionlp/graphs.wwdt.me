@@ -34,13 +34,14 @@ def load_config(
         use_pool = database_config.get("use_pool", False)
 
         if use_pool:
-            pool_name = database_config.get("pool_name", connection_pool_name)
-            pool_size = database_config.get("pool_size", connection_pool_size)
-            if pool_size < connection_pool_size:
-                pool_size = connection_pool_size
+            pool_name: str = str(database_config.get("pool_name", connection_pool_name))
+            pool_size: int = int(database_config.get("pool_size", connection_pool_size))
+            # if pool_size < connection_pool_size:
+            #    pool_size = connection_pool_size
+            _pool_size = max(pool_size, connection_pool_size)
 
             database_config["pool_name"] = pool_name
-            database_config["pool_size"] = pool_size
+            database_config["pool_size"] = _pool_size
             del database_config["use_pool"]
         else:
             if "pool_name" in database_config:

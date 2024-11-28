@@ -33,7 +33,7 @@
         "mastodon_user": "",
         "patreon_url": "",
         "github_sponsor_url": "",
-        "use_latest_plotly": false,
+        "use_plotly_v3": false,
         "use_decimal_scores": true,
         "block_ai_scrapers": false,
         "use_minified_css": false

@@ -1,5 +1,21 @@
 # Changes
 
+## 3.3.0-beta
+
+### Application Changes
+
+- Replace the `use_latest_plotly` application configuration setting with `use_plotly_v3` to set the version of Plotly.js to use in the application. The default value is `false`.
+- Remove the `stable` and `latest` labels from Plotly.js versions. See "Component Changes" for more information.
+- Change the color scale for both "Monthly Aggregate Score" and "Monthly Average Score" heatmaps to provide more contrast across the range.
+
+### Component Changes
+
+- Upgrade Plotly.js versions and introduce Plotly.js 3.0.0-rc.1
+  - Plotly.js v2.x has been upgraded from 2.28.0 (formerly labeled `stable`) and 2.35.0 (formerly labeled `latest`) to 2.35.2
+    - Both `plotly-latest.min.js` and `plotly-stable.min.js` symlinks will point to `plotly.min.js`, which in turn points to 2.35.2
+  - Setting `use_plotly_v3` to `true` will use 3.0.0-rc.1
+  - Previous versions of the Plotly.js files remain under `app/static/js` for the time being and will be removed in a future release
+
 ## 3.2.1
 
 ### Application Changes
