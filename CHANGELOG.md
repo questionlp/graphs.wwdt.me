@@ -1,5 +1,12 @@
 # Changes
 
+## 3.2.2
+
+### Application Changes
+
+- Update `wwdtm-theme` to set font weight for header and footer navigation links to `500`
+- Tweak responsive font sizing for `root` in `wwdtm-theme` with a range of 14.5px and 16.75px
+
 ## 3.2.1
 
 ### Application Changes
