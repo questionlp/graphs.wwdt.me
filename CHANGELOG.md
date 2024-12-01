@@ -1,6 +1,6 @@
 # Changes
 
-## 3.3.0-beta
+## 3.3.0
 
 ### Application Changes
 
