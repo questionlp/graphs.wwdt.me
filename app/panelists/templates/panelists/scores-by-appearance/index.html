@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% set page_title = "Scores by Appearance" %}
-{% block title %}Scores by Appearance | Panelists{% endblock %}
+{% block title %}{{ page_title }} | Panelists{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('panelists.index') }}">Panelists</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Scores by Appearance</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
 
-<h2>Scores by Appearance</h2>
+<h2>{{ page_title }}</h2>
 <p>
     Choose from one of the panelists below to view a chart displaying
     their scores for each of their appearances (excluding Best Of and repeat

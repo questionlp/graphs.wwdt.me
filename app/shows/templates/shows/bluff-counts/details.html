@@ -1,16 +1,17 @@
 {% extends "base.html" %}
-{% block title %}{{ year }} | Bluff the Listener Counts | Shows{% endblock %}
+{% set page_title="Bluff the Listener Counts" %}
+{% block title %}{{ year }} | {{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('shows.bluff_counts') }}">Bluff the Listener Counts</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.bluff_counts') }}">{{ page_title }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ year }}</li>
     </ol>
 </nav>
 
-<h2>Bluff the Listener Counts for {{ year }}</h2>
+<h2>{{ page_title }}: {{ year }}</h2>
 
 {% if months %}
 <p>
@@ -98,7 +99,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Bluff the Listener Counts for {{ year }}"
+            text: "{{ page_title }}: {{ year }}"
         },
         xaxis: {
             color: axisColor,

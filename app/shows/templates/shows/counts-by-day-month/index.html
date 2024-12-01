@@ -1,15 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Counts by Day of Month | Shows{% endblock %}
+{% set page_title="Counts by Day of Month" %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Counts by Day of Month</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
 
-<h2>Counts by Day of Month</h2>
+<h2>{{ page_title }}</h2>
 <p>
     Choose from one of the months below to view the counts of shows by day of
     month for each calendar month.

@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% set page_title = "Appearances by Year" %}
-{% block title %}{{ info.name }} | Appearances by Year | Panelists{% endblock %}
+{% block title %}{{ info.name }} | {{ page_title }} | Panelists{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('panelists.index') }}">Panelists</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('panelists.appearances_by_year') }}">Appearances by Year</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('panelists.appearances_by_year') }}">{{ page_title }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ info.name }}</li>
     </ol>
 </nav>
 
-<h2>{{ info.name }}</h2>
+<h2>{{ page_title }}: {{ info.name }}</h2>
 
 {% if years %}
 <p>
@@ -92,7 +92,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }} for {{ info.name | safe }}"
+            text: "{{ page_title }}: {{ info.name | safe }}"
         },
         xaxis: {
             color: axisColor,

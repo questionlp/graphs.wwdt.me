@@ -1,16 +1,17 @@
 {% extends "base.html" %}
-{% block title %}All | Counts by Day of Month | Shows{% endblock %}
+{% set page_title="Counts by Day of Month" %}
+{% block title %}All | {{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('shows.counts_by_day_of_month') }}">Counts by Day of Month</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.counts_by_day_of_month') }}">{{ page_title }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">All</li>
     </ol>
 </nav>
 
-<h2>Counts by Day of Month for All Months</h2>
+<h2>{{ page_title }}: All Months</h2>
 
 {% if days %}
 <p>
@@ -130,7 +131,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Counts by Day of Month for All Months"
+            text: "{{ page_title }}: All Months"
         },
         xaxis: {
             color: axisColor,

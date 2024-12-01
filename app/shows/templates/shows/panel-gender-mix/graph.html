@@ -1,11 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Panel Gender Mix | Shows{% endblock %}
+{% set page_title="Panel Gender Mix" %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Panel Gender Mix</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
 
@@ -109,7 +110,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Panel Gender Mix"
+            text: "{{ page_title }}"
         },
         xaxis: {
             color: axisColor,

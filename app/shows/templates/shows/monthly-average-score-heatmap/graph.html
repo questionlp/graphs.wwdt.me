@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% set page_title="Monthly Average Score Heatmap" %}
-{% block title %}Monthly Average Score Heatmap | Shows{% endblock %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Monthly Average Score Heatmap</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
 
@@ -65,9 +65,8 @@
             },
             colorscale: [
                 [0, "#000"],
-                [0.375, "#700"],
-                [0.5, "#bf360c"],
-                [0.625, "#f55000"],
+                [0.625, "#ff832b"],
+                [0.75, "#f1c21b"],
                 [1, "#fafafa"]
             ],
             hoverongaps: false,
@@ -101,7 +100,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Monthly Average Score Heatmap"
+            text: "{{ page_title }}"
         },
         xaxis: {
             color: axisColor,
