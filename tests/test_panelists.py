@@ -43,7 +43,7 @@ def test_appearances_by_year_details(client: FlaskClient, panelist_slug: str) ->
     )
     assert response.status_code == 200
     assert b"Panelists" in response.data
-    assert b"Appearances by Year for" in response.data
+    assert b"Appearances by Year:" in response.data
 
 
 def test_score_breakdown(client: FlaskClient) -> None:
@@ -60,7 +60,7 @@ def test_score_breakdown_details(client: FlaskClient, panelist_slug: str) -> Non
     response: TestResponse = client.get(f"/panelists/score-breakdown/{panelist_slug}")
     assert response.status_code == 200
     assert b"Panelists" in response.data
-    assert b"Score Breakdown for" in response.data
+    assert b"Score Breakdown:" in response.data
 
 
 def test_scores_by_appearance(client: FlaskClient) -> None:
@@ -79,4 +79,4 @@ def test_scores_by_appearance_details(client: FlaskClient, panelist_slug: str) -
     )
     assert response.status_code == 200
     assert b"Panelists" in response.data
-    assert b"Scores by Appearance for" in response.data
+    assert b"Scores by Appearance:" in response.data

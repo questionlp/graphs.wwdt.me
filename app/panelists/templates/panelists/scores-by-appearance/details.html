@@ -1,16 +1,17 @@
 {% extends "base.html" %}
-{% block title %}{{ info.name }} | Scores by Appearance | Panelists{% endblock %}
+{% set page_title="Scores by Appearance" %}
+{% block title %}{{ info.name }} | {{ page_title }} | Panelists{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('panelists.index') }}">Panelists</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('panelists.scores_by_appearance') }}">Scores by Appearance</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('panelists.scores_by_appearance') }}">{{ page_title }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ info.name }}</li>
     </ol>
 </nav>
 
-<h2>Scores by Appearance</h2>
+<h2>{{ page_title }}: {{ info.name }}</h2>
 
 {% if shows and scores %}
 <p>
@@ -83,7 +84,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Scores by Appearance for {{ info.name | safe }}"
+            text: "{{ page_title }}: {{ info.name | safe }}"
         },
         xaxis: {
             color: axisColor,

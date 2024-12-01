@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% set page_title = "All Scores" %}
-{% block title %}{{ year }} | All Scores | Shows{% endblock %}
+{% block title %}{{ year }} | {{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('shows.all_scores') }}">All Scores</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.all_scores') }}">{{ page_title }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ year }}</li>
     </ol>
 </nav>
 
-<h2>{{ page_title }} for {{ year }}</h2>
+<h2>{{ page_title }}: {{ year }}</h2>
 
 {% if shows %}
 <p>
@@ -104,7 +104,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "All Scores for {{ year }}"
+            text: "{{ page_title }}: {{ year }}"
         },
         xaxis: {
             color: axisColor,
