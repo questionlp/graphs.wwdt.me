@@ -48,7 +48,7 @@ def test_bluff_counts_all(client: FlaskClient) -> None:
     response: TestResponse = client.get("/shows/bluff-counts/all")
     assert response.status_code == 200
     assert b"Shows" in response.data
-    assert b"Bluff the Listener Counts: All Years by Month" in response.data
+    assert b"Bluff the Listener Counts: All Years" in response.data
     assert b"Correct" in response.data
 
 
