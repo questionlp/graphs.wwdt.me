@@ -16,6 +16,13 @@
   - Setting `use_plotly_v3` to `true` will use 3.0.0-rc.1
   - Previous versions of the Plotly.js files remain under `app/static/js` for the time being and will be removed in a future release
 
+## 3.2.2
+
+### Application Changes
+
+- Update `wwdtm-theme` to set font weight for header and footer navigation links to `500`
+- Tweak responsive font sizing for `root` in `wwdtm-theme` with a range of 14.5px and 16.75px
+
 ## 3.2.1
 
 ### Application Changes
