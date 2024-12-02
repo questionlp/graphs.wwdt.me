@@ -31,7 +31,7 @@
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         axisColor = "#fff";
-        backgroundColor = "#161616";
+        backgroundColor = "#161616";    // IBM Gray 100
     }
 
     let months = [
@@ -65,9 +65,9 @@
             },
             colorscale: [
                 [0, "#000"],
-                [0.4, "#ff832b"],
-                [0.6, "#f1c21b"],
-                [1, "#fafafa"]
+                [0.4, "#ff832b"],   // IBM Alert 40
+                [0.6, "#f1c21b"],   // IBM Alert 30
+                [1, "#f4f4f4"]      // IBM Gray 10
                 
             ],
             hoverongaps: false,

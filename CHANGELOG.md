@@ -8,8 +8,9 @@
 - Remove the `stable` and `latest` labels from Plotly.js versions. See "Component Changes" for more information.
 - Change the color scale for both "Monthly Aggregate Score" and "Monthly Average Score" heatmaps to provide more contrast across the range.
   - Use different color scales for "Monthly Aggregate Score" and "Monthly Average Score" heatmaps due to the former having an order of magnitude large scale.
-- Add missing page titles on various pages
-- Standardize use of `page_title` variable across all Panelists and Shows pages
+- Standardize on colors from the [IBM Design Language](https://www.ibm.com/design/language/color/) for chart colorways.
+- Add missing page titles on various pages.
+- Standardize use of `page_title` variable across all Panelists and Shows pages.
 
 ### Component Changes
 
