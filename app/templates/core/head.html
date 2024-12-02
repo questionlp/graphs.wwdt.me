@@ -15,10 +15,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-icons/bootstrap-icons.min.css')}}">
 
     <!-- Plotly.js -->
-    {% if use_latest_plotly %}
-    <script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
+    {% if use_plotly_v3 %}
+    <script src="{{ url_for('static', filename='js/plotly-v3.min.js') }}"></script>
     {% else %}
-    <script src="{{ url_for('static', filename='js/plotly-stable.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plotly.min.js') }}"></script>
     {% endif %}
 
     {% if ga_property_code %}

@@ -1,11 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Panel Gender Mix | Shows{% endblock %}
+{% set page_title="Panel Gender Mix" %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Panel Gender Mix</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
 
@@ -25,22 +26,22 @@
     let axisColor = "#000";
     let backgroundColor = "#fff";
     let colorway = [
-        "#0043ce",
-        "#ffc000",
-        "#ff7f0e",
-        "#198038"
+        "#0043ce",  // IBM Blue 70
+        "#f1c21b",  // IBM Alert 30
+        "#ff832b",  // IBM Alert 40
+        "#24a148"   // IBM Alert 50
     ];
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         axisColor = "#fff";
-        backgroundColor = "#161616";
+        backgroundColor = "#161616";    // IBM Gray 100
         colorway = [
-            "#78a9ff",
-            "#ffc000",
-            "#ff7f0e",
-            "#6fdc8c"
+            "#78a9ff",  // IBM Blue 40
+            "#f1c21b",  // IBM Alert 30
+            "#ff832b",  // IBM Alert 40
+            "#24a148"   // IBM Alert 50
         ];
     }
 
@@ -109,7 +110,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Panel Gender Mix"
+            text: "{{ page_title }}"
         },
         xaxis: {
             color: axisColor,

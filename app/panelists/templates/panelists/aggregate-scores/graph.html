@@ -1,15 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Aggregate Scores | Panelists{% endblock %}
+{% set page_title="Aggregate Scores Breakdown" %}
+{% block title %}{{ page_title }} | Panelists{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('panelists.index') }}">Panelists</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Aggregate Scores</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
 
-<h2>Aggregate Scores</h2>
+<h2>{{ page_title }}</h2>
 
 {% if aggregate_scores.scores %}
 <p>
@@ -24,14 +25,14 @@
     // Set default colors
     let axisColor = "#000";
     let backgroundColor = "#fff";
-    let markerColor = "#0043ce";
+    let markerColor = "#0043ce";    // IBM Blue 70
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         axisColor = "#fff";
-        backgroundColor = "#161616";
-        markerColor = "#78a9ff";
+        backgroundColor = "#161616";    // IBM Gray 100
+        markerColor = "#78a9ff";    // IBM Blue 40
     }
 
     let data = [
@@ -80,7 +81,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Aggregate Scores Breakdown"
+            text: "{{ page_title }}"
         },
         xaxis: {
             color: axisColor,

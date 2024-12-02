@@ -32,7 +32,7 @@ def test_all_scores_by_year(client: FlaskClient, year: int) -> None:
     response: TestResponse = client.get(f"/shows/all-scores/{year}")
     assert response.status_code == 200
     assert b"Shows" in response.data
-    assert b"All Scores for" in response.data
+    assert b"All Scores:" in response.data
 
 
 def test_bluff_counts(client: FlaskClient) -> None:
@@ -48,7 +48,7 @@ def test_bluff_counts_all(client: FlaskClient) -> None:
     response: TestResponse = client.get("/shows/bluff-counts/all")
     assert response.status_code == 200
     assert b"Shows" in response.data
-    assert b"Bluff the Listener Counts by Year and Month" in response.data
+    assert b"Bluff the Listener Counts: All Years" in response.data
     assert b"Correct" in response.data
 
 
@@ -58,7 +58,7 @@ def test_bluff_counts_by_year(client: FlaskClient, year: int) -> None:
     response: TestResponse = client.get(f"/shows/bluff-counts/{year}")
     assert response.status_code == 200
     assert b"Shows" in response.data
-    assert b"Bluff the Listener Counts for" in response.data
+    assert b"Bluff the Listener Counts:" in response.data
     assert b"Correct" in response.data
 
 
@@ -75,7 +75,7 @@ def test_counts_by_day_of_month_all(client: FlaskClient) -> None:
     response: TestResponse = client.get("/shows/counts-by-day-month/all")
     assert response.status_code == 200
     assert b"Shows" in response.data
-    assert b"Counts by Day of Month for All Months" in response.data
+    assert b"Counts by Day of Month: All Months" in response.data
     assert b"Regular" in response.data
 
 
@@ -85,7 +85,7 @@ def test_counts_by_day_of_month_by_month(client: FlaskClient, month: int) -> Non
     response: TestResponse = client.get(f"/shows/counts-by-day-month/{month}")
     assert response.status_code == 200
     assert b"Shows" in response.data
-    assert b"Counts by Day of Month for" in response.data
+    assert b"Counts by Day of Month:" in response.data
     assert b"Regular" in response.data
 
 

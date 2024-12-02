@@ -1,14 +1,15 @@
 {% extends "base.html" %}
-{% block title %}Panelists{% endblock %}
+{% set page_title="Panelists" %}
+{% block title %}{{ page_title }}{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Panelists</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
 
-<h2>Panelists</h2>
+<h2>{{ page_title }}</h2>
 <p>
     Choose from one of the following graph types to get a list of available
     panelists.
@@ -18,7 +19,7 @@
     <div class="pages">
         <ul class="list-group page-list">
             <li class="list-group-item">
-                <a href="{{ url_for('panelists.aggregate_scores') }}">Aggregate Scores</a>
+                <a href="{{ url_for('panelists.aggregate_scores') }}">Aggregate Scores Breakdown</a>
             </li>
             <li class="list-group-item">
                 <a href="{{ url_for('panelists.appearances_by_year') }}">Appearances by Year</a>

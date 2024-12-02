@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% set page_title = "All Scores" %}
-{% block title %}{{ year }} | All Scores | Shows{% endblock %}
+{% block title %}{{ year }} | {{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('shows.all_scores') }}">All Scores</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.all_scores') }}">{{ page_title }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ year }}</li>
     </ol>
 </nav>
 
-<h2>{{ page_title }} for {{ year }}</h2>
+<h2>{{ page_title }}: {{ year }}</h2>
 
 {% if shows %}
 <p>
@@ -28,20 +28,20 @@
     let axisColor = "#000";
     let backgroundColor = "#fff";
     let colorway = [
-        "#0043ce",
-        "#ff7f0e",
-        "#525252"
+        "#0043ce",  // IBM Blue 70
+        "#ff832b",  // IBM Alert 40
+        "#525252"   // IBM Gray 70
     ];
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         axisColor = "#fff";
-        backgroundColor = "#161616";
+        backgroundColor = "#161616";    // IBM Gray 100
         colorway = [
-            "#78a9ff",
-            "#ff7f0e",
-            "#f4f4f4"
+            "#78a9ff",  // IBM Blue 40
+            "#ff832b",  // IBM Alert 40
+            "#f4f4f4"   // IBM Gray 10
         ];
     }
 
@@ -104,7 +104,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "All Scores for {{ year }}"
+            text: "{{ page_title }}: {{ year }}"
         },
         xaxis: {
             color: axisColor,

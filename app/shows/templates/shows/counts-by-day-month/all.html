@@ -1,16 +1,17 @@
 {% extends "base.html" %}
-{% block title %}All | Counts by Day of Month | Shows{% endblock %}
+{% set page_title="Counts by Day of Month" %}
+{% block title %}All | {{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('shows.counts_by_day_of_month') }}">Counts by Day of Month</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.counts_by_day_of_month') }}">{{ page_title }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">All</li>
     </ol>
 </nav>
 
-<h2>Counts by Day of Month for All Months</h2>
+<h2>{{ page_title }}: All Months</h2>
 
 {% if days %}
 <p>
@@ -35,22 +36,22 @@
     let axisColor = "#000";
     let backgroundColor = "#fff";
     let colorway = [
-        "#0043ce",
-        "#ffc000",
-        "#ff7f0e",
-        "#198038"
+        "#0043ce",  // IBM Blue 70
+        "#f1c21b",  // IBM Alert 30
+        "#ff832b",  // IBM Alert 40
+        "#24a148"   // IBM Alert 50
     ];
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         axisColor = "#fff";
-        backgroundColor = "#161616";
+        backgroundColor = "#161616";    // IBM Gray 100
         colorway = [
-            "#78a9ff",
-            "#ffc000",
-            "#ff7f0e",
-            "#6fdc8c"
+            "#78a9ff",  // IBM Blue 40
+            "#f1c21b",  // IBM Alert 30
+            "#ff832b",  // IBM Alert 40
+            "#24a148"   // IBM Alert 50
         ];
     }
 
@@ -130,7 +131,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Counts by Day of Month for All Months"
+            text: "{{ page_title }}: All Months"
         },
         xaxis: {
             color: axisColor,

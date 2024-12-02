@@ -1,11 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Monthly Aggregate Score Heatmap | Shows{% endblock %}
+{% set page_title="Monthly Aggregate Score Heatmap" %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Monthly Aggregate Score Heatmap</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
 
@@ -30,7 +31,7 @@
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         axisColor = "#fff";
-        backgroundColor = "#161616";
+        backgroundColor = "#161616";    // IBM Gray 100
     }
 
     let months = [
@@ -64,9 +65,10 @@
             },
             colorscale: [
                 [0, "#000"],
-                [0.5, "#7a2800"],
-                [0.75, "#f55000"],
-                [1, "#ff8a52"]
+                [0.4, "#ff832b"],   // IBM Alert 40
+                [0.6, "#f1c21b"],   // IBM Alert 30
+                [1, "#f4f4f4"]      // IBM Gray 10
+                
             ],
             hoverongaps: false,
             hovertemplate: "Year: %{y}<br>Month: %{x}<br>Aggregate Score: %{z}<extra></extra>",
@@ -97,7 +99,7 @@
                 color: axisColor,
                 size: 20
             },
-            text: "Monthly Aggregate Score Heatmap"
+            text: "{{ page_title }}"
         },
         xaxis: {
             color: axisColor,

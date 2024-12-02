@@ -1,14 +1,15 @@
 {% extends "base.html" %}
-{% block title %}Shows{% endblock %}
+{% set page_title="Shows" %}
+{% block title %}{{ page_title }}{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Shows</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
 
-<h2>Shows</h2>
+<h2>{{ page_title }}</h2>
 <p>
     Choose from one of the following links to view graphs representing data
     collected from each broadcasted show.
