@@ -1,5 +1,12 @@
 # Changes
 
+## 3.3.1
+
+### Component Changes
+
+- Upgrade Plotly.js v2 from 2.35.2 to 2.35.3
+- Upgrade Ployly.js v3 from 3.0.0-rc.1 to 3.0.0-rc.2
+
 ## 3.3.0
 
 ### Application Changes
