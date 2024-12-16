@@ -6,6 +6,7 @@
 
 - Upgrade Plotly.js v2 from 2.35.2 to 2.35.3
 - Upgrade Ployly.js v3 from 3.0.0-rc.1 to 3.0.0-rc.2
+- Upgrade nanoid from 3.3.7 to 3.3.8 to fix a security vulnerability for a package required to compile, minify and copy generated CSS files
 
 ## 3.3.0
 
