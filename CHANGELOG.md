@@ -1,5 +1,11 @@
 # Changes
 
+## 3.3.2
+
+### Component Changes
+
+- Upgrade Flask from 3.0.3 to 3.1.0
+
 ## 3.3.1
 
 ### Component Changes
