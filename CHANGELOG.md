@@ -1,5 +1,16 @@
 # Changes
 
+## 3.3.3
+
+### Component Changes
+
+- Upgrade Plotly.js v3 from 3.0.0-rc.2 to 3.0.0
+
+### Development Changes
+
+- Upgrade ruff from 0.7.4 to 0.9.2
+- Ran `ruff format` to format Python code files using the Ruff 2025 Style Guide
+
 ## 3.3.2
 
 ### Component Changes
@@ -11,7 +22,7 @@
 ### Component Changes
 
 - Upgrade Plotly.js v2 from 2.35.2 to 2.35.3
-- Upgrade Ployly.js v3 from 3.0.0-rc.1 to 3.0.0-rc.2
+- Upgrade Plotly.js v3 from 3.0.0-rc.1 to 3.0.0-rc.2
 - Upgrade nanoid from 3.3.7 to 3.3.8 to fix a security vulnerability for a package required to compile, minify and copy generated CSS files
 
 ## 3.3.0

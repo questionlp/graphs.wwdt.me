@@ -4,6 +4,7 @@
 #
 # vim: set noai syntax=python ts=4 sw=4:
 """Utility functions used by the Graphs Site."""
+
 from datetime import datetime
 from typing import Any
 

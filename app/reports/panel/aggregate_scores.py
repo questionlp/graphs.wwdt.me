@@ -4,6 +4,7 @@
 #
 # vim: set noai syntax=python ts=4 sw=4:
 """WWDTM Panel Aggregate Scores Data Retrieval Functions."""
+
 from math import floor
 
 from flask import current_app

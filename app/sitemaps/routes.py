@@ -4,6 +4,7 @@
 #
 # vim: set noai syntax=python ts=4 sw=4:
 """Sitemap Routes for Wait Wait Graphs Site."""
+
 from flask import Blueprint, Response, render_template
 
 from app.utility import month_names, retrieve_panelists, retrieve_show_years

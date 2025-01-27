@@ -4,6 +4,7 @@
 #
 # vim: set noai syntax=python ts=4 sw=4:
 """WWDTM Show Counts Retrieval Functions."""
+
 from flask import current_app
 from mysql.connector import connect
 
