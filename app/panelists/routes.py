@@ -4,6 +4,7 @@
 #
 # vim: set noai syntax=python ts=4 sw=4:
 """Panelists Routes for Wait Wait Graphs Site."""
+
 import json
 
 from flask import Blueprint, Response, current_app, render_template, url_for

@@ -4,6 +4,7 @@
 #
 # vim: set noai syntax=python ts=4 sw=4:
 """Configuration Loading and Parsing for Wait Wait Graphs Site."""
+
 import json
 from pathlib import Path
 from typing import Any
