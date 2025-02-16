@@ -1,5 +1,16 @@
 # Changes
 
+## 3.3.4
+
+### Component Changes
+
+- Update list of AI bots from <https://github.com/ai-robots-txt/ai.robots.txt> in the default `robots.txt`
+
+### Development Changes
+
+- Upgrade ruff from 0.9.2 to 0.9.4
+- Remove black from required development packages as part of migrating entirely to Ruff
+
 ## 3.3.3
 
 ### Component Changes
