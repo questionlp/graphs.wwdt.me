@@ -2,13 +2,17 @@
 
 ## 3.3.4
 
-### Component Changes
+### Application Changes
 
 - Update list of AI bots from <https://github.com/ai-robots-txt/ai.robots.txt> in the default `robots.txt`
 
+### Component Upgrades
+
+- Upgrad wwdtm from 2.14.0 to 2.17.2
+
 ### Development Changes
 
-- Upgrade ruff from 0.9.2 to 0.9.4
+- Upgrade ruff from 0.9.2 to 0.9.6
 - Remove black from required development packages as part of migrating entirely to Ruff
 
 ## 3.3.3
