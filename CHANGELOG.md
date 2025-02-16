@@ -8,14 +8,14 @@
 
 ### Component Upgrades
 
-- Upgrad wwdtm from 2.14.0 to 2.17.2
+- Upgrade wwdtm from 2.14.0 to 2.17.2
 
 ### Development Changes
 
 - Upgrade ruff from 0.9.2 to 0.9.6
 - Remove black from required development packages as part of migrating entirely to Ruff
 
-## 3.3.3
+## 3.3.3 (Not Released)
 
 ### Component Changes
 
