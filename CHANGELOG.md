@@ -1,5 +1,17 @@
 # Changes
 
+## 3.3.5
+
+### Application Changes
+
+- Relocate the Bootstrap and application code initialization from towards the end of the document to the head to prevent background flashing on page loads when in dark mode
+- Corrected Umami Analytics include for error page template
+- Update Bootstrap icon classes to include `.bi`
+
+### Component Changes
+
+- Set Jinja2 version to `~=3.1.6`
+
 ## 3.3.4
 
 ### Application Changes
