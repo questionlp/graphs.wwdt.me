@@ -12,6 +12,7 @@ Due to the significant changes around the new application theming, the usual App
 - Trimming down the included `package.json` to only require `@ibm/plex-mono` and `@ibm/plex-sans`
 - NPM scripts have been simplified to copy the required CSS and JS files from `wwdtm-theme` and the required IBM Plex web font files into the appropriate paths under `app/static`
 - Upgrade wwdtm from 2.17.2 to 2.18.1-beta.1
+- Upgrade Plotly.js v3 from 3.0.0 to 3.0.1
 
 ## 3.3.5
 
