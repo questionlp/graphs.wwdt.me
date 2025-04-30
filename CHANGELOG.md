@@ -1,6 +1,6 @@
 # Changes
 
-## 3.4.0-beta
+## 3.4.0
 
 Due to the significant changes around the new application theming, the usual Application, Component and Development changes section are being merged into a single Changes section.
 
@@ -11,7 +11,7 @@ Due to the significant changes around the new application theming, the usual App
   - `wwdtm-theme` now handles the compiling of the Sass files to CSS into `dist/css` and copies the Bootstrap scripts into `dist/js`
 - Trimming down the included `package.json` to only require `@ibm/plex-mono` and `@ibm/plex-sans`
 - NPM scripts have been simplified to copy the required CSS and JS files from `wwdtm-theme` and the required IBM Plex web font files into the appropriate paths under `app/static`
-- Upgrade wwdtm from 2.17.2 to 2.18.1-beta.1
+- Upgrade wwdtm from 2.17.2 to 2.18.1
 - Upgrade Plotly.js v3 from 3.0.0 to 3.0.1
 
 ## 3.3.5
