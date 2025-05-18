@@ -33,22 +33,22 @@
                             <hr>
                         </li>
                         <li class="nav-item d-block d-md-none">
-                            <a class="nav-link" href="{{ blog_url }}">Blog</a>
+                            <a class="nav-link" href="{{ blog_url }}" target="_blank">Blog</a>
                         </li>
                         {% if github_sponsor_url or patreon_url %}
                         <li class="nav-item d-block d-md-none">
                             <hr>
                         </li>
-                            {% if github_sponsor_url %}
+                        {% if github_sponsor_url %}
                         <li class="nav-item d-block d-md-none">
-                            <a class="nav-link" href="{{ github_sponsor_url }}">GitHub Sponsor</a>
+                            <a class="nav-link" href="{{ github_sponsor_url }}" target="_blank">GitHub Sponsor</a>
                         </li>
-                            {% endif %}
-                            {% if patreon_url %}
+                        {% endif %}
+                        {% if patreon_url %}
                         <li class="nav-item d-block d-md-none">
-                            <a class="nav-link" href="{{ patreon_url }}">Patreon</a>
+                            <a class="nav-link" href="{{ patreon_url }}" target="_blank">Patreon</a>
                         </li>
-                            {% endif %}
+                        {% endif %}
                         {% endif %}
                         <li class="nav-item d-block d-md-none">
                             <hr>
