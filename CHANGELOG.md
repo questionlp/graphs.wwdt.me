@@ -1,5 +1,12 @@
 # Changes
 
+## 3.4.3
+
+### Application Changes
+
+- Update list of AI scraper user agents
+- Change the `block_ai_scrapers` logic so that if the configuration key is set to `true`, the action is set to `Disallow: /`. If the configuration key is set to `false`, the action is set to `Crawl-delay: 10`
+
 ## 3.4.2
 
 ### Component Changes
