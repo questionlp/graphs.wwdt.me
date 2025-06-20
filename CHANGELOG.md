@@ -1,5 +1,13 @@
 # Changes
 
+## 3.4.4
+
+### Component Changes
+
+- Upgrade wwdtm from 2.18.2 to 2.19.0
+- Upgrade wwdtm-theme from 2.0.5 to 2.0.20, which includes:
+  - Upgrade Bootstrap from 5.3.6 to 5.3.7
+
 ## 3.4.3
 
 ### Application Changes
