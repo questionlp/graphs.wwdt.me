@@ -26,12 +26,13 @@
     // Set default colors and font list
     let axisColor = "#000";
     let backgroundColor = "#fff";
+    let colorscale = {{ colorscale_bold | safe }};
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         axisColor = "#fff";
-        backgroundColor = "#161616";    // IBM Gray 100
+        backgroundColor = "#161616"; // IBM Gray 100
     }
 
     let months = [
@@ -63,6 +64,7 @@
                     size: 16
                 }
             },
+            /*
             colorscale: [
                 [0, "#000"],
                 [0.5, "#a2191f"],   // IBM Red 70
@@ -70,6 +72,8 @@
                 [0.75, "#f1c21b"],  // IBM Alert 30
                 [1, "#f4f4f4"]      // IBM Gray 10
             ],
+            */
+            colorscale: colorscale,
             hoverongaps: false,
             hovertemplate: "Year: %{y}<br>Month: %{x}<br>Average Score: %{z}<extra></extra>",
             type: "heatmap",

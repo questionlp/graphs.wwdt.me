@@ -119,6 +119,16 @@ def test_monthly_average_score_heatmap(client: FlaskClient) -> None:
     assert b"Year" in response.data
 
 
+def test_not_by_job_vs_bluff_win_ratios(client: FlaskClient) -> None:
+    """Testing shows.not_by_job_vs_bluff_win_ratios."""
+    response: TestResponse = client.get("/shows/not-my-job-vs-bluff-win-ratios")
+    assert response.status_code == 200
+    assert b"Shows" in response.data
+    assert b"Not My Job vs Bluff the Listener Win Ratios" in response.data
+    assert b"Win Ratio (%)" in response.data
+    assert b"Year" in response.data
+
+
 def test_panel_gender_mix(client: FlaskClient) -> None:
     """Testing shows.panel_gender_mix."""
     response: TestResponse = client.get("/shows/panel-gender-mix")

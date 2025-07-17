@@ -28,14 +28,16 @@
     // Set default colors
     let axisColor = "#000";
     let backgroundColor = "#fff";
-    let markerColor = "#0043ce";    // IBM Blue 70
+    let markerColor = "#0043ce"; // IBM Blue 70
+    let colorway = {{ colorway_light | safe }};
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         axisColor = "#fff";
-        backgroundColor = "#161616";    // IBM Gray 100
-        markerColor = "#78a9ff";    // IBM Blue 40
+        backgroundColor = "#161616"; // IBM Gray 100
+        markerColor = "#78a9ff"; // IBM Blue 40
+        colorway = {{ colorway_dark | safe }};
     }
 
     let data = [
@@ -44,15 +46,13 @@
             y: {{ scores | safe }},
             name: "Score",
             showlegend: true,
-            type: "bar",
-            marker: {
-                color: markerColor
-            }
+            type: "bar"
         }
     ];
 
     let layout = {
         autosize: true,
+        colorway: colorway,
         font: { family: fontList },
         hoverlabel: {
             font: {

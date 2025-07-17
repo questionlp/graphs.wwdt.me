@@ -14,7 +14,36 @@ from mysql.connector import DatabaseError, connect
 from wwdtm.panelist import Panelist
 from wwdtm.show import Show
 
-month_names = {
+COLORWAY_LIGHT: list[str] = [
+    "#6929c4",  # IBM Purple 70
+    "#1192e8",  # IBM Cyan 50
+    "#005d5d",  # IBM Teal 70
+    "#d4bbff",  # IBM Purple 30
+    "#570408",  # IBM Red 90
+]
+COLORWAY_DARK: list[str] = [
+    "#8a3ffc",  # IBM Purple 60
+    "#08bdba",  # IBM Teal 40
+    "#bae6ff",  # IBM Cyan 20
+    "#4589ff",  # IBM Blue 50
+    "#ff7eb6",  # IBM Magenta 40
+]
+
+COLORSCALE: list[str] = [
+    [0, "#000000"],
+    [0.1, "#1c0f30"],  # IBM Purple 100
+    [0.5, "#a56eff"],  # IBM Purple 50
+    [1, "#f6f2ff"],  # IBM Purple 10
+]
+
+COLORSCALE_BOLD: list[str] = [
+    [0, "#000000"],
+    [0.1, "#1c0f30"],  # IBM Purple 100
+    [0.5, "#6929c4"],  # IBM Purple 70
+    [1, "#f6f2ff"],  # IBM Purple 10
+]
+
+MONTH_NAMES: dict[int, str] = {
     1: "January",
     2: "February",
     3: "March",

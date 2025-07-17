@@ -1,30 +1,21 @@
 {% extends "base.html" %}
-{% set page_title="Counts by Day of Month" %}
-{% block title %}All | {{ page_title }} | Shows{% endblock %}
+{% set page_title="Home vs Away" %}
+{% block title %}{{ page_title }} | Locations{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('shows.counts_by_day_of_month') }}">{{ page_title }}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">All</li>
+        <li class="breadcrumb-item"><a href="{{ url_for('locations.index') }}">Locations</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
 
-<h2>{{ page_title }}: All Months</h2>
+<h2>{{ page_title }}</h2>
 
-{% if days %}
+{% if years and home and away and studios %}
 <p>
-    This chart displays the number of shows that have aired for a specific day
-    of month, broken out by regular shows, Best Of shows, repeat shows, and
-    repeat Best Of shows.
-</p>
-
-<p>
-    The chart is set up to initially show the first six months and allows you
-    to pan across the data by swiping left or right, or by clicking and
-    dragging left or right. Double-tapping or double-clicking will default back
-    to the original time span.
+    A list of the number of shows recorded at home (any venue or studio located in
+    Chicago, Illinois), away, and at home/remote studios for each year.
 </p>
 
 <div class="info py-2">
@@ -45,35 +36,24 @@
         colorway = {{ colorway_dark | safe }};
     }
 
-    let days = {{ days | safe }};
-    let regular_shows = {{ regular_shows | safe }};
-    let best_of_shows = {{ best_of_shows | safe }};
-    let repeat_shows = {{ repeat_shows | safe }};
-    let repeat_best_of_shows = {{ repeat_best_of_shows | safe }};
-
+    let showYears = {{ years | safe }};
     let data = [
         {
-            x: days,
-            y: regular_shows,
-            name: "Regular",
+            x: showYears,
+            y: {{ home | safe }},
+            name: "Home",
             type: "bar"
         },
         {
-            x: days,
-            y: best_of_shows,
-            name: "Best Of",
+            x: showYears,
+            y: {{ away | safe }},
+            name: "Away",
             type: "bar"
         },
         {
-            x: days,
-            y: repeat_shows,
-            name: "Repeat",
-            type: "bar"
-        },
-        {
-            x: days,
-            y: repeat_best_of_shows,
-            name: "Repeat Best Of",
+            x: showYears,
+            y: {{ studios | safe }},
+            name: "Studios",
             type: "bar"
         }
     ];
@@ -81,13 +61,7 @@
     let layout = {
         autosize: true,
         barmode: "stack",
-        colorway: [
-            "#1f77b4",
-            "#ffc000",
-            "#ff7f0e",
-            "#70ad47"
-        ],
-        dragmode: "pan",
+        colorway: colorway,
         font: { family: fontList },
         hoverlabel: {
             font: {
@@ -121,11 +95,10 @@
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }}: All Months"
+            text: "{{ page_title }}"
         },
         xaxis: {
             color: axisColor,
-            range: [-1, 182],
             showspikes: true,
             spikecolor: axisColor,
             spikedash: "dot",
@@ -135,14 +108,15 @@
             tickfont: { size: 14 },
             title: {
                 font: { size: 18 },
-                text: "Day of Month"
+                text: "Year"
             },
             type: "category"
         },
         yaxis: {
             color: axisColor,
-            dtick: 1,
+            dtick: 5,
             fixedrange: true,
+            range: [0, 60],
             tickfont: { size: 16 },
             title: {
                 font: { size: 18 },
@@ -153,17 +127,13 @@
 
     let config = {
         displaylogo: false,
-        displayModeBar: true,
         modeBarButtonsToRemove: [
-            "autoScale2d",
-            "lasso2d",
-            "select2d",
             "zoomIn2d",
             "zoomOut2d"
         ],
         responsive: true,
         toImageButtonOptions: {
-            filename: "counts-by-day-months-all",
+            filename: "home-vs-away",
             height: 800,
             scale: 1,
             width: 1200
@@ -174,7 +144,7 @@
 </script>
 {% else %}
 <p>
-    No show count data available.
+    No panel data available.
 </p>
 {% endif %}
 

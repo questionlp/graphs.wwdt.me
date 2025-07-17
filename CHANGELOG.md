@@ -1,5 +1,21 @@
 # Changes
 
+## 3.5.0
+
+### Application Changes
+
+- Change color scheme for all graphs with new colorways and color scales
+  - The color schemes are derived from the [Carbon Design System Data Visualization Color Palettes](https://carbondesignsystem.com/data-visualization/color-palettes/), which is based on [IBM's Design Language](https://www.ibm.com/design/language/)
+  - Both light and dark color schemes have been selected to improve contrast between specific colors for people affected by protanopia, deuteranopia, tritanopia, or achromatopsia.
+  - Heatmap graphs get two new color scales based on the sequential palettes from the Carbon Design System Data Visualization Color Palettes.
+  - Colors are defined by a new YAML configuration file, `colors.yaml`
+- Add new Locations "Home vs Away" graph
+- Add new Shows "Not My Job vs Bluff the Listener Win Ratios" graphs
+
+### Component Changes
+
+- Adding PyYAML 6.0.2
+
 ## 3.4.4
 
 ### Component Changes

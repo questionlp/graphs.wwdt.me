@@ -1,30 +1,32 @@
 {% extends "base.html" %}
-{% set page_title="Counts by Day of Month" %}
-{% block title %}All | {{ page_title }} | Shows{% endblock %}
+{% set page_title="Not My Job vs Bluff the Listener Win Ratios" %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('shows.counts_by_day_of_month') }}">{{ page_title }}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">All</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
 
-<h2>{{ page_title }}: All Months</h2>
+<h2>{{ page_title}}</h2>
 
-{% if days %}
+{% if years and not_my_job and bluff %}
 <p>
-    This chart displays the number of shows that have aired for a specific day
-    of month, broken out by regular shows, Best Of shows, repeat shows, and
-    repeat Best Of shows.
+    This chart displays the win rate percentage of Not My Job guests and Bluff
+    the Listener contestants for each year.
 </p>
-
 <p>
-    The chart is set up to initially show the first six months and allows you
-    to pan across the data by swiping left or right, or by clicking and
-    dragging left or right. Double-tapping or double-clicking will default back
-    to the original time span.
+    Not My Job guest wins are counted when a guest answers two or more questions
+    correct or when a scorekeeper grants an exception. Only wins from regular
+    shows and from unique Not My Job segments that only aired as part of Best Of
+    shows.
+</p>
+<p>
+    Bluff the Listener wins are counted when a listener contestant chooses the
+    panelist with the correct story. Only wins from regular shows and from
+    unique Bluff the Listener segments that only aired as part of Best Of shows.
 </p>
 
 <div class="info py-2">
@@ -32,10 +34,12 @@
 </div>
 
 <script>
-    // Set default colors and font list
+    // Set default colors
     let axisColor = "#000";
     let backgroundColor = "#fff";
     let colorway = {{ colorway_light | safe }};
+    let notMyJobHoverColor = "#fff";
+    let bluffHoverColor = "#fff";
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
@@ -43,56 +47,43 @@
         axisColor = "#fff";
         backgroundColor = "#161616"; // IBM Gray 100
         colorway = {{ colorway_dark | safe }};
+        notMyJobHoverColor = "#161616"; // IBM Gray 100
+        bluffHoverColor = "#fff";
     }
 
-    let days = {{ days | safe }};
-    let regular_shows = {{ regular_shows | safe }};
-    let best_of_shows = {{ best_of_shows | safe }};
-    let repeat_shows = {{ repeat_shows | safe }};
-    let repeat_best_of_shows = {{ repeat_best_of_shows | safe }};
-
+    // Set y-axis dtick value
+    let yAxisdTick = 2;
+    let years = {{ years | safe }};
+    
     let data = [
         {
-            x: days,
-            y: regular_shows,
-            name: "Regular",
-            type: "bar"
+            x: years,
+            y: {{ not_my_job | safe }},
+            name: "Not My Job",
+            type: "scatter",
+            hoverlabel: {
+                font: { color: notMyJobHoverColor }
+            }
         },
         {
-            x: days,
-            y: best_of_shows,
-            name: "Best Of",
-            type: "bar"
-        },
-        {
-            x: days,
-            y: repeat_shows,
-            name: "Repeat",
-            type: "bar"
-        },
-        {
-            x: days,
-            y: repeat_best_of_shows,
-            name: "Repeat Best Of",
-            type: "bar"
+            x: years,
+            y: {{ bluff | safe }},
+            name: "Bluff the Listener",
+            type: "scatter",
+            hoverlabel: {
+                font: { color: bluffHoverColor }
+            }
         }
     ];
 
     let layout = {
         autosize: true,
-        barmode: "stack",
-        colorway: [
-            "#1f77b4",
-            "#ffc000",
-            "#ff7f0e",
-            "#70ad47"
-        ],
-        dragmode: "pan",
+        colorway: colorway,
         font: { family: fontList },
         hoverlabel: {
             font: {
                 family: fontList,
-                size: 16
+                size: 16,
             },
         },
         hovermode: "x",
@@ -100,70 +91,65 @@
             font: {
                 color: axisColor,
                 family: fontList,
-                size: 16
+                size: 15
             },
-            traceorder: "normal",
             orientation: "h",
             y: 1.025,
             x: 0,
         },
         margin: {
             l: 60,
-            r: 40,
+            r: 60,
             t: 48,
-            b: 90
+            b: 68
         },
+        showlegend: true,
         paper_bgcolor: backgroundColor,
         plot_bgcolor: backgroundColor,
-        showlegend: true,
         title: {
             font: {
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }}: All Months"
+            text: "{{ page_title }}"
         },
         xaxis: {
             color: axisColor,
-            range: [-1, 182],
             showspikes: true,
             spikecolor: axisColor,
             spikedash: "dot",
             spikemode: "across",
             spikethickness: 1,
             tickangle: -45,
-            tickfont: { size: 14 },
+            tickfont: { size: 16 },
+            tickmode: "linear",
             title: {
                 font: { size: 18 },
-                text: "Day of Month"
-            },
-            type: "category"
+                text: "Year"
+            }
         },
         yaxis: {
             color: axisColor,
-            dtick: 1,
+            dtick: 10,
             fixedrange: true,
+            range: [0, 100.5],
             tickfont: { size: 16 },
             title: {
                 font: { size: 18 },
-                text: "Shows"
+                text: "Win Ratio (%)"
             }
         }
     };
 
     let config = {
         displaylogo: false,
-        displayModeBar: true,
         modeBarButtonsToRemove: [
-            "autoScale2d",
-            "lasso2d",
-            "select2d",
             "zoomIn2d",
             "zoomOut2d"
         ],
         responsive: true,
         toImageButtonOptions: {
-            filename: "counts-by-day-months-all",
+            filename: "not-my-job-vs-bluff-win-rate",
             height: 800,
             scale: 1,
             width: 1200
@@ -174,7 +160,7 @@
 </script>
 {% else %}
 <p>
-    No show count data available.
+    Not enough scoring data is available to generate a graph.
 </p>
 {% endif %}
 

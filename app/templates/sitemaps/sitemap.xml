@@ -5,6 +5,14 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>{{ site_url }}{{ url_for("locations.index") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("locations.home_vs_away") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>{{ site_url }}{{ url_for("panelists.index") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
@@ -90,6 +98,10 @@
   </url>
   <url>
     <loc>{{ site_url }}{{ url_for("shows.monthly_average_score_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.not_by_job_vs_bluff_win_ratios") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
   <url>

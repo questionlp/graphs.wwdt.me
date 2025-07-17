@@ -5,11 +5,14 @@
 # vim: set noai syntax=python ts=4 sw=4:
 """Core Application for Wait Wait Graphs Site."""
 
+import json
+
 from flask import Flask
 from wwdtm import VERSION as WWDTM_VERSION
 
 from app import config, utility
 from app.errors import handlers
+from app.locations.routes import blueprint as locations_bp
 from app.main.redirects import blueprint as redirects_bp
 from app.main.routes import blueprint as main_bp
 from app.panelists.routes import blueprint as panelists_bp
@@ -17,7 +20,7 @@ from app.shows.routes import blueprint as shows_bp
 from app.sitemaps.routes import blueprint as sitemaps_bp
 from app.version import APP_VERSION
 
-from .utility import format_umami_analytics
+from .utility import COLORSCALE, COLORSCALE_BOLD, COLORWAY_DARK, COLORWAY_LIGHT
 
 
 def create_app():
@@ -35,6 +38,7 @@ def create_app():
     app.register_error_handler(500, handlers.handle_exception)
 
     # Load configuration file
+    _colors = config.load_colors()
     _config = config.load_config()
     app.config["database"] = _config["database"]
     app.config["app_settings"] = _config["settings"]
@@ -79,6 +83,11 @@ def create_app():
         _config["settings"].get("use_decimal_scores", False)
     )
 
+    app.jinja_env.globals["colorscale"] = json.dumps(_colors["colorscale"])
+    app.jinja_env.globals["colorscale_bold"] = json.dumps(_colors["colorscale_bold"])
+    app.jinja_env.globals["colorway_light"] = json.dumps(_colors["colorway_light"])
+    app.jinja_env.globals["colorway_dark"] = json.dumps(_colors["colorway_dark"])
+
     # Check to see if panelistscore_decimal column exists and set a flag
     app.config["app_settings"]["has_decimal_scores_column"] = (
         utility.panelist_decimal_score_exists(database_settings=app.config["database"])
@@ -88,6 +97,7 @@ def create_app():
     app.register_blueprint(main_bp)
     app.register_blueprint(redirects_bp)
     app.register_blueprint(sitemaps_bp)
+    app.register_blueprint(locations_bp, url_prefix="/locations")
     app.register_blueprint(panelists_bp, url_prefix="/panelists")
     app.register_blueprint(shows_bp, url_prefix="/shows")
 

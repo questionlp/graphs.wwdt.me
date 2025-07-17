@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% set page_title="Locations" %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
+    </ol>
+</nav>
+
+<h2>{{ page_title }}</h2>
+<p>
+    Choose from one of the following links to view graphs representing data
+    collected from each show location.
+</p>
+
+<div class="info">
+    <div class="pages">
+        <ul class="list-group page-list">
+            <li class="list-group-item">
+                <a href="{{ url_for('locations.home_vs_away') }}">Home vs Away</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
