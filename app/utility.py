@@ -64,7 +64,7 @@ def format_umami_analytics(umami_analytics: dict = None) -> str:
     if not umami_analytics:
         return None
 
-    _enabled = bool(umami_analytics.get("_enabled", False))
+    _enabled = bool(umami_analytics.get("enabled", False))
 
     if not _enabled:
         return None
@@ -149,7 +149,7 @@ def retrieve_show_years(reverse_order: bool = True) -> list[int]:
     return years
 
 
-def time_zone_parser(time_zone: str) -> pytz.timezone:
+def time_zone_parser(time_zone: str) -> tuple[pytz.timezone, str]:
     """Parses a time zone name into a pytz.timezone object.
 
     Returns pytz.timezone object and string if time_zone is valid.

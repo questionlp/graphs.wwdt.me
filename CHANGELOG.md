@@ -11,10 +11,15 @@
   - Colors are defined by a new YAML configuration file, `colors.yaml`
 - Add new Locations "Home vs Away" graph
 - Add new Shows "Not My Job vs Bluff the Listener Win Ratios" graphs
+- Corrected the `enabled` key name for the Umami Analytics configuration dictionary. It was incorrectly using `_enabled`.
 
 ### Component Changes
 
 - Adding PyYAML 6.0.2
+
+### Development Changes
+
+- Add missing tests for the `utility` module
 
 ## 3.4.4
 
