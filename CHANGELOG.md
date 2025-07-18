@@ -18,7 +18,7 @@
 ### Component Changes
 
 - Adding PyYAML 6.0.2
-- Upgrade wwdtm-theme from 2.0.19 to 2.0.23
+- Upgrade wwdtm-theme from 2.0.19 to 2.0.26
   - Increases line height for the `.footer.links` on smaller screens to make it easier to tap or click specific links when the text is wrapped
 
 ### Development Changes
