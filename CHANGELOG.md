@@ -11,11 +11,15 @@
   - Colors are defined by a new YAML configuration file, `colors.yaml`
 - Add new Locations "Home vs Away" graph
 - Add new Shows "Not My Job vs Bluff the Listener Win Ratios" graphs
-- Corrected the `enabled` key name for the Umami Analytics configuration dictionary. It was incorrectly using `_enabled`.
+- Corrected the `enabled` key name for the Umami Analytics configuration dictionary. It was incorrectly using `_enabled`
+- Add `support_npr_url` to the `app_settings` section in the `config.json` file
+- Display link to "Support NPR" in the pop-out side navigation and in the footer with the value from `support_npr_url`, if not blank or `None`
 
 ### Component Changes
 
 - Adding PyYAML 6.0.2
+- Upgrade wwdtm-theme from 2.0.19 to 2.0.23
+  - Increases line height for the `.footer.links` on smaller screens to make it easier to tap or click specific links when the text is wrapped
 
 ### Development Changes
 
