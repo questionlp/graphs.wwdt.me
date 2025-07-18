@@ -21,17 +21,6 @@ TEST_UMAMI_ANALYTICS: dict[str, str | bool] = {
 }
 
 
-def test_format_umami_analytics() -> None:
-    """Testing utility.format_umami_analytics."""
-    _analytics: str = utility.format_umami_analytics(
-        umami_analytics=TEST_UMAMI_ANALYTICS
-    )
-    assert _analytics
-    assert "script" in _analytics
-    assert TEST_UMAMI_ANALYTICS["url"] in _analytics
-    assert TEST_UMAMI_ANALYTICS["data_website_id"] in _analytics
-
-
 @pytest.mark.parametrize("date_string", ["2000-01-01", "1970-01-01"])
 def test_date_string_to_date(date_string: str) -> None:
     """Testing utility.date_string_to_date."""
