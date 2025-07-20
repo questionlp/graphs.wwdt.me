@@ -8,6 +8,9 @@
                         <li><a href="{{ blog_url }}" target="_blank">Blog</a></li>
                         <li><a href="{{ reports_url }}" target="_blank">Reports</a></li>
                         <li><a href="{{ stats_url }}" target="_blank">Stats</a></li>
+                        {% if support_npr_url %}
+                        <li><a href="{{ support_npr_url }}" target="_blank">Support NPR</a></li>
+                        {% endif %}
                         {% if github_sponsor_url %}
                         <li><a href="{{ github_sponsor_url }}" target="_blank">GitHub Sponsor</a></li>
                         {% endif %}
@@ -38,7 +41,7 @@
                 </div>
                 <div class="col-lg-5 text-lg-end app-details py-1">
                     <span id="app-version">
-                        <span title="Page Rendered">R: {{ rendered_at(time_zone) }}</span> |
+                        <span title="Page Rendered {%- if node_name %}: {{ node_name }}{% endif %}">R: {{ rendered_at(time_zone) }}</span> |
                         <span title="Application Version">V: {{ app_version }}</span> |
                         <span title="wwdtm Version">L: {{ wwdtm_version }}</span>
                     </span>

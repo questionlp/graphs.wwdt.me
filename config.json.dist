@@ -17,7 +17,7 @@
         "blog_url": "",
         "ga_property_code": null,
         "umami_analytics": {
-            "_enabled": false,
+            "enabled": false,
             "url": "",
             "data_website_id": "",
             "data_domains": "",
@@ -33,6 +33,7 @@
         "bluesky_user": "",
         "mastodon_url": "",
         "mastodon_user": "",
+        "support_npr_url": "",
         "patreon_url": "",
         "github_sponsor_url": "",
         "use_plotly_v3": false,

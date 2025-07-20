@@ -9,7 +9,62 @@ import json
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 from app import utility
+
+COLORWAY_LIGHT: list[str] = [
+    "#6929c4",  # IBM Purple 70
+    "#1192e8",  # IBM Cyan 50
+    "#005d5d",  # IBM Teal 70
+    "#d4bbff",  # IBM Purple 30
+    "#570408",  # IBM Red 90
+]
+COLORWAY_DARK: list[str] = [
+    "#8a3ffc",  # IBM Purple 60
+    "#08bdba",  # IBM Teal 40
+    "#bae6ff",  # IBM Cyan 20
+    "#4589ff",  # IBM Blue 50
+    "#ff7eb6",  # IBM Magenta 40
+]
+
+COLORSCALE: list[str] = [
+    [0, "#000000"],
+    [0.1, "#1c0f30"],  # IBM Purple 100
+    [0.5, "#a56eff"],  # IBM Purple 50
+    [1, "#f6f2ff"],  # IBM Purple 10
+]
+
+COLORSCALE_BOLD: list[str] = [
+    [0, "#000000"],
+    [0.1, "#1c0f30"],  # IBM Purple 100
+    [0.5, "#6929c4"],  # IBM Purple 70
+    [1, "#f6f2ff"],  # IBM Purple 10
+]
+
+
+def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
+    """Read colors YAML configuration file."""
+    _colors_file_path = Path(colors_file_path)
+    if _colors_file_path.exists():
+        with _colors_file_path.open(mode="r", encoding="utf-8") as colors_file:
+            colors_config: dict[str, str] = yaml.safe_load(colors_file)
+
+        _config = {
+            "colorway_light": colors_config.get("colorway_light", COLORWAY_LIGHT),
+            "colorway_dark": colors_config.get("colorway_dark", COLORWAY_DARK),
+            "colorscale": colors_config.get("colorscale", COLORSCALE),
+            "colorscale_bold": colors_config.get("colorscale_bold", COLORSCALE_BOLD),
+        }
+    else:
+        _config = {
+            "colorway_light": COLORWAY_LIGHT,
+            "colorway_dark": COLORWAY_DARK,
+            "colorscale": COLORSCALE,
+            "colorscale_bold": COLORSCALE_BOLD,
+        }
+
+    return _config
 
 
 def load_config(

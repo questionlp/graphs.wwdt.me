@@ -1,0 +1,35 @@
+# Using color palettes from: https://carbondesignsystem.com/data-visualization/color-palettes/
+
+# Based on Categorical Palettes / Light / 5-Color Group / Option 1
+# Magenta 70 has been replaced with Purple 30 for better contrast
+colorway_light:
+  - "#6929c4" # IBM Purple 70
+  - "#1192e8" # IBM Cyan 50
+  - "#005d5d" # IBM Teal 70
+  - "#d4bbff" # IBM Purple 30
+  - "#570408" # IBM Red 90
+
+# Based on Categorical Palettes / Dark / 5-Color Group / Option 1
+colorway_dark:
+  - "#8a3ffc" # IBM Purple 60
+  - "#08bdba" # IBM Teal 40
+  - "#bae6ff" # IBM Cyan 20
+  - "#4589ff" # IBM Blue 50
+  - "#ff7eb6" # IBM Magenta 40
+
+# Based on Sequential Palettes Monochromatic Option 2
+# Using black as the lowest value to reduce brightness at the low end
+colorscale:
+  - [0, "#000000"]
+  - [0.1, "#1c0f30"] # IBM Purple 100
+  - [0.5, "#a56eff"] # IBM Purple 50
+  - [1, "#f6f2ff"] # IBM Purple 10
+
+# Based on Sequential Palettes Monochromatic Option 2
+# Using black as the lowest value to reduce brightness at the low end and
+# shifted color weights to increase contrast between low and high values
+colorscale_bold:
+  - [0, "#000000"]
+  - [0.1, "#1c0f30"] # IBM Purple 100
+  - [0.5, "#6929c4"] # IBM Purple 70
+  - [1, "#f6f2ff"] # IBM Purple 10

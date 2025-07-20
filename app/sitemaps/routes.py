@@ -7,7 +7,7 @@
 
 from flask import Blueprint, Response, render_template
 
-from app.utility import month_names, retrieve_panelists, retrieve_show_years
+from app.utility import MONTH_NAMES, retrieve_panelists, retrieve_show_years
 
 blueprint = Blueprint("sitemaps", __name__)
 
@@ -19,7 +19,7 @@ def primary() -> Response:
     years = retrieve_show_years()
     sitemap = render_template(
         "sitemaps/sitemap.xml",
-        months=month_names,
+        months=MONTH_NAMES,
         panelists=panelists,
         show_years=years,
     )

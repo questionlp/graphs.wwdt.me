@@ -24,6 +24,9 @@
                             <hr>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('locations.index') }}">Locations</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('panelists.index') }}">Panelists</a>
                         </li>
                         <li class="nav-item">
@@ -35,6 +38,14 @@
                         <li class="nav-item d-block d-md-none">
                             <a class="nav-link" href="{{ blog_url }}" target="_blank">Blog</a>
                         </li>
+                        {% if support_npr_url %}
+                        <li class="nav-item d-block d-md-none">
+                            <hr>
+                        </li>
+                        <li class="nav-item d-block d-md-none">
+                            <a class="nav-link" href="{{ support_npr_url }}" target="_blank">Support NPR</a>
+                        </li>
+                        {% endif %}
                         {% if github_sponsor_url or patreon_url %}
                         <li class="nav-item d-block d-md-none">
                             <hr>

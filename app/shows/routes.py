@@ -10,7 +10,11 @@ from mysql.connector import connect
 from wwdtm.show import Show
 
 from app.reports.show import bluff_count, dates, gender_mix, scores, show_counts
-from app.utility import month_names, redirect_url
+from app.reports.show.guests_vs_bluffs import (
+    retrieve_bluff_win_rate_by_year,
+    retrieve_not_my_job_win_rate_by_year,
+)
+from app.utility import MONTH_NAMES, redirect_url
 
 blueprint = Blueprint("shows", __name__, template_folder="templates")
 
@@ -158,7 +162,7 @@ def bluff_counts_by_year(year: int) -> Response | str:
 @blueprint.route("/counts-by-day-month")
 def counts_by_day_of_month() -> str:
     """View: Counts by Day of Month."""
-    return render_template("shows/counts-by-day-month/index.html", months=month_names)
+    return render_template("shows/counts-by-day-month/index.html", months=MONTH_NAMES)
 
 
 @blueprint.route("/counts-by-day-month/all")
@@ -217,7 +221,7 @@ def counts_by_day_of_month_by_month(month: int) -> Response | str:
 
     return render_template(
         "shows/counts-by-day-month/details.html",
-        month=month_names[month],
+        month=MONTH_NAMES[month],
         days=days,
         regular_shows=regular_shows,
         best_of_shows=best_of_shows,
@@ -302,6 +306,30 @@ def monthly_average_score_heatmap() -> str:
         "shows/monthly-average-score-heatmap/graph.html",
         years=years,
         scores=scores_list,
+    )
+
+
+@blueprint.route("/not-my-job-vs-bluff-win-ratios")
+def not_by_job_vs_bluff_win_ratios() -> Response | str:
+    """View: Not My Job vs Bluff the Listener Win Ratios."""
+    show_years = retrieve_show_years()
+
+    if not show_years:
+        return redirect_url(url_for("shows_index"))
+
+    _not_my_job_win_rate = []
+    _bluff_win_rate = []
+    for show_year in show_years:
+        _not_my_job_win_rate.append(
+            retrieve_not_my_job_win_rate_by_year(year=show_year)
+        )
+        _bluff_win_rate.append(retrieve_bluff_win_rate_by_year(year=show_year))
+
+    return render_template(
+        "shows/not-my-job-vs-bluff-win-ratios/graph.html",
+        years=show_years,
+        not_my_job=_not_my_job_win_rate,
+        bluff=_bluff_win_rate,
     )
 
 

@@ -28,24 +28,14 @@
     // Set default colors and font list
     let axisColor = "#000";
     let backgroundColor = "#fff";
-    let colorway = [
-        "#0043ce",  // IBM Blue 70
-        "#f1c21b",  // IBM Alert 30
-        "#ff832b",  // IBM Alert 40
-        "#24a148"   // IBM Alert 50
-    ];
+    let colorway = {{ colorway_light | safe }};
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         axisColor = "#fff";
-        backgroundColor = "#161616";    // IBM Gray 100
-        colorway = [
-            "#78a9ff",  // IBM Blue 40
-            "#f1c21b",  // IBM Alert 40
-            "#ff832b",  // IBM Alert 40
-            "#24a148"   // IBM Alert 50
-        ];
+        backgroundColor = "#161616"; // IBM Gray 100
+        colorway = {{ colorway_dark | safe }};
     }
 
     let days = {{ days | safe }};
