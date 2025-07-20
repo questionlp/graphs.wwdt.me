@@ -6,6 +6,7 @@
 """Core Application for Wait Wait Graphs Site."""
 
 import json
+import platform
 
 from flask import Flask
 from wwdtm import VERSION as WWDTM_VERSION
@@ -94,6 +95,10 @@ def create_app():
     # Check to see if panelistscore_decimal column exists and set a flag
     app.config["app_settings"]["has_decimal_scores_column"] = (
         utility.panelist_decimal_score_exists(database_settings=app.config["database"])
+    )
+
+    app.jinja_env.globals["node_name"] = (
+        platform.node().split(".")[0] if platform.node() else None
     )
 
     # Register application blueprints

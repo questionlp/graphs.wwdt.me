@@ -14,6 +14,7 @@
 - Corrected the `enabled` key name for the Umami Analytics configuration dictionary. It was incorrectly using `_enabled`
 - Add `support_npr_url` to the `app_settings` section in the `config.json` file
 - Display link to "Support NPR" in the pop-out side navigation and in the footer with the value from `support_npr_url`, if not blank or `None`
+- Discreetly display the node rendering and serving the page as a tooltip in the footer
 
 ### Component Changes
 
