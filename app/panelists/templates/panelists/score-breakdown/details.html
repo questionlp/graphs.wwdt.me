@@ -34,7 +34,9 @@
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    const getStoredTheme = () => localStorage.getItem("theme");
+    const storedTheme = getStoredTheme();
+    if ((window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) && (storedTheme === "dark" || storedTheme === "auto")) {
         axisColor = "#fff";
         backgroundColor = "#161616"; // IBM Gray 100
         markerColor = "#78a9ff"; // IBM Blue 40
@@ -42,11 +44,15 @@
     }
 
     // Set y-axis dtick value
-    let yAxisdTick = 2;
+    let yAxisdTick = 1;
     let scoreCounts = {{ scores.count | safe }};
     let maxCount = Math.max.apply(Math, scoreCounts);
-    if (maxCount <= 3) {
-        yAxisdTick = 1;
+    if (maxCount >= 50) {
+        yAxisdTick = 10;
+    } else if (maxCount >= 15) {
+        yAxisdTick = 5;
+    } else if (maxCount >= 5) {
+        yAxisdTick = 2;
     }
 
     let data = [
@@ -69,16 +75,6 @@
             },
         },
         hovermode: "x",
-        legend: {
-            font: {
-                color: axisColor,
-                family: fontList,
-                size: 15
-            },
-            orientation: "h",
-            y: 1.025,
-            x: 0,
-        },
         margin: {
             l: 60,
             r: 60,
@@ -88,12 +84,18 @@
         showlegend: true,
         paper_bgcolor: backgroundColor,
         plot_bgcolor: backgroundColor,
+        showlegend: false,
         title: {
+            automargin: true,
             font: {
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }}: {{ info.name | safe }}"
+            pad: {
+                t: 6
+            },
+            text: "{{ page_title }}: {{ info.name | safe }}",
+            x: 0.01
         },
         xaxis: {
             color: axisColor,
@@ -113,6 +115,7 @@
             color: axisColor,
             dtick: yAxisdTick,
             fixedrange: true,
+            showline: true,
             tickfont: { size: 16 },
             title: {
                 font: { size: 18 },

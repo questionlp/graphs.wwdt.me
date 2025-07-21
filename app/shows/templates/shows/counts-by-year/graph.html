@@ -35,7 +35,9 @@
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    const getStoredTheme = () => localStorage.getItem("theme");
+    const storedTheme = getStoredTheme();
+    if ((window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) && (storedTheme === "dark" || storedTheme === "auto")) {
         axisColor = "#fff";
         backgroundColor = "#161616"; // IBM Gray 100
         colorway = {{ colorway_dark | safe }};
@@ -102,11 +104,16 @@
         plot_bgcolor: backgroundColor,
         showlegend: true,
         title: {
+            automargin: true,
             font: {
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }}"
+            pad: {
+                t: 6
+            },
+            text: "{{ page_title }}",
+            x: 0.01
         },
         xaxis: {
             color: axisColor,
@@ -125,9 +132,10 @@
         },
         yaxis: {
             color: axisColor,
-            dtick: 5,
+            dtick: 10,
             fixedrange: true,
-            range: [0, 60],
+            range: [0, 56],
+            showline: true,
             tickfont: { size: 16 },
             title: {
                 font: { size: 18 },
