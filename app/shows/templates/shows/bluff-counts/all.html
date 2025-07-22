@@ -31,10 +31,15 @@
     let colorway = {{ colorway_light | safe }};
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
-    // Change colors if in dark mode
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    // Change colors if in dark mode (stored theme overrides prefers-color-scheme)
+    const getStoredTheme = () => localStorage.getItem("theme");
+    const storedTheme = getStoredTheme();
+    let lightMode = storedTheme === "light" || ((storedTheme === "light" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches));
+    let darkMode = storedTheme === "dark" || ((storedTheme === "dark" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches));
+    if (darkMode) {
         axisColor = "#fff";
         backgroundColor = "#161616"; // IBM Gray 100
+        markerColor = "#78a9ff"; // IBM Blue 40
         colorway = {{ colorway_dark | safe }};
     }
 
@@ -90,11 +95,16 @@
         plot_bgcolor: backgroundColor,
         showlegend: true,
         title: {
+            automargin: true,
             font: {
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }}: All Years"
+            pad: {
+                t: 6
+            },
+            text: "{{ page_title }}: All Years",
+            x: 0.01
         },
         xaxis: {
             color: axisColor,
@@ -114,9 +124,10 @@
         },
         yaxis: {
             color: axisColor,
-            dtick: 1,
+            dtick: 5,
             fixedrange: true,
-            range: [0, max_height],
+            range: [0, max_height + 2],
+            showline: true,
             tickfont: { size: 16 },
             title: {
                 font: { size: 18 },

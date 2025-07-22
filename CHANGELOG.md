@@ -1,5 +1,18 @@
 # Changes
 
+## 3.5.1
+
+### Application Changes
+
+- Changed the graph titles to be left aligned rather than center aligned
+- Changed the top padding for graph titles to be inset by 6 pixels
+- Changed the y-axis to show the axis line, which is the same behavior as the x-axis
+- Changed the y-axis tick counts for most graphs to reduce the number of ticks, thus reducing graph clutter
+- Removed graph legends on graphs with only one data category
+- Updated light and dark mode detection at graph rendering to use both the `prefers-color-scheme` value as well as the local storage `theme` value. A page refresh is still required to get the correct color scheme to be applied
+  - Note: The `theme` value that is selected from the dropdown will take precedence over the `prefers-color-scheme`. If the `theme` value is not set (default) or set to `auto`, then the `prefers-color-scheme` value is honored
+  - There may be some cases where there is a mismatch between the graph color mode and the page color mode. Switching between themes and refreshing the page should cause the local storage value to be picked up properly
+
 ## 3.5.0
 
 ### Application Changes

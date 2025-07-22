@@ -29,10 +29,16 @@
     let colorscale = {{ colorscale | safe }};
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
-    // Change colors if in dark mode
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    // Change colors if in dark mode (stored theme overrides prefers-color-scheme)
+    const getStoredTheme = () => localStorage.getItem("theme");
+    const storedTheme = getStoredTheme();
+    let lightMode = storedTheme === "light" || ((storedTheme === "light" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches));
+    let darkMode = storedTheme === "dark" || ((storedTheme === "dark" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches));
+    if (darkMode) {
         axisColor = "#fff";
         backgroundColor = "#161616"; // IBM Gray 100
+        markerColor = "#78a9ff"; // IBM Blue 40
+        colorway = {{ colorway_dark | safe }};
     }
 
     let months = [
@@ -64,15 +70,6 @@
                     size: 16
                 }
             },
-            /*
-            colorscale: [
-                [0, "#000"],
-                [0.4, "#ff832b"],   // IBM Alert 40
-                [0.6, "#f1c21b"],   // IBM Alert 30
-                [1, "#f4f4f4"]      // IBM Gray 10
-                
-            ],
-            */
             colorscale: colorscale,
             hoverongaps: false,
             hovertemplate: "Year: %{y}<br>Month: %{x}<br>Aggregate Score: %{z}<extra></extra>",
@@ -99,14 +96,20 @@
         plot_bgcolor: backgroundColor,
         showlegend: true,
         title: {
+            automargin: true,
             font: {
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }}"
+            pad: {
+                t: 6
+            },
+            text: "{{ page_title }}",
+            x: 0.01
         },
         xaxis: {
             color: axisColor,
+            showline: true,
             tickfont: { size: 14 },
             title: {
                 font: { size: 18 },
@@ -115,6 +118,7 @@
         },
         yaxis: {
             color: axisColor,
+            showline: true,
             tickfont: { size: 16 },
             title: {
                 font: { size: 18 },

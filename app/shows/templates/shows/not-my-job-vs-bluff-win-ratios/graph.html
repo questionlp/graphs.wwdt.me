@@ -42,13 +42,16 @@
     let bluffHoverColor = "#fff";
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
-    // Change colors if in dark mode
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    // Change colors if in dark mode (stored theme overrides prefers-color-scheme)
+    const getStoredTheme = () => localStorage.getItem("theme");
+    const storedTheme = getStoredTheme();
+    let lightMode = storedTheme === "light" || ((storedTheme === "light" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches));
+    let darkMode = storedTheme === "dark" || ((storedTheme === "dark" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches));
+    if (darkMode) {
         axisColor = "#fff";
         backgroundColor = "#161616"; // IBM Gray 100
+        markerColor = "#78a9ff"; // IBM Blue 40
         colorway = {{ colorway_dark | safe }};
-        notMyJobHoverColor = "#161616"; // IBM Gray 100
-        bluffHoverColor = "#fff";
     }
 
     // Set y-axis dtick value
@@ -107,11 +110,16 @@
         paper_bgcolor: backgroundColor,
         plot_bgcolor: backgroundColor,
         title: {
+            automargin: true,
             font: {
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }}"
+            pad: {
+                t: 6
+            },
+            text: "{{ page_title }}",
+            x: 0.01
         },
         xaxis: {
             color: axisColor,
@@ -130,9 +138,10 @@
         },
         yaxis: {
             color: axisColor,
-            dtick: 10,
+            dtick: 20,
             fixedrange: true,
-            range: [0, 100.5],
+            range: [0, 105],
+            showline: true,
             tickfont: { size: 16 },
             title: {
                 font: { size: 18 },

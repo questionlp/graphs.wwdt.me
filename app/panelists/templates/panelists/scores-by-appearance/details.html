@@ -32,8 +32,12 @@
     let colorway = {{ colorway_light | safe }};
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
-    // Change colors if in dark mode
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    // Change colors if in dark mode (stored theme overrides prefers-color-scheme)
+    const getStoredTheme = () => localStorage.getItem("theme");
+    const storedTheme = getStoredTheme();
+    let lightMode = storedTheme === "light" || ((storedTheme === "light" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches));
+    let darkMode = storedTheme === "dark" || ((storedTheme === "dark" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches));
+    if (darkMode) {
         axisColor = "#fff";
         backgroundColor = "#161616"; // IBM Gray 100
         markerColor = "#78a9ff"; // IBM Blue 40
@@ -61,16 +65,6 @@
             },
         },
         hovermode: "x",
-        legend: {
-            font: {
-                color: axisColor,
-                family: fontList,
-                size: 16
-            },
-            orientation: "h",
-            y: 1.025,
-            x: 0,
-        },
         margin: {
             l: 60,
             r: 40,
@@ -79,12 +73,18 @@
         },
         paper_bgcolor: backgroundColor,
         plot_bgcolor: backgroundColor,
+        showlegend: false,
         title: {
+            automargin: true,
             font: {
                 color: axisColor,
                 size: 20
             },
-            text: "{{ page_title }}: {{ info.name | safe }}"
+            pad: {
+                t: 6
+            },
+            text: "{{ page_title }}: {{ info.name | safe }}",
+            x: 0.01
         },
         xaxis: {
             color: axisColor,
@@ -104,10 +104,11 @@
         },
         yaxis: {
             color: axisColor,
-            dtick: 2,
+            dtick: 5,
             fixedrange: true,
+            showline: true,
             tickfont: { size: 16 },
-            range: [0, 28],
+            range: [0, 30],
             title: {
                 font: { size: 18 },
                 text: "Score"
