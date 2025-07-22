@@ -9,7 +9,8 @@
 - Changed the y-axis to show the axis line, which is the same behavior as the x-axis
 - Changed the y-axis tick counts for most graphs to reduce the number of ticks, thus reducing graph clutter
 - Removed graph legends on graphs with only one data category
-- Updated light and dark mode detection at graph rendering to use both the CSS `prefers-color-scheme` value as well as the local storage `theme` value. A page refresh is still required to get the correct color scheme to be applied
+- Updated light and dark mode detection at graph rendering to use both the `prefers-color-scheme` value as well as the local storage `theme` value. A page refresh is still required to get the correct color scheme to be applied
+  - Note: The `theme` value that is selected from the dropdown will take precedence over the `prefers-color-scheme`. If the `theme` value is not set (default) or set to `auto`, then the `prefers-color-scheme` value is honored
 
 ## 3.5.0
 
