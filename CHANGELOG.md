@@ -1,5 +1,12 @@
 # Changes
 
+## 3.5.2
+
+### Component Changes
+
+- Upgrade Plotly.js v3 from 3.0.1 to 3.0.2
+- Remove older Plotly.js v2 and v3 files
+
 ## 3.5.1
 
 ### Application Changes
