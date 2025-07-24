@@ -48,7 +48,9 @@ def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
     _colors_file_path = Path(colors_file_path)
     if _colors_file_path.exists():
         with _colors_file_path.open(mode="r", encoding="utf-8") as colors_file:
-            colors_config: dict[str, str] = yaml.safe_load(colors_file)
+            colors_config: dict[str, list[str | int | float]] = yaml.safe_load(
+                colors_file
+            )
 
         _config = {
             "colorway_light": colors_config.get("colorway_light", COLORWAY_LIGHT),

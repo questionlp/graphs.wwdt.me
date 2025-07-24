@@ -6,6 +6,7 @@
 
 - Changed `colorscale` values in `colors.yaml` and in `app.config` to improve contrast between min and max values
 - Changed `colorscale_bold` Jinja environment global variable to use value of `colorscale`
+- Fixed type hint for `color_config` variable in `app.config.load_colors()`
 - Removed `colorscale_bold` from `colors.yaml` now that `colorscale` has higher contrast
 - Removed `COLORSCALE_BOLD` from `app.config`
 - Removed the following variables from `app.utility` since they are no longer necessary
