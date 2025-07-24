@@ -29,17 +29,17 @@ COLORWAY_DARK: list[str] = [
 ]
 
 COLORSCALE: list[str] = [
-    [0, "#000000"],
+    [0.0, "#000000"],  # Black
     [0.1, "#1c0f30"],  # IBM Purple 100
-    [0.5, "#a56eff"],  # IBM Purple 50
-    [1, "#f6f2ff"],  # IBM Purple 10
-]
-
-COLORSCALE_BOLD: list[str] = [
-    [0, "#000000"],
-    [0.1, "#1c0f30"],  # IBM Purple 100
-    [0.5, "#6929c4"],  # IBM Purple 70
-    [1, "#f6f2ff"],  # IBM Purple 10
+    [0.2, "#31135e"],  # IBM Purple 90
+    [0.3, "#491d8b"],  # IBM Purple 80
+    [0.4, "#6929c4"],  # IBM Purple 70
+    [0.5, "#8a3ffc"],  # IBM Purple 60
+    [0.6, "#a56eff"],  # IBM Purple 50
+    [0.7, "#be95ff"],  # IBM Purple 40
+    [0.8, "#d4bbff"],  # IBM Purple 30
+    [0.9, "#e8daff"],  # IBM Purple 20
+    [1.0, "#f6f2ff"],  # IBM Purple 10
 ]
 
 
@@ -54,14 +54,14 @@ def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
             "colorway_light": colors_config.get("colorway_light", COLORWAY_LIGHT),
             "colorway_dark": colors_config.get("colorway_dark", COLORWAY_DARK),
             "colorscale": colors_config.get("colorscale", COLORSCALE),
-            "colorscale_bold": colors_config.get("colorscale_bold", COLORSCALE_BOLD),
+            "colorscale_bold": colors_config.get("colorscale_bold", COLORSCALE),
         }
     else:
         _config = {
             "colorway_light": COLORWAY_LIGHT,
             "colorway_dark": COLORWAY_DARK,
             "colorscale": COLORSCALE,
-            "colorscale_bold": COLORSCALE_BOLD,
+            "colorscale_bold": COLORSCALE,
         }
 
     return _config

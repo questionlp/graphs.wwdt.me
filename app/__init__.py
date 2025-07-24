@@ -21,8 +21,6 @@ from app.shows.routes import blueprint as shows_bp
 from app.sitemaps.routes import blueprint as sitemaps_bp
 from app.version import APP_VERSION
 
-from .utility import COLORSCALE, COLORSCALE_BOLD, COLORWAY_DARK, COLORWAY_LIGHT
-
 
 def create_app():
     """Create Flask application."""
