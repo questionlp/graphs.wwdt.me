@@ -1,5 +1,30 @@
 # Changes
 
+## 3.5.2
+
+### Application Changes
+
+- Changed `colorscale` values in `colors.yaml` and in `app.config` to improve contrast between min and max values
+- Changed `colorscale_bold` Jinja environment global variable to use value of `colorscale`
+- Fixed type hint for `color_config` variable in `app.config.load_colors()`
+- Removed `colorscale_bold` from `colors.yaml` now that `colorscale` has higher contrast
+- Removed `COLORSCALE_BOLD` from `app.config`
+- Removed the following variables from `app.utility` since they are no longer necessary
+  - `COLORWAY_LIGHT`
+  - `COLORWAY_DARK`
+  - `COLORSCALE`
+  - `COLORSCALE_BOLD`
+
+### Component Changes
+
+- Upgraded Plotly.js v3 from 3.0.1 to 3.0.3
+- Removed the following old and unused versions of Plotly JS from `app/static/js`
+  - `plotly-2.25.2.min.js`
+  - `plotly-2.26.0.min.js`
+  - `plotly-2.28.0.min.js`
+  - `plotly-3.0.0-rc.1.min.js`
+  - `plotly-3.0.0-rc.2.min.js`
+
 ## 3.5.1
 
 ### Application Changes
