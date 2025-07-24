@@ -17,7 +17,7 @@
 
 ### Component Changes
 
-- Upgraded Plotly.js v3 from 3.0.1 to 3.0.2
+- Upgraded Plotly.js v3 from 3.0.1 to 3.0.3
 - Removed the following old and unused versions of Plotly JS from `app/static/js`
   - `plotly-2.25.2.min.js`
   - `plotly-2.26.0.min.js`
