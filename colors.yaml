@@ -17,6 +17,13 @@ colorway_dark:
   - "#4589ff" # IBM Blue 50
   - "#ff7eb6" # IBM Magenta 40
 
+colorway_retro:
+  - "#800080" # HTML Purple
+  - "#00ffff" # HTML Cyan
+  - "#336666"
+  - "#0000ff" # HTML blue
+  - "#ff00ff"
+
 # Based on Sequential Palettes Monochromatic Option 2
 # Using Black instead of IBM Purple 100 as the lowest value increase contrast
 colorscale:
@@ -31,3 +38,13 @@ colorscale:
   - [0.8 ,"#d4bbff"] # IBM Purple 30
   - [0.9 ,"#e8daff"] # IBM Purple 20
   - [1.0 ,"#f6f2ff"] # IBM Purple 10
+
+
+# Using colors from the 216-color palette that is considered web-safe
+colorscale_retro:
+  - [0.0, "#000000"] # HTML Black
+  - [0.2, "#330066"]
+  - [0.4, "#6600cc"]
+  - [0.6, "#9900ff"]
+  - [0.8, "#ff99ff"]
+  - [1.0, "#ffccff"]

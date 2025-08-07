@@ -28,6 +28,14 @@ COLORWAY_DARK: list[str] = [
     "#ff7eb6",  # IBM Magenta 40
 ]
 
+COLORWAY_RETRO: list[str] = [
+    "#800080",  # HTML Purple
+    "#00ffff",  # HTML Cyan
+    "#336666",
+    "#0000ff",  # HTML Blue
+    "#ff00ff",
+]
+
 COLORSCALE: list[str] = [
     [0.0, "#000000"],  # Black
     [0.1, "#1c0f30"],  # IBM Purple 100
@@ -40,6 +48,15 @@ COLORSCALE: list[str] = [
     [0.8, "#d4bbff"],  # IBM Purple 30
     [0.9, "#e8daff"],  # IBM Purple 20
     [1.0, "#f6f2ff"],  # IBM Purple 10
+]
+
+COLORSCALE_RETRO: list[str] = [
+    [0.0, "#000000"],  # Black
+    [0.2, "#330066"],
+    [0.4, "#6600cc"],
+    [0.6, "#9900ff"],
+    [0.8, "#ff99ff"],
+    [1.0, "#ffccff"],
 ]
 
 
@@ -55,15 +72,19 @@ def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
         _config = {
             "colorway_light": colors_config.get("colorway_light", COLORWAY_LIGHT),
             "colorway_dark": colors_config.get("colorway_dark", COLORWAY_DARK),
+            "colorway_retro": colors_config.get("colorway_retro", COLORWAY_RETRO),
             "colorscale": colors_config.get("colorscale", COLORSCALE),
             "colorscale_bold": colors_config.get("colorscale_bold", COLORSCALE),
+            "colorscale_retro": colors_config.get("colorscale_retro", COLORSCALE_RETRO),
         }
     else:
         _config = {
             "colorway_light": COLORWAY_LIGHT,
             "colorway_dark": COLORWAY_DARK,
+            "colorway_retro": COLORWAY_RETRO,
             "colorscale": COLORSCALE,
             "colorscale_bold": COLORSCALE,
+            "colorscale_retro": COLORSCALE_RETRO,
         }
 
     return _config
