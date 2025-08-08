@@ -1,5 +1,26 @@
 # Changes
 
+## 3.6.0-beta
+
+### Application Changes
+
+- Added a retro-inspired "middle" mode theme that was added to version 2.1.0 of [wwdtm-theme](https://github.com/questionlp/wwdtm-theme)
+  - The new color theme is built around the limited color palettes and serif fonts that were commonly used to render web pages in the mid to late-1990s, specifically Netscape 2 and 3 on classic Macintosh and Windows 3.x.
+  - The limited set of colors were the basic named colors from [HTML 3.2](https://www.w3.org/TR/2018/SPSD-html32-20180315/) and the 216-color "[web-safe](https://en.wikipedia.org/wiki/Web_colors#Web-safe_colors)" palette.
+  - The page background color, `#c0c0c0`, comes from the page and window background color used by Netscape Navigator 2 and 3 on classic Macintosh computers and on Windows 3.x
+  - Page elements, including the navbar, footer, off-canvas side navigation changed to use similar colors available from the "web-safe" color palette
+  - The new theme uses "IBM Plex Serif" as the primary font family, instead of "IBM Plex Sans". Fallback font families are set to "Times", "Times New Roman" and the "serif" generic.
+- Added "Retro" option in the color theme selection dropdown in the navbar and off-canvas side navigation
+- Added a new colorway and color scale used for graphs when the theme is set to "Retro".
+  - The new colorway was selected from the same limited set of colors used in the new theme
+  - The new color scale for heatmaps uses colors from the same limited set of colors used in the new theme, but only defines those colors for the `0.0`, `0.2`, `0.4`, `0.6`, `0.8` and `1.0` min and max range set points.
+  - Since heatmaps use computed color values between each set point, those graphs will render colors that fall outside of the limited color palette.
+
+### Component Changes
+
+- Added IBM Plex Serif web font files
+- Upgrade wwdtm-theme from 2.0.28 to 2.1.0
+
 ## 3.5.3
 
 ### Application Changes
