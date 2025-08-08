@@ -16,10 +16,19 @@
   - The new colorway was selected from the same limited set of colors used in the new theme
   - The new color scale for heatmaps uses colors from the same limited set of colors used in the new theme, but only defines those colors for the `0.0`, `0.2`, `0.4`, `0.6`, `0.8` and `1.0` min and max range set points.
   - Since heatmaps use computed color values between each set point, those graphs will render colors that fall outside of the limited color palette.
+- Changed the default value for the `settings.use_plotly_v3` from `False` to `True` in preparation for the removal of Plotly.js v2 in an upcoming release
+- Changed the script file referenced when `settings.use_plotly_v3` is set to `False` from `plotly.min.js` to `plotly-v2.min.js`
+- Changed the Plotly.js symlinks to the following:
+  - Removed `plotly-latest.min.js`
+  - `plotly.min.js` points to `plotly-3.1.0.min.js`
+  - `plotly-stable.min.js` points to `plotly-2.35.3.min.js`
+  - `plotly-v2.min.js` points to `plotly-2.35.3.min.js`
+  - `plotly-v3.min.js` points to `plotly-3.1.0.min.js`
 
 ### Component Changes
 
 - Added IBM Plex Serif web font files
+- Upgrade Plotly.js v3 from 3.0.3 to 3.1.0
 - Upgrade wwdtm-theme from 2.0.28 to 2.1.0
 
 ## 3.5.3

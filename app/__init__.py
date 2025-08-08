@@ -73,7 +73,7 @@ def create_app():
         "github_sponsor_url", ""
     )
     app.jinja_env.globals["use_plotly_v3"] = bool(
-        bool(_config["settings"].get("use_plotly_v3", False))
+        bool(_config["settings"].get("use_plotly_v3", True))
     )
     app.jinja_env.globals["block_ai_scrapers"] = bool(
         _config["settings"].get("block_ai_scrapers", False)
