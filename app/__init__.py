@@ -87,8 +87,10 @@ def create_app():
 
     app.jinja_env.globals["colorscale"] = json.dumps(_colors["colorscale"])
     app.jinja_env.globals["colorscale_bold"] = json.dumps(_colors["colorscale_bold"])
+    app.jinja_env.globals["colorscale_retro"] = json.dumps(_colors["colorscale_retro"])
     app.jinja_env.globals["colorway_light"] = json.dumps(_colors["colorway_light"])
     app.jinja_env.globals["colorway_dark"] = json.dumps(_colors["colorway_dark"])
+    app.jinja_env.globals["colorway_retro"] = json.dumps(_colors["colorway_retro"])
 
     # Check to see if panelistscore_decimal column exists and set a flag
     app.config["app_settings"]["has_decimal_scores_column"] = (
