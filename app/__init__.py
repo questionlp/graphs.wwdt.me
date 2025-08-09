@@ -73,7 +73,7 @@ def create_app():
         "github_sponsor_url", ""
     )
     app.jinja_env.globals["use_plotly_v3"] = bool(
-        bool(_config["settings"].get("use_plotly_v3", False))
+        bool(_config["settings"].get("use_plotly_v3", True))
     )
     app.jinja_env.globals["block_ai_scrapers"] = bool(
         _config["settings"].get("block_ai_scrapers", False)
@@ -87,8 +87,10 @@ def create_app():
 
     app.jinja_env.globals["colorscale"] = json.dumps(_colors["colorscale"])
     app.jinja_env.globals["colorscale_bold"] = json.dumps(_colors["colorscale_bold"])
+    app.jinja_env.globals["colorscale_retro"] = json.dumps(_colors["colorscale_retro"])
     app.jinja_env.globals["colorway_light"] = json.dumps(_colors["colorway_light"])
     app.jinja_env.globals["colorway_dark"] = json.dumps(_colors["colorway_dark"])
+    app.jinja_env.globals["colorway_retro"] = json.dumps(_colors["colorway_retro"])
 
     # Check to see if panelistscore_decimal column exists and set a flag
     app.config["app_settings"]["has_decimal_scores_column"] = (

@@ -35,11 +35,16 @@
     const storedTheme = getStoredTheme();
     let lightMode = storedTheme === "light" || ((storedTheme === "light" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches));
     let darkMode = storedTheme === "dark" || ((storedTheme === "dark" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches));
+    let retroMode = storedTheme === "retro";
     if (darkMode) {
         axisColor = "#fff";
         backgroundColor = "#161616"; // IBM Gray 100
         markerColor = "#78a9ff"; // IBM Blue 40
         colorway = {{ colorway_dark | safe }};
+    } else if (retroMode) {
+        backgroundColor = "#c0c0c0";
+        colorway = {{ colorway_retro | safe }};
+        fontList = "'IBM Plex Serif', serif";
     }
 
     let showMonths = {{ months | safe }};
