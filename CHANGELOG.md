@@ -16,7 +16,7 @@
 
 - Upgrade wwdtm from 2.19.0 to 2.20.0
   - Includes upgrading NumPy from 2.1.2 to 2.2.6
-- Upgrade wwdtm-theme from 2.1.0 to 2.2.3
+- Upgrade wwdtm-theme from 2.1.0 to 2.2.4
 
 ### Development Changes
 
