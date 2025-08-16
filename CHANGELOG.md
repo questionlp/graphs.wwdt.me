@@ -1,5 +1,11 @@
 # Changes
 
+## 3.6.2
+
+### Application Changes
+
+- Enable scroll zooming for the Panelists "Scores by Appearance" and Shows "Counts by Day of Month: All" graphs
+
 ## 3.6.1
 
 ### Application Changes
