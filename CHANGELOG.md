@@ -1,5 +1,15 @@
 # Changes
 
+## 3.6.2
+
+### Application Changes
+
+- Enable scroll zooming for the following graphs:
+  - Panelists "Scores by Appearance"
+  - Shows "Bluff the Listener Counts: All Years"
+  - Shows "Counts by Day of Month: All"
+- Standardize Plotly mode bar buttons that are shows across all graphs
+
 ## 3.6.1
 
 ### Application Changes
