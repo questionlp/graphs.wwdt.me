@@ -1,5 +1,13 @@
 # Changes
 
+## 3.6.5
+
+### Application Changes
+
+- Updated wording of the following page and graph descriptions to clarify that appearances are only for regular shows:
+  - Panelist Appearances by Year
+  - Panelist Scores by Appearance
+
 ## 3.6.4
 
 ### Application Changes
