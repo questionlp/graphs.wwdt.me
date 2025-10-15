@@ -1,5 +1,15 @@
+[project]
+name = "graphs.wwdt.me"
+authors = [
+    {name = "Linh Pham", email = "dev@wwdt.me"}
+]
+description = "Wait Wait Graphs Site"
+readme = {file = "README.md", content-type = "text/markdown"}
+license = "Apache-2.0"
+requires-python = ">=3.12"
+
 [tool.pytest.ini_options]
-minversion = "8.0"
+minversion = "8.4"
 filterwarnings = [
     "ignore::DeprecationWarning:mysql.*:",
 ]
@@ -13,8 +23,8 @@ norecursedirs = [
 ]
 
 [tool.ruff]
-required-version = ">= 0.9.0"
-target-version = "py310"
+required-version = ">= 0.13.0"
+target-version = "py312"
 
 exclude = [
     "migrations",

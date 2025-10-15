@@ -1,5 +1,27 @@
 # Changes
 
+## 3.7.0
+
+### Application Changes
+
+- Python 3.12 is now the minimum supported version
+- Updated background colors for graphs to match the page background color when the graphs are rendered with the dark color theme
+
+### Component Changes
+
+- Upgraded Flask from 3.1.1 to 3.1.2
+- Upgrade PyYAML from 6.0.2 to 6.0.3
+- Upgraded wwdtm from 2.20.0 to 2.21.1
+- Upgraded wwdtm-theme from 2.4.2 to 2.4.4
+
+### Development Changes
+
+- Added project information to `pyproject.toml` and updated additional settings
+  - Increased the minimum version of pytest from 8.3 to 8.4
+  - Increased the minimum required version of Ruff from 0.9.0 to 0.13.0
+  - Updated the target Python version from `py310` to `py312`
+- Upgraded Ruff from 0.12.8 to 0.13.3
+
 ## 3.6.6
 
 ### Component Changes
