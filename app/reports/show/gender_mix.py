@@ -32,12 +32,9 @@ def retrieve_show_years() -> list[int] | None:
     return years
 
 
-def retrieve_panel_gender_count_by_year(year: int, gender: str) -> dict:
-    """Retrieve a count of shows with panelists of a given gender."""
+def retrieve_panel_gender_count_by_year(year: int) -> dict:
+    """Return a count of shows for a year with counts of panel gender counts."""
     database_connection = connect(**current_app.config["database"])
-
-    # panelistgender field only contains a single letter
-    gender_tag = gender[0].upper()
 
     counts = {}
     for gender_count in range(0, 4):
@@ -46,7 +43,7 @@ def retrieve_panel_gender_count_by_year(year: int, gender: str) -> dict:
             JOIN ww_shows s ON s.showid = pm.showid
             JOIN ww_panelists p ON p.panelistid = pm.panelistid
             WHERE s.bestof = 0 AND s.repeatshowid IS NULL
-            AND p.panelistgender = %s
+            AND p.panelistgender = 'F'
             AND year(s.showdate) = %s
             AND s.showdate <> '2018-10-27' -- Exclude 25th anniversary special
             GROUP BY s.showdate
@@ -56,31 +53,43 @@ def retrieve_panel_gender_count_by_year(year: int, gender: str) -> dict:
         cursor.execute(
             query,
             (
-                gender_tag,
                 year,
                 gender_count,
             ),
         )
-        _ = cursor.fetchall()
+        cursor.fetchall()
+        counts[f"{gender_count}F"] = cursor.rowcount
+        cursor.close()
 
-        counts[f"{gender_count}{gender_tag}"] = cursor.rowcount
-
+    query = """
+            SELECT s.showdate FROM ww_showpnlmap pm
+            JOIN ww_shows s ON s.showid = pm.showid
+            JOIN ww_panelists p ON p.panelistid = pm.panelistid
+            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
+            AND p.panelistgender = 'M'
+            AND year(s.showdate) = %s
+            AND s.showdate <> '2018-10-27' -- Exclude 25th anniversary special
+            GROUP BY s.showdate
+            HAVING COUNT(p.panelistgender) = 3;
+            """
+    cursor = database_connection.cursor(dictionary=True)
+    cursor.execute(query, (year,))
+    cursor.fetchall()
+    counts["0F"] = cursor.rowcount
     cursor.close()
+
     total = sum(counts.values())
     counts["total"] = total
     return counts
 
 
-def panel_gender_mix_breakdown(gender: str) -> dict:
-    """Retrieve a gender mix breakdown for a given gender."""
+def panel_gender_mix_breakdown() -> dict:
+    """Retrieve a gender mix breakdown."""
     show_years = retrieve_show_years()
 
     gender_mix_breakdown = {}
     for year in show_years:
-        count = retrieve_panel_gender_count_by_year(
-            year=year,
-            gender=gender,
-        )
+        count = retrieve_panel_gender_count_by_year(year=year)
         gender_mix_breakdown[year] = count
 
     return gender_mix_breakdown

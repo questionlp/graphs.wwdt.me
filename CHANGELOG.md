@@ -1,5 +1,11 @@
 # Changes
 
+## 3.7.1
+
+### Application Changes
+
+- Fixed an issue in the Shows "Panel Gender Mix" graph where shows with an all men panel were not being included in counts
+
 ## 3.7.0
 
 ### Application Changes

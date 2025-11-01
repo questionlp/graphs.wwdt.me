@@ -336,7 +336,7 @@ def not_by_job_vs_bluff_win_ratios() -> Response | str:
 @blueprint.route("/panel-gender-mix")
 def panel_gender_mix() -> Response | str:
     """View: Panel Gender Mix."""
-    panel_mix = gender_mix.panel_gender_mix_breakdown(gender="female")
+    panel_mix = gender_mix.panel_gender_mix_breakdown()
 
     if not panel_mix:
         return redirect_url(url_for("shows_index"))
