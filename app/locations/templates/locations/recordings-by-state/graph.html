@@ -15,8 +15,12 @@
 {% if states and names and recordings %}
 <p>
     A choropleth map of the United States indicating the number of regular
-    show recordings made in each state. Regular shows exclude Best Of, repeat
-    and repeat Best Of shows.
+    show recordings made in each state.
+</p>
+<p>
+    Regular shows exclude Best Of, repeat and repeat Best Of shows. Shows
+    recorded at <a href="{{ stats_url }}/locations/home-remote-studios">Home/Remote
+    Studios</a> are also excluded.
 </p>
 
 <div class="info py-2">

@@ -1,5 +1,11 @@
 # Changes
 
+## 3.8.1
+
+### Application Changes
+
+- Updated the description for the Locations "Recordings by State" to clarify that shows with the location of Home/Remote Studios are excluded.
+
 ## 3.8.0
 
 ### Application Changes
