@@ -36,7 +36,7 @@ COLORWAY_RETRO: list[str] = [
     "#ff00ff",
 ]
 
-COLORSCALE: list[str] = [
+COLORSCALE: list[float | str] = [
     [0.0, "#000000"],  # Black
     [0.1, "#1c0f30"],  # IBM Purple 100
     [0.2, "#31135e"],  # IBM Purple 90
@@ -50,7 +50,21 @@ COLORSCALE: list[str] = [
     [1.0, "#f6f2ff"],  # IBM Purple 10
 ]
 
-COLORSCALE_RETRO: list[str] = [
+COLORSCALE_COMPRESSED_BOTTOM: list[float | str] = [
+    [0.000, "#000000"],  # Black
+    [0.001, "#31135e"],  # IBM Purple 90
+    [0.025, "#d4bbff"],  # IBM Purple 30
+    [1.000, "#f6f2ff"],  # IBM Purple 10
+]
+
+COLORSCALE_COMPRESSED_BOTTOM_RETRO: list[float | str] = [
+    [0.000, "#000000"],  # Black
+    [0.001, "#330066"],
+    [0.100, "#ff00ff"],
+    [1.000, "#ffccff"],
+]
+
+COLORSCALE_RETRO: list[float | str] = [
     [0.0, "#000000"],  # Black
     [0.2, "#330066"],
     [0.4, "#6600cc"],
@@ -75,6 +89,12 @@ def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
             "colorway_retro": colors_config.get("colorway_retro", COLORWAY_RETRO),
             "colorscale": colors_config.get("colorscale", COLORSCALE),
             "colorscale_bold": colors_config.get("colorscale_bold", COLORSCALE),
+            "colorscale_compressed_bottom": colors_config.get(
+                "colorscale_compressed_bottom", COLORSCALE_COMPRESSED_BOTTOM
+            ),
+            "colorscale_compressed_bottom_retro": colors_config.get(
+                "colorscale_compressed_bottom_retro", COLORSCALE_COMPRESSED_BOTTOM_RETRO
+            ),
             "colorscale_retro": colors_config.get("colorscale_retro", COLORSCALE_RETRO),
         }
     else:
@@ -84,6 +104,8 @@ def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
             "colorway_retro": COLORWAY_RETRO,
             "colorscale": COLORSCALE,
             "colorscale_bold": COLORSCALE,
+            "colorscale_compressed_bottom": COLORSCALE_COMPRESSED_BOTTOM,
+            "colorscale_compressed_bottom_retro": COLORSCALE_COMPRESSED_BOTTOM_RETRO,
             "colorscale_retro": COLORSCALE_RETRO,
         }
 

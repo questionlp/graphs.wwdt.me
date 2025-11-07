@@ -1,5 +1,24 @@
 # Changes
 
+## 3.8.0
+
+### Application Changes
+
+- Added a new Locations "Recordings by State" that includes a choropleth map of the United States plotted with the number of regular show recordings that have been made in each state
+- Added new colorscales where nearly all of the data is clumped at the lower end of the scale
+- Changed the minimum required version of Plotly.js from 2 to 3
+  - Removed `use_plotly_v3` configuration setting that is used to determine whether or not Plotly.js v2 or v3 should be used
+  - Removed code that uses the `use_plotly_v3` configuration setting
+- Removed unused `markerColor` variables for charts that do not use markers
+
+### Component Changes
+
+- Removed all copies of Plotly.js 2.x and 3.0
+- Removed symlinks for:
+  - `plotly-v2.min.js`
+  - `plotly-stable.min.js`
+- Upgraded Plotly.js from 3.1.1 to 3.2.0
+
 ## 3.7.1
 
 ### Application Changes

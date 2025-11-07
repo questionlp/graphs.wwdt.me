@@ -10,7 +10,7 @@ from werkzeug.test import TestResponse
 
 
 def test_index(client: FlaskClient) -> None:
-    """Testing main.index."""
+    """Testing locations.index."""
     response: TestResponse = client.get("/locations/")
     assert response.status_code == 200
     assert b"Locations" in response.data
@@ -18,8 +18,16 @@ def test_index(client: FlaskClient) -> None:
 
 
 def test_home_vs_away(client: FlaskClient) -> None:
-    """Testing main.aggregate_scores."""
+    """Testing locations.home_vs_away."""
     response: TestResponse = client.get("/locations/home-vs-away")
     assert response.status_code == 200
     assert b"Home vs Away" in response.data
     assert b"Studios" in response.data
+
+
+def test_recordings_by_state(client: FlaskClient) -> None:
+    """Testing locations.recordings_by_state."""
+    response: TestResponse = client.get("/locations/recordings-by-state")
+    assert response.status_code == 200
+    assert b"Recordings by State" in response.data
+    assert b"choropleth" in response.data

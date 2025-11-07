@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% set page_title="Recordings by State" %}
+{% block title %}{{ page_title }} | Locations{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('locations.index') }}">Locations</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
+    </ol>
+</nav>
+
+<h2>{{ page_title }}</h2>
+
+{% if states and names and recordings %}
+<p>
+    A choropleth map of the United States indicating the number of regular
+    show recordings made in each state. Regular shows exclude Best Of, repeat
+    and repeat Best Of shows.
+</p>
+
+<div class="info py-2">
+    <div id="ww-chart"></div>
+</div>
+
+<script>
+    // Set default colors and font list
+    let axisColor = "#000";
+    let backgroundColor = "#fff";
+    let markerColor = "#f4f4f4"; // IBM Gray 10
+    let colorscale = {{ colorscale_compressed_bottom | safe }};
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
+
+    // Change colors if in dark mode (stored theme overrides prefers-color-scheme)
+    const getStoredTheme = () => localStorage.getItem("theme");
+    const storedTheme = getStoredTheme();
+    let lightMode = storedTheme === "light" || ((storedTheme === "light" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches));
+    let darkMode = storedTheme === "dark" || ((storedTheme === "dark" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches));
+    let retroMode = storedTheme === "retro";
+    if (darkMode) {
+        axisColor = "#fff";
+        backgroundColor = "#262626"; // IBM Gray 100
+        markerColor = "#a8a8a8"; // IBM Gray 40
+    } else if (retroMode) {
+        backgroundColor = "#c0c0c0";
+        markerColor = "#cccccc";
+        fontList = "'IBM Plex Serif', serif";
+        colorscale = {{ colorscale_compressed_bottom_retro | safe }};
+    };
+
+    let data = [{
+        type: "choropleth",
+        locationmode: "USA-states",
+        locations: {{ states | safe }},
+        z: {{ recordings | tojson }},
+        text: {{ names | safe }},
+        zmin: 0,
+        colorscale: colorscale,
+        colorbar: {
+            tickfont: {
+                color: axisColor,
+                family: fontList,
+                size: 15
+            },
+            title: {
+                font: {
+                    color: axisColor,
+                    family: fontList,
+                    size: 16
+                },
+                text: "Recordings"
+            }
+        },
+        showscale: true,
+        marker: {
+            line: {
+                color: markerColor,
+                width: 2
+            }
+        }
+    }];
+
+    let layout = {
+        font: { family: fontList },
+        hoverlabel: {
+            font: {
+                family: fontList,
+                size: 16
+            },
+        },
+        margin: {
+            l: 128,
+            r: 64,
+            t: 64,
+            b: 64
+        },
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        showlegend: false,
+        title: {
+            automargin: true,
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            pad: {
+                t: 6
+            },
+            text: "{{ page_title }}",
+            x: 0.01
+        },
+        geo: {
+            bgcolor: backgroundColor,
+            scope: "usa",
+            showlakes: false,
+            showland: false,
+            showsubunits: true,
+            subunitwidth: 2
+        }
+    };
+
+    let config = {
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+            "autoScale2d",
+            "lasso2d",
+            "select2d",
+        ],
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "recordings-by-state",
+            height: 800,
+            scale: 1,
+            width: 1200
+        }
+    };
+
+    Plotly.newPlot("ww-chart", data, layout, config);
+</script>
+{% else %}
+<p>
+    No panel data available.
+</p>
+{% endif %}
+
+{% endblock %}

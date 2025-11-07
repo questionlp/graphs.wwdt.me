@@ -29,7 +29,6 @@
     // Set default colors
     let axisColor = "#000";
     let backgroundColor = "#fff";
-    let markerColor = "#0043ce"; // IBM Blue 70
     let colorway = {{ colorway_light | safe }};
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
@@ -42,13 +41,12 @@
     if (darkMode) {
         axisColor = "#fff";
         backgroundColor = "#262626"; // IBM Gray 100
-        markerColor = "#78a9ff"; // IBM Blue 40
         colorway = {{ colorway_dark | safe }};
     } else if (retroMode) {
         backgroundColor = "#c0c0c0";
         colorway = {{ colorway_retro | safe }};
         fontList = "'IBM Plex Serif', serif";
-    }
+    };
 
     let data = [
         {

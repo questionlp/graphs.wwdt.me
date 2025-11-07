@@ -47,13 +47,12 @@
     if (darkMode) {
         axisColor = "#fff";
         backgroundColor = "#262626"; // IBM Gray 100
-        markerColor = "#78a9ff"; // IBM Blue 40
         colorway = {{ colorway_dark | safe }};
     } else if (retroMode) {
         backgroundColor = "#c0c0c0";
         colorway = {{ colorway_retro | safe }};
         fontList = "'IBM Plex Serif', serif";
-    }
+    };
 
     let days = {{ days | safe }};
     let regular_shows = {{ regular_shows | safe }};

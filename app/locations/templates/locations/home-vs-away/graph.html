@@ -14,8 +14,8 @@
 
 {% if years and home and away and studios %}
 <p>
-    A list of the number of shows recorded at home (any venue or studio located in
-    Chicago, Illinois), away, and at home/remote studios for each year.
+    A chart of the number of shows recorded at home (any venue or studio located
+    in Chicago, Illinois), away, and at home/remote studios for each year.
 </p>
 
 <div class="info py-2">
@@ -38,13 +38,12 @@
     if (darkMode) {
         axisColor = "#fff";
         backgroundColor = "#262626"; // IBM Gray 100
-        markerColor = "#78a9ff"; // IBM Blue 40
         colorway = {{ colorway_dark | safe }};
     } else if (retroMode) {
         backgroundColor = "#c0c0c0";
         colorway = {{ colorway_retro | safe }};
         fontList = "'IBM Plex Serif', serif";
-    }
+    };
 
     let showYears = {{ years | safe }};
     let data = [
