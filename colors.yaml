@@ -25,7 +25,7 @@ colorway_retro:
   - "#ff00ff"
 
 # Based on Sequential Palettes Monochromatic Option 2
-# Using Black instead of IBM Purple 100 as the lowest value increase contrast
+# Using Black instead of IBM Purple 100 as the lowest value to increase contrast
 colorscale:
   - [0.0, "#000000"] # Black
   - [0.1 ,"#1c0f30"] # IBM Purple 100
@@ -39,6 +39,19 @@ colorscale:
   - [0.9 ,"#e8daff"] # IBM Purple 20
   - [1.0 ,"#f6f2ff"] # IBM Purple 10
 
+# Custom scale where there is one hot point of data and the rest are
+# compressed into the lower end of the scale
+colorscale_compressed_bottom:
+  - [0.000, "#000000"] # Black
+  - [0.001, "#31135e"] # IBM Purple 90
+  - [0.025, "#d4bbff"] # IBM Purple 30
+  - [1.000, "#f6f2ff"] # IBM Purple 10
+
+colorscale_compressed_bottom_retro:
+  - [0.000, "#000000"] # Black
+  - [0.001, "#6600cc"]
+  - [0.100, "#ff00ff"]
+  - [1.000, "#ffccff"]
 
 # Using colors from the 216-color palette that is considered web-safe
 colorscale_retro:

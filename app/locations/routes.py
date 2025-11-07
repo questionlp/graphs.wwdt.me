@@ -8,6 +8,7 @@
 from flask import Blueprint, render_template, url_for
 
 from app.reports.location import home_vs_away as home_away
+from app.reports.location import recordings_by_state as recordings_state
 from app.shows.routes import retrieve_show_years
 from app.utility import redirect_url
 
@@ -48,4 +49,29 @@ def home_vs_away() -> str:
         home=_home,
         away=_away,
         studios=_studios,
+    )
+
+
+@blueprint.route("/recordings-by-state")
+def recordings_by_state() -> str:
+    """View: Recordings by State."""
+    recording_counts = recordings_state.retrieve_recordings_by_state()
+
+    if not recording_counts:
+        return render_template("locations/recordings-by-state/graph.html")
+
+    states = []
+    names = []
+    recordings = []
+
+    for state in recording_counts:
+        states.append(recording_counts[state]["state"])
+        names.append(recording_counts[state]["name"])
+        recordings.append(recording_counts[state]["recordings"])
+
+    return render_template(
+        "locations/recordings-by-state/graph.html",
+        states=states,
+        names=names,
+        recordings=recordings,
     )

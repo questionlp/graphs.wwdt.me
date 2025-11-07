@@ -13,6 +13,10 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>{{ site_url }}{{ url_for("locations.recordings_by_state") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>{{ site_url }}{{ url_for("panelists.index") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
