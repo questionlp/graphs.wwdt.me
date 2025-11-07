@@ -14,6 +14,7 @@ def test_index(client: FlaskClient) -> None:
     response: TestResponse = client.get("/")
     assert response.status_code == 200
     assert b"Wait Wait Don't Tell Me! Graphs" in response.data
+    assert b"/locations/" in response.data
     assert b"/panelists/" in response.data
     assert b"/shows/" in response.data
 

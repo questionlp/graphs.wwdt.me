@@ -15,6 +15,7 @@ def test_index(client: FlaskClient) -> None:
     assert response.status_code == 200
     assert b"Locations" in response.data
     assert b"Home vs Away" in response.data
+    assert b"Recordings by State" in response.data
 
 
 def test_home_vs_away(client: FlaskClient) -> None:
