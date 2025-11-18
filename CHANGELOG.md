@@ -1,5 +1,12 @@
 # Changes
 
+## 3.8.2
+
+### Component Changes
+
+- Upgraded Plotly.js from 3.2.0 to 3.3.0
+- Upgraded wwdtm-theme from 2.4.4 to 2.4.5
+
 ## 3.8.1
 
 ### Application Changes
