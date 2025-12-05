@@ -14,22 +14,10 @@ from app.reports.show.guests_vs_bluffs import (
     retrieve_bluff_win_rate_by_year,
     retrieve_not_my_job_win_rate_by_year,
 )
+from app.reports.show.utility import retrieve_show_years
 from app.utility import MONTH_NAMES, redirect_url
 
 blueprint = Blueprint("shows", __name__, template_folder="templates")
-
-
-def retrieve_show_years(reverse_order: bool = True) -> list[int]:
-    """Retrieve a list of available show years."""
-    database_connection = connect(**current_app.config["database"])
-    show = Show(database_connection=database_connection)
-    years = show.retrieve_years()
-    database_connection.close()
-
-    if years and reverse_order:
-        years.reverse()
-
-    return years
 
 
 @blueprint.route("/")

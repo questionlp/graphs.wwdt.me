@@ -90,6 +90,26 @@ def create_app():
     app.jinja_env.globals["colorscale_compressed_bottom_retro"] = json.dumps(
         _colors["colorscale_compressed_bottom_retro"]
     )
+    app.jinja_env.globals["colorscale_home"] = json.dumps(_colors["colorscale_home"])
+    app.jinja_env.globals["colorscale_home_retro"] = json.dumps(
+        _colors["colorscale_home_retro"]
+    )
+    app.jinja_env.globals["colorscale_away"] = json.dumps(_colors["colorscale_away"])
+    app.jinja_env.globals["colorscale_away_retro"] = json.dumps(
+        _colors["colorscale_away_retro"]
+    )
+    app.jinja_env.globals["colorscale_studios"] = json.dumps(
+        _colors["colorscale_studios"]
+    )
+    app.jinja_env.globals["colorscale_studios_retro"] = json.dumps(
+        _colors["colorscale_studios_retro"]
+    )
+    app.jinja_env.globals["colorscale_home_away_studios"] = json.dumps(
+        _colors["colorscale_home_away_studios"]
+    )
+    app.jinja_env.globals["colorscale_home_away_studios_retro"] = json.dumps(
+        _colors["colorscale_home_away_studios_retro"]
+    )
     app.jinja_env.globals["colorscale_retro"] = json.dumps(_colors["colorscale_retro"])
     app.jinja_env.globals["colorway_light"] = json.dumps(_colors["colorway_light"])
     app.jinja_env.globals["colorway_dark"] = json.dumps(_colors["colorway_dark"])

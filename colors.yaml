@@ -61,3 +61,38 @@ colorscale_retro:
   - [0.6, "#9900ff"]
   - [0.8, "#ff99ff"]
   - [1.0, "#ffccff"]
+
+# Custom color scale for home, away and home/remote studio heatmaps
+colorscale_home:
+  - [0.0, "#000000"] # Black
+  - [1.0, "#a56eff"] # IBM Purple 50
+
+colorscale_home_retro:
+  - [0.0, "#000000"] # Black
+  - [1.0, "#ff66ff"]
+
+colorscale_away:
+  - [0.0, "#000000"] # Black
+  - [1.0, "#f1c21b"] # IBM Alert 30
+
+colorscale_away_retro:
+  - [0.0, "#000000"] # Black
+  - [1.0, "#ff66ff"]
+
+colorscale_studios:
+  - [0.0, "#000000"] # Black
+  - [1.0, "#007d79"] # IBM Teal 60
+
+colorscale_studios_retro:
+  - [0.0, "#000000"] # Black
+  - [1.0, "#00cc00"]
+
+colorscale_home_away_studios:
+  - [0.0, "#f1c21b"] # Black (Away)
+  - [0.5, "#a56eff"] # IBM Purple 50 (Home)
+  - [1.0, "#007d79"] # IBM Magenta 40 (Home/Remote Studios)
+
+colorscale_home_away_studios_retro:
+  - [0.0, "#ffff66"] # Away
+  - [0.5, "#ff66ff"] # Home
+  - [1.0, "#00cc00"] # Home/Remote Studios

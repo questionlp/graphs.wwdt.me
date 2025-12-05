@@ -73,6 +73,48 @@ COLORSCALE_RETRO: list[float | str] = [
     [1.0, "#ffccff"],
 ]
 
+COLORSCALE_HOME: list[float | str] = [
+    [0.0, "#000000"],  # Black
+    [1.0, "#a56eff"],  # IBM Purple 50
+]
+
+COLORSCALE_HOME_RETRO: list[float | str] = [
+    [0.0, "#000000"],  # Black
+    [1.0, "#ff66ff"],
+]
+
+COLORSCALE_AWAY: list[float | str] = [
+    [0.0, "#000000"],  # Black
+    [1.0, "#f1c21b"],  # IBM Alert 30
+]
+
+COLORSCALE_AWAY_RETRO: list[float | str] = [
+    [0.0, "#000000"],  # Black
+    [1.0, "#ffff66"],
+]
+
+COLORSCALE_STUDIOS: list[float | str] = [
+    [0.0, "#000000"],  # Black
+    [1.0, "#007d79"],  # IBM Teal 60
+]
+
+COLORSCALE_STUDIOS_RETRO: list[float | str] = [
+    [0.0, "#000000"],  # Black
+    [1.0, "#00cc00"],
+]
+
+COLORSCALE_HOME_AWAY_STUDIOS: list[float | str] = [
+    [0.0, "#f1c21b"],  # IBM Alert 30 (Away)
+    [0.5, "#a56eff"],  # IBM Purple 50 (Home)
+    [1.0, "#007d79"],  # IBM Teal 60 (Home/Remote Studios)
+]
+
+COLORSCALE_HOME_AWAY_STUDIOS_RETRO: list[float | str] = [
+    [0.0, "#ffff66"],  # Away
+    [0.5, "#ff66ff"],  # Home
+    [1.0, "#00cc00"],  # Home/Remote Studios
+]
+
 
 def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
     """Read colors YAML configuration file."""
@@ -96,6 +138,26 @@ def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
                 "colorscale_compressed_bottom_retro", COLORSCALE_COMPRESSED_BOTTOM_RETRO
             ),
             "colorscale_retro": colors_config.get("colorscale_retro", COLORSCALE_RETRO),
+            "colorscale_home": colors_config.get("colorscale_home", COLORSCALE_HOME),
+            "colorscale_home_retro": colors_config.get(
+                "colorscale_home_retro", COLORSCALE_HOME_RETRO
+            ),
+            "colorscale_away": colors_config.get("colorscale_away", COLORSCALE_AWAY),
+            "colorscale_away_retro": colors_config.get(
+                "colorscale_away_retro", COLORSCALE_AWAY_RETRO
+            ),
+            "colorscale_studios": colors_config.get(
+                "colorscale_studios", COLORSCALE_STUDIOS
+            ),
+            "colorscale_studios_retro": colors_config.get(
+                "colorscale_studios_retro", COLORSCALE_STUDIOS_RETRO
+            ),
+            "colorscale_home_away_studios": colors_config.get(
+                "colorscale_home_away_studios", COLORSCALE_HOME_AWAY_STUDIOS
+            ),
+            "colorscale_home_away_studios_retro": colors_config.get(
+                "colorscale_home_away_studios_retro", COLORSCALE_HOME_AWAY_STUDIOS_RETRO
+            ),
         }
     else:
         _config = {
@@ -107,6 +169,14 @@ def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
             "colorscale_compressed_bottom": COLORSCALE_COMPRESSED_BOTTOM,
             "colorscale_compressed_bottom_retro": COLORSCALE_COMPRESSED_BOTTOM_RETRO,
             "colorscale_retro": COLORSCALE_RETRO,
+            "colorscale_home": COLORSCALE_HOME,
+            "colorscale_home_retro": COLORSCALE_HOME_RETRO,
+            "colorscale_away": COLORSCALE_AWAY,
+            "colorscale_away_retro": COLORSCALE_AWAY_RETRO,
+            "colorscale_studios": COLORSCALE_STUDIOS,
+            "colorscale_studios_retro": COLORSCALE_STUDIOS_RETRO,
+            "colorscale_home_away_studios": COLORSCALE_HOME_AWAY_STUDIOS,
+            "colorscale_home_away_studios_retro": COLORSCALE_HOME_AWAY_STUDIOS_RETRO,
         }
 
     return _config
@@ -137,8 +207,6 @@ def load_config(
         if use_pool:
             pool_name: str = str(database_config.get("pool_name", connection_pool_name))
             pool_size: int = int(database_config.get("pool_size", connection_pool_size))
-            # if pool_size < connection_pool_size:
-            #    pool_size = connection_pool_size
             _pool_size = max(pool_size, connection_pool_size)
 
             database_config["pool_name"] = pool_name
