@@ -18,6 +18,38 @@ def test_index(client: FlaskClient) -> None:
     assert b"Recordings by State" in response.data
 
 
+def test_all_locations_shows_heatmap(client: FlaskClient) -> None:
+    """Testing locations.all_locations_shows_heatmap."""
+    response: TestResponse = client.get("/locations/all-locations-shows-heatmap")
+    assert response.status_code == 200
+    assert b"All Locations Shows Heatmap" in response.data
+    assert b"plotly" in response.data
+
+
+def test_away_shows_heatmap(client: FlaskClient) -> None:
+    """Testing locations.away_shows_heatmap."""
+    response: TestResponse = client.get("/locations/away-shows-heatmap")
+    assert response.status_code == 200
+    assert b"Away Shows Heatmap" in response.data
+    assert b"plotly" in response.data
+
+
+def test_home_shows_heatmap(client: FlaskClient) -> None:
+    """Testing locations.home_shows_heatmap."""
+    response: TestResponse = client.get("/locations/home-shows-heatmap")
+    assert response.status_code == 200
+    assert b"Home Shows Heatmap" in response.data
+    assert b"plotly" in response.data
+
+
+def test_home_remote_studios_shows_heatmap(client: FlaskClient) -> None:
+    """Testing locations.home_remote_studios_shows_heatmap."""
+    response: TestResponse = client.get("/locations/home-remote-studios-shows-heatmap")
+    assert response.status_code == 200
+    assert b"Home/Remote Studios Shows Heatmap" in response.data
+    assert b"plotly" in response.data
+
+
 def test_home_vs_away(client: FlaskClient) -> None:
     """Testing locations.home_vs_away."""
     response: TestResponse = client.get("/locations/home-vs-away")

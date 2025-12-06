@@ -9,7 +9,23 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>{{ site_url }}{{ url_for("locations.home_vs_away") }}</loc>
+    <loc>{{ site_url }}{{ url_for("locations.all_locations_shows_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("locations.away_shows_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("locations.home_shows_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("locations.home_remote_studios_shows_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+  <loc>{{ site_url }}{{ url_for("locations.home_vs_away") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
   <url>
