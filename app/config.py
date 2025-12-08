@@ -105,14 +105,16 @@ COLORSCALE_STUDIOS_RETRO: list[float | str] = [
 
 COLORSCALE_HOME_AWAY_STUDIOS: list[float | str] = [
     [0.0, "#f1c21b"],  # IBM Alert 30 (Away)
-    [0.5, "#a56eff"],  # IBM Purple 50 (Home)
-    [1.0, "#007d79"],  # IBM Teal 60 (Home/Remote Studios)
+    [0.333333, "#a56eff"],  # IBM Purple 50 (Home)
+    [0.666667, "#007d79"],  # IBM Teal 60 (Home/Remote Studios)
+    [1.0, "#000000"],  # Black (TBD)
 ]
 
 COLORSCALE_HOME_AWAY_STUDIOS_RETRO: list[float | str] = [
-    [0.0, "#ffff66"],  # Away
-    [0.5, "#ff66ff"],  # Home
-    [1.0, "#00cc00"],  # Home/Remote Studios
+    [0.0, "#ffff66"],  # Yello (Away)
+    [0.333333, "#ff66ff"],  # Home
+    [0.666667, "#00cc00"],  # Home/Remote Studios
+    [1.0, "#000000"],  # Black (TBD)
 ]
 
 

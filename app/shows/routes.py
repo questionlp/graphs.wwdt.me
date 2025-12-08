@@ -32,7 +32,7 @@ def all_scores() -> Response | str:
     show_years = retrieve_show_years()
 
     if not show_years:
-        return redirect_url(url_for("shows_index"))
+        return redirect_url(url_for("shows.index"))
 
     return render_template("shows/all-scores/index.html", show_years=show_years)
 
@@ -42,7 +42,7 @@ def all_scores_by_year(year: int) -> Response | str:
     """View: All Scores by Year."""
     show_years = retrieve_show_years()
     if year not in show_years:
-        return redirect_url(url_for("shows_all_scores"))
+        return redirect_url(url_for("shows.all_scores"))
 
     database_connection = connect(**current_app.config["database"])
     _show = Show(database_connection=database_connection)
@@ -96,7 +96,7 @@ def bluff_counts_all() -> Response | str:
     bluff_data = bluff_count.retrieve_all_bluff_counts()
 
     if not bluff_data:
-        return redirect_url(url_for("shows_bluff_counts"))
+        return redirect_url(url_for("shows.bluff_counts"))
 
     _dates = list(bluff_data.keys())
     correct = []
@@ -224,7 +224,7 @@ def counts_by_year() -> Response | str:
     counts = show_counts.retrieve_show_counts_by_year()
 
     if not counts:
-        return redirect_url(url_for("shows_index"))
+        return redirect_url(url_for("shows.index"))
 
     years = []
     regular = []
@@ -327,7 +327,7 @@ def panel_gender_mix() -> Response | str:
     panel_mix = gender_mix.panel_gender_mix_breakdown()
 
     if not panel_mix:
-        return redirect_url(url_for("shows_index"))
+        return redirect_url(url_for("shows.index"))
 
     years = []
     panel_0f = []

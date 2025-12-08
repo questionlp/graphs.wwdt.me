@@ -88,11 +88,13 @@ colorscale_studios_retro:
   - [1.0, "#00cc00"]
 
 colorscale_home_away_studios:
-  - [0.0, "#f1c21b"] # Black (Away)
-  - [0.5, "#a56eff"] # IBM Purple 50 (Home)
-  - [1.0, "#007d79"] # IBM Magenta 40 (Home/Remote Studios)
+  - [0.0, "#f1c21b"] # IBM Alert 30 (Away)
+  - [0.333333, "#a56eff"] # IBM Purple 50 (Home)
+  - [0.666667, "#007d79"] # IBM Magenta 40 (Home/Remote Studios)
+  - [1.0, "#000000"] # Black (TBD)
 
 colorscale_home_away_studios_retro:
-  - [0.0, "#ffff66"] # Away
-  - [0.5, "#ff66ff"] # Home
-  - [1.0, "#00cc00"] # Home/Remote Studios
+  - [0.0, "#ffff66"] # Yello (Away)
+  - [0.333333, "#ff66ff"] # Home
+  - [0.666667, "#00cc00"] # Home/Remote Studios
+  - [1.0, "#000000"] # Black (TBD)

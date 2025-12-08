@@ -1,22 +1,22 @@
 {% extends "base.html" %}
-{% set page_title="Bluff the Listener Counts" %}
-{% block title %}{{ year }} | {{ page_title }} | Shows{% endblock %}
+{% set page_title = "Show Location Types by Year" %}
+{% block title %}{{ year }} | {{ page_title }} | Locations{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('shows.bluff_counts') }}">{{ page_title }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('locations.index') }}">Locations</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('locations.show_location_types') }}">{{ page_title }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ year }}</li>
     </ol>
 </nav>
 
 <h2>{{ page_title }}: {{ year }}</h2>
 
-{% if months %}
+{% if show_dates and home and away and home_remote_studios and tbd_na %}
 <p>
-    This chart displays the number of times a listener contestant has chosen
-    the correct or incorrect Bluff the Listener story, broken down by month.
+    This chart displays location type (home, away or home/away studios) for each show,
+    including regular, Best Of, repeat and repeat Best Of shows.
 </p>
 
 <div class="info py-2">
@@ -24,7 +24,7 @@
 </div>
 
 <script>
-    // Set default colors and font list
+    // Set default colors
     let axisColor = "#000";
     let backgroundColor = "#fff";
     let colorway = {{ colorway_light | safe }};
@@ -46,23 +46,35 @@
         fontList = "'IBM Plex Serif', serif";
     };
 
-    let showMonths = {{ months | safe }};
-    let correct = {{ correct | safe }};
-    let incorrect = {{ incorrect | safe }};
-    let max_height = Math.ceil(Math.max.apply(Math, correct) + Math.max.apply(Math, incorrect));
     let data = [
         {
-            x: showMonths,
-            y: correct,
-            name: "Correct",
+            x: {{ show_dates | safe }},
+            y: {{ home | safe }},
+            name: "Home",
+            showlegend: true,
             type: "bar"
         },
         {
-            x: showMonths,
-            y: incorrect,
-            name: "Incorrect",
+            x: {{ show_dates | safe }},
+            y: {{ away | safe }},
+            name: "Away",
+            showlegend: true,
             type: "bar"
-        }
+        },
+        {
+            x: {{ show_dates | safe }},
+            y: {{ home_remote_studios | safe }},
+            name: "Home/Remote Studios",
+            showlegend: true,
+            type: "bar"
+        },
+        {
+            x: {{ show_dates | safe }},
+            y: {{ tbd_na | safe }},
+            name: "TBD/NA",
+            showlegend: true,
+            type: "bar"
+        },
     ];
 
     let layout = {
@@ -73,7 +85,7 @@
         hoverlabel: {
             font: {
                 family: fontList,
-                size: 16
+                size: 15
             },
         },
         hovermode: "x unified",
@@ -92,7 +104,7 @@
             l: 60,
             r: 40,
             t: 48,
-            b: 90,
+            b: 90
         },
         paper_bgcolor: backgroundColor,
         plot_bgcolor: backgroundColor,
@@ -106,35 +118,35 @@
             pad: {
                 t: 6
             },
-            text: "{{ page_title }}: {{ year }}",
+            text: "{{ page_title }}: {{ year | safe }}",
             x: 0.01
         },
         xaxis: {
             color: axisColor,
+            nticks: 26,
+            showgrid: false,
             showspikes: true,
             spikecolor: axisColor,
             spikedash: "dot",
             spikemode: "across",
             spikethickness: 1,
             tickangle: -45,
-            tickfont: { size: 14 },
+            tickfont: { size: 13 },
             title: {
                 font: { size: 18 },
-                text: "Month"
+                text: "Show Date"
             },
-            type: "category"
+            type: "category",
+            visible: true
         },
         yaxis: {
             color: axisColor,
-            dtick: 3,
+            dtick: 1,
             fixedrange: true,
-            range: [0, max_height + 1],
             showline: true,
+            showgrid: true,
             tickfont: { size: 16 },
-            title: {
-                font: { size: 18 },
-                text: "Count"
-            }
+            visible: false
         }
     };
 
@@ -147,7 +159,7 @@
         ],
         responsive: true,
         toImageButtonOptions: {
-            filename: "bluff-counts-{{ year }}",
+            filename: "show-location-types-by-year-{{ year }}",
             height: 800,
             scale: 1,
             width: 1200
@@ -158,7 +170,7 @@
 </script>
 {% else %}
 <p>
-    No Bluff the Listener data is currently available for {{ year }}.
+    Not enough data is available for {{ year }} to generate a graph.
 </p>
 {% endif %}
 

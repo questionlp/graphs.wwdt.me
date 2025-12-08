@@ -6,7 +6,9 @@
 
 - Added four new heatmaps that plot shows that were recorded at home (in Chicago, Illinois), away from Chicago, and shows recorded from home/remote studios. The fourth heatmap overlays all three location types in one heatmap.
   - Hovering over each block in the heatmap only displays the year and the show number for that year
-- Added a new set of colorscales for the new location heatmaps that use a different set of colors from the other colorscales due to the need to make each one distinct from each other when mixed in with other colors. The colors were chosen to ensure that they are distinct for those with color blindness.
+- Added a new Locations "Show Location Types by Year" chart that plots out the location type (home, remote, home/remote studios) for each show for a given year
+- Added a new set of colorscales for the new location heatmaps that use a different set of colors from the other colorscales due to the need to make each one distinct from each other when mixed in with other colors. The colors were chosen to ensure that they are distinct and have enough contrast for people with forms of visual impairments
+- Changed hover format for line and bar charts to use a unified hover box to combine multiple x-axis values to make it easier to read
 
 ## 3.8.3
 

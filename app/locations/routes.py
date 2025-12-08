@@ -172,3 +172,47 @@ def recordings_by_state() -> str:
         names=names,
         recordings=recordings,
     )
+
+
+@blueprint.route("/show-location-types-by-year")
+def show_location_types() -> str:
+    """View: Show Location Types."""
+    show_years = retrieve_show_years()
+
+    if not show_years:
+        return redirect_url(url_for("locations.index"))
+
+    return render_template(
+        "locations/show-location-types-by-year/index.html", show_years=show_years
+    )
+
+
+@blueprint.route("/show-location-types-by-year/<int:year>")
+def show_location_types_by_year(year: int) -> str:
+    """View: Show Location Types by Year."""
+    show_years = retrieve_show_years()
+    if year not in show_years:
+        return redirect_url(url_for("locations.show_location_types"))
+
+    _data = home_away_year.retrieve_home_away_studios_shows_by_year(year=year)
+    if not _data:
+        return redirect_url(url_for("locations.show_location_types"))
+
+    if (
+        "show_dates" in _data
+        and "home" in _data
+        and "away" in _data
+        and "studios" in _data
+        and "tbd_na" in _data
+    ):
+        return render_template(
+            "locations/show-location-types-by-year/details.html",
+            year=year,
+            show_dates=_data["show_dates"],
+            home=json.dumps(_data["home"]),
+            away=json.dumps(_data["away"]),
+            home_remote_studios=json.dumps(_data["studios"]),
+            tbd_na=json.dumps(_data["tbd_na"]),
+        )
+
+    return redirect_url(url_for("locations.show_location_types"))

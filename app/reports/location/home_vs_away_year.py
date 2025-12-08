@@ -10,8 +10,6 @@ from mysql.connector import connect
 
 from app.reports.show.utility import retrieve_show_years
 
-_LOCATION_ID_TBD = 3
-_LOCATION_ID_HOME_REMOTE_STUDIOS = 148
 _MAX_SHOWS_PER_YEAR = 53
 
 
@@ -38,6 +36,48 @@ def retrieve_home_location_ids() -> list[int] | None:
         _ids.append(row[0])
 
     return _ids
+
+
+def retrieve_home_remote_studios_location_id() -> int | None:
+    """Retrieve location ID for the Home/Remote Studios location."""
+    database_connection = connect(**current_app.config["database"])
+
+    query = """
+        SELECT locationid FROM ww_locations
+        WHERE locationslug = 'home-remote-studios'
+        LIMIT 1;
+    """
+    cursor = database_connection.cursor(dictionary=False)
+    cursor.execute(query)
+    result = cursor.fetchone()
+    cursor.close()
+    database_connection.close()
+
+    if result:
+        return result[0]
+
+    return None
+
+
+def retrieve_tbd_location_id() -> int | None:
+    """Retrieve location ID for the TBD location."""
+    database_connection = connect(**current_app.config["database"])
+
+    query = """
+        SELECT locationid FROM ww_locations
+        WHERE locationslug = 'tbd'
+        LIMIT 1;
+    """
+    cursor = database_connection.cursor(dictionary=False)
+    cursor.execute(query)
+    result = cursor.fetchone()
+    cursor.close()
+    database_connection.close()
+
+    if result:
+        return result[0]
+
+    return None
 
 
 def retrieve_all_locations_shows_by_year(year: int) -> list[int] | None:
@@ -72,11 +112,16 @@ def retrieve_all_locations_shows_by_year(year: int) -> list[int] | None:
     if not results:
         return None
 
+    _tbd_id = retrieve_tbd_location_id()
+    _home_remote_studios_id = retrieve_home_remote_studios_location_id()
+
     _shows = []
     for row in results:
-        if row[0] in _home_location_ids:
+        if not row[0] or row[0] == _tbd_id:
+            _shows.append(3)
+        elif row[0] in _home_location_ids:
             _shows.append(1)
-        elif row[0] == _LOCATION_ID_HOME_REMOTE_STUDIOS:
+        elif row[0] == _home_remote_studios_id:
             _shows.append(2)
         else:
             _shows.append(0)
@@ -105,6 +150,81 @@ def retrieve_all_locations_shows_all_years() -> dict[int, list[int]] | None:
         _info[year] = retrieve_all_locations_shows_by_year(year=year)
 
     return _info
+
+
+def retrieve_home_away_studios_shows_by_year(
+    year: int,
+) -> dict[int, list[int | None]] | None:
+    """Retrieve a dictionary containing lists denoting home, away and studios shows.
+
+    The three lists contain ones or zeros to flag the corresponding
+    location types and right-padded with None to ensure that the list
+    contains `_MAX_SHOWS_PER_YEAR` items.
+    """
+    database_connection = connect(**current_app.config["database"])
+
+    _years = retrieve_show_years(reverse_order=False)
+    if not _years or year not in _years:
+        return None
+
+    _home_location_ids = retrieve_home_location_ids()
+    if not _home_location_ids:
+        return None
+
+    query = """
+        SELECT s.showdate, lm.locationid FROM ww_showlocationmap lm
+        JOIN ww_shows s ON s.showid = lm.showid
+        WHERE YEAR(s.showdate) = %s
+        ORDER BY s.showdate ASC;
+    """
+    cursor = database_connection.cursor(dictionary=False)
+    cursor.execute(query, (year,))
+    results = cursor.fetchall()
+    cursor.close()
+    database_connection.close()
+
+    if not results:
+        return None
+
+    _tbd_id = retrieve_tbd_location_id()
+    _home_remote_studios_id = retrieve_home_remote_studios_location_id()
+
+    _show_dates = []
+    _home_shows = []
+    _away_shows = []
+    _studios_shows = []
+    _tbd_na_shows = []
+
+    for row in results:
+        _show_dates.append(row[0].isoformat())
+        if not row[1] or row[1] == _tbd_id:
+            _home_shows.append(None)
+            _away_shows.append(None)
+            _studios_shows.append(None)
+            _tbd_na_shows.append(1)
+        elif row[1] in _home_location_ids:
+            _home_shows.append(1)
+            _away_shows.append(None)
+            _studios_shows.append(None)
+            _tbd_na_shows.append(None)
+        elif row[1] == _home_remote_studios_id:
+            _home_shows.append(None)
+            _away_shows.append(None)
+            _studios_shows.append(1)
+            _tbd_na_shows.append(None)
+        else:
+            _home_shows.append(None)
+            _away_shows.append(1)
+            _studios_shows.append(None)
+            _tbd_na_shows.append(None)
+
+    return {
+        "show_dates": _show_dates,
+        "home": _home_shows,
+        "away": _away_shows,
+        "studios": _studios_shows,
+        "tbd_na": _tbd_na_shows,
+    }
 
 
 def retrieve_home_shows_by_year(year: int) -> list[int] | None:
@@ -187,7 +307,11 @@ def retrieve_away_shows_by_year(year: int) -> list[int] | None:
 
     _home_location_ids = retrieve_home_location_ids()
     # Excluding TBD and Home/Remote Studio location IDs
-    _excluded_ids = [_LOCATION_ID_TBD, _LOCATION_ID_HOME_REMOTE_STUDIOS]
+    _excluded_ids = [
+        retrieve_tbd_location_id(),
+        retrieve_home_remote_studios_location_id(),
+    ]
+
     if not _home_location_ids:
         return None
 
@@ -267,9 +391,11 @@ def retrieve_home_remote_studios_shows_by_year(year: int) -> list[int] | None:
     if not results:
         return None
 
+    _studios_location_ids = retrieve_home_remote_studios_location_id()
+
     _shows = []
     for row in results:
-        if row[0] == _LOCATION_ID_HOME_REMOTE_STUDIOS:
+        if row[0] == _studios_location_ids:
             _shows.append(1)
         else:
             _shows.append(0)
