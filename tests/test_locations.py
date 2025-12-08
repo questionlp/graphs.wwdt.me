@@ -74,7 +74,7 @@ def test_show_location_types(client: FlaskClient) -> None:
     assert b"Show Location Types by Year" in response.data
 
 
-@pytest.mark.parametrize("year", [2006, 2020])
+@pytest.mark.parametrize("year", [2006, 2020, 2025])
 def test_show_location_types_by_year(client: FlaskClient, year: int) -> None:
     """Testing locations.show_location_types_by_year."""
     response: TestResponse = client.get(
