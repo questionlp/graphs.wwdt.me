@@ -12,6 +12,10 @@
 - Changed hover format for line and bar charts to use a unified hover box to combine multiple x-axis values to make it easier to read
 - Fixed the Bluff the Listener database queries for the "Not My Job vs Bluff the Listener Win Ratios" chart that had incorrect filters causing additional data to be included and counted for
 
+### Component Updates
+
+- Upgraded Plotly.js from 3.3.0 to 3.3.1
+
 ## 3.8.3
 
 ### Application Changes
