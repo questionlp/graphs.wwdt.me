@@ -56,6 +56,7 @@ def retrieve_home_vs_away_by_year(year: int) -> dict[str, int | None] | None:
     )
     result = cursor.fetchone()
     cursor.close()
+    database_connection.close()
 
     counts = {
         "home": result["home"],

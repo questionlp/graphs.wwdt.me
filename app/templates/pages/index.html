@@ -24,10 +24,25 @@
                 <h3>Locations</h3>
             </li>
             <li class="list-group-item">
+                <a href="{{ url_for('locations.all_locations_shows_heatmap') }}">All Locations Shows Heatmap</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('locations.away_shows_heatmap') }}">Away Shows Heatmap</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('locations.home_shows_heatmap') }}">Home Shows Heatmap</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('locations.home_remote_studios_shows_heatmap') }}">Home/Remote Studios Shows Heatmap</a>
+            </li>
+            <li class="list-group-item">
                 <a href="{{ url_for('locations.home_vs_away') }}">Home vs Away</a>
             </li>
             <li class="list-group-item">
                 <a href="{{ url_for('locations.recordings_by_state') }}">Recordings by State</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('locations.show_location_types') }}">Show Location Types by Year</a>
             </li>
         </ul>
     </div>

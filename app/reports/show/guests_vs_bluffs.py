@@ -136,12 +136,15 @@ def retrieve_bluff_win_rate_by_year(
         SELECT COUNT(s.showid)
         FROM ww_showbluffmap blm
         JOIN ww_shows s ON s.showid = blm.showid
-        WHERE YEAR(s.showdate) = %s AND
-        (s.bestof = 0 AND blm.chosenbluffpnlid IS NOT NULL AND
-            blm.correctbluffpnlid IS NOT NULL) OR
-        (s.bestof = 1 AND s.bestofuniquebluff = 1 AND
-            blm.chosenbluffpnlid IS NOT NULL AND blm.correctbluffpnlid IS NOT
-            NULL);
+        WHERE YEAR(s.showdate) = %s
+        AND (
+            (s.bestof = 0 AND blm.chosenbluffpnlid IS NOT NULL AND
+            blm.correctbluffpnlid IS NOT NULL)
+            OR
+            (s.bestof = 1 AND s.bestofuniquebluff = 1 AND
+            blm.chosenbluffpnlid IS NOT NULL AND
+            blm.correctbluffpnlid IS NOT NULL)
+        );
     """
     cursor = database_connection.cursor(dictionary=False)
     cursor.execute(query, (year,))
@@ -157,10 +160,13 @@ def retrieve_bluff_win_rate_by_year(
         SELECT COUNT(s.showid)
         FROM ww_showbluffmap blm
         JOIN ww_shows s ON s.showid = blm.showid
-        WHERE YEAR(s.showdate) = %s AND
-        (s.bestof = 0 AND blm.chosenbluffpnlid = blm.correctbluffpnlid) OR
-        (s.bestof = 1 AND s.bestofuniquebluff = 1 AND
-            blm.chosenbluffpnlid = blm.correctbluffpnlid);
+        WHERE YEAR(s.showdate) = %s
+        AND (
+            (s.bestof = 0 AND blm.chosenbluffpnlid = blm.correctbluffpnlid)
+            OR
+            (s.bestof = 1 AND s.bestofuniquebluff = 1 AND
+            blm.chosenbluffpnlid = blm.correctbluffpnlid)
+        );
     """
     cursor = database_connection.cursor(dictionary=False)
     cursor.execute(query, (year,))

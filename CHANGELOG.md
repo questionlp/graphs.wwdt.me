@@ -1,5 +1,21 @@
 # Changes
 
+## 3.9.0
+
+### Application Changes
+
+- Added four new heatmaps that plot shows that were recorded at home (in Chicago, Illinois), away from Chicago, and shows recorded from home/remote studios. The fourth heatmap overlays all three location types in one heatmap.
+  - Hovering over each block in the heatmap only displays the year and the show number for that year
+  - Displaying the show date instead of the show number of a given year leads to issues with the heatmap due to dates not aligning correct and issues with rendering the axis
+- Added a new Locations "Show Location Types by Year" chart that plots out the location type (home, remote, home/remote studios) for each show for a given year
+- Added a new set of colorscales for the new location heatmaps that use a different set of colors from the other colorscales due to the need to make each one distinct from each other when mixed in with other colors. The colors were chosen to ensure that they are distinct and have enough contrast for people with forms of visual impairments
+- Changed hover format for line and bar charts to use a unified hover box to combine multiple x-axis values to make it easier to read
+- Fixed the Bluff the Listener database queries for the "Not My Job vs Bluff the Listener Win Ratios" chart that had incorrect filters causing additional data to be included and counted for
+
+### Component Updates
+
+- Upgraded Plotly.js from 3.3.0 to 3.3.1
+
 ## 3.8.3
 
 ### Application Changes
