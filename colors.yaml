@@ -77,7 +77,7 @@ colorscale_away:
 
 colorscale_away_retro:
   - [0.0, "#000000"] # Black
-  - [1.0, "#ff66ff"]
+  - [1.0, "#ffff66"]
 
 colorscale_studios:
   - [0.0, "#000000"] # Black
@@ -98,3 +98,11 @@ colorscale_home_away_studios_retro:
   - [0.333333, "#ff66ff"] # Home
   - [0.666667, "#00cc00"] # Home/Remote Studios
   - [1.0, "#000000"] # Black (TBD)
+
+colorscale_hosts_scorekeepers:
+  - [0.0, "#a56eff"] # IBM Purple 50
+  - [1.0, "#f1c21b"] # IBM Alert 30
+
+colorscale_hosts_scorekeepers_retro:
+  - [0.0, "#ff66ff"]
+  - [1.0, "#ffff66"]

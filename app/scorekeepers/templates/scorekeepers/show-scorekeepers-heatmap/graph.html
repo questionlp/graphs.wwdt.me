@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% set page_title="Show Scorekeepers Heatmap" %}
+{% block title %}{{ page_title }} | Scorekeepers{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('scorekeepers.index') }}">Scorekeepers</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
+    </ol>
+</nav>
+
+<h2>{{ page_title }}</h2>
+
+{% if years and show_numbers and data %}
+<p>
+    This heatmap chart displays when shows had a regular or a guest scorekeeper
+    broken out by year.
+</p>
+<p>
+    All shows are included, including regular, Best Of, repeat and repeat Best
+    Of shows. Purple or violet denotes shows with a regular scorekeeper and yellow
+    denotes shows with a guest scorekeeper.
+</p>
+
+<div class="info py-2">
+    <div id="ww-chart"></div>
+</div>
+
+<script>
+    // Set default colors and font list
+    let axisColor = "#000";
+    let backgroundColor = "#fff";
+    let colorscale = {{ colorscale_hosts_scorekeepers | safe }};
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
+
+    // Change colors if in dark mode (stored theme overrides prefers-color-scheme)
+    const getStoredTheme = () => localStorage.getItem("theme");
+    const storedTheme = getStoredTheme();
+    let lightMode = storedTheme === "light" || ((storedTheme === "light" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches));
+    let darkMode = storedTheme === "dark" || ((storedTheme === "dark" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches));
+    let retroMode = storedTheme === "retro"
+    if (darkMode) {
+        axisColor = "#fff";
+        backgroundColor = "#262626"; // IBM Gray 100
+    } else if (retroMode) {
+        backgroundColor = "#c0c0c0";
+        fontList = "'IBM Plex Serif', serif";
+        colorscale = {{ colorscale_hosts_scorekeepers_retro | safe }};
+    };
+
+    let showNumbers = {{ show_numbers | safe }};
+    let years = {{ years | safe }};
+    let locData = {{ data | safe }};
+
+    let data = [
+        {
+            x: showNumbers,
+            y: years,
+            z: locData,
+            colorbar: {
+                tickfont: {
+                    color: axisColor,
+                    family: fontList,
+                    size: 16
+                }
+            },
+            colorscale: colorscale,
+            hoverongaps: false,
+            hovertemplate: "%{y} Show #%{x}<extra></extra>",
+            showscale: false,
+            type: "heatmap",
+            xgap: 3,
+            ygap: 3,
+            zsmooth: false
+        }
+    ];
+
+    let layout = {
+        font: { family: fontList },
+        hoverlabel: {
+            font: {
+                family: fontList,
+                size: 16
+            },
+        },
+        margin: {
+            l: 128,
+            r: 64,
+            t: 64,
+            b: 64
+        },
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        showlegend: false,
+        title: {
+            automargin: true,
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            pad: {
+                t: 6
+            },
+            text: "{{ page_title }}",
+            x: 0.01
+        },
+        xaxis: {
+            color: axisColor,
+            showgrid: false,
+            showline: true,
+            tickfont: { size: 14 },
+            title: {
+                font: { size: 18 },
+                text: "Show Number"
+            },
+        },
+        yaxis: {
+            color: axisColor,
+            showgrid: false,
+            showline: true,
+            tickfont: { size: 16 },
+            title: {
+                font: { size: 18 },
+                text: "Year"
+            }
+        }
+    };
+
+    let config = {
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+            "autoScale2d",
+            "lasso2d",
+            "select2d",
+        ],
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "show-scorekeepers-heatmap",
+            height: 800,
+            scale: 1,
+            width: 1200
+        }
+    };
+
+    Plotly.newPlot("ww-chart", data, layout, config);
+</script>
+{% else %}
+<p>
+    No scoring data available.
+</p>
+{% endif %}
+
+{% endblock %}

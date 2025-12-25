@@ -1,27 +1,27 @@
 {% extends "base.html" %}
-{% set page_title="Score Breakdown" %}
-{% block title %}{{ page_title }} | Panelists{% endblock %}
+{% set page_title="Show Host Types by Year" %}
+{% block title %}{{ page_title }} | Hosts{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url_for('panelists.index') }}">Panelists</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('hosts.index') }}">Hosts</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
 
 <h2>{{ page_title }}</h2>
 <p>
-    Choose from one of the panelists below to view a chart displaying a
-    breakdown of their scores.
+    Choose from one of the years below to view the show host type (regular host or
+    guest host) for each show.
 </p>
 
 <div class="info">
     <div class="pages">
         <ul class="list-group name-list">
-            {% for panelist in panelists %}
+            {% for year in show_years %}
             <li class="list-group-item">
-                <a href="{{ url_for('panelists.score_breakdown_details', panelist=panelist.slug) }}">{{ panelist.name }}</a>
+                <a href="{{ url_for('hosts.show_host_types_by_year', year=year) }}">{{ year }}</a>
             </li>
             {% endfor %}
         </ul>

@@ -1,19 +1,19 @@
 {% extends "base.html" %}
-{% set page_title="Show Location Types by Year" %}
-{% block title %}{{ page_title }} | Locations{% endblock %}
+{% set page_title="Show Scorekeeper Types by Year" %}
+{% block title %}{{ page_title }} | Scorekeepers{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url_for('locations.index') }}">Locations</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('scorekeepers.index') }}">Scorekeepers</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
 
 <h2>{{ page_title }}</h2>
 <p>
-    Choose from one of the years below to view the location type (home, away or
-    home/remote studios) for each show.
+    Choose from one of the years below to view the show scorekeepers type (regular
+    scorekeeper or guest scorekeeper) for each show.
 </p>
 
 <div class="info">
@@ -21,7 +21,7 @@
         <ul class="list-group name-list">
             {% for year in show_years %}
             <li class="list-group-item">
-                <a href="{{ url_for('locations.show_location_types_by_year', year=year) }}">{{ year }}</a>
+                <a href="{{ url_for('scorekeepers.show_scorekeeper_types_by_year', year=year) }}">{{ year }}</a>
             </li>
             {% endfor %}
         </ul>

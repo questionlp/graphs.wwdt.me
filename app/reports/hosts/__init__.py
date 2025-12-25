@@ -3,6 +3,4 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 # vim: set noai syntax=python ts=4 sw=4:
-"""Application Version for Wait Wait Graphs Site."""
-
-APP_VERSION = "3.10.0"
+"""Hosts Module for Wait Wait Graphs Site."""

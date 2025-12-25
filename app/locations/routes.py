@@ -176,7 +176,7 @@ def recordings_by_state() -> str:
 
 @blueprint.route("/show-location-types-by-year")
 def show_location_types() -> str:
-    """View: Show Location Types."""
+    """View: Show Location Types by Year."""
     show_years = retrieve_show_years()
 
     if not show_years:

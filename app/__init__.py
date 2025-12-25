@@ -13,10 +13,12 @@ from wwdtm import VERSION as WWDTM_VERSION
 
 from app import config, utility
 from app.errors import handlers
+from app.hosts.routes import blueprint as hosts_bp
 from app.locations.routes import blueprint as locations_bp
 from app.main.redirects import blueprint as redirects_bp
 from app.main.routes import blueprint as main_bp
 from app.panelists.routes import blueprint as panelists_bp
+from app.scorekeepers.routes import blueprint as scorekeepers_bp
 from app.shows.routes import blueprint as shows_bp
 from app.sitemaps.routes import blueprint as sitemaps_bp
 from app.version import APP_VERSION
@@ -110,6 +112,12 @@ def create_app():
     app.jinja_env.globals["colorscale_home_away_studios_retro"] = json.dumps(
         _colors["colorscale_home_away_studios_retro"]
     )
+    app.jinja_env.globals["colorscale_hosts_scorekeepers"] = json.dumps(
+        _colors["colorscale_hosts_scorekeepers"]
+    )
+    app.jinja_env.globals["colorscale_hosts_scorekeepers_retro"] = json.dumps(
+        _colors["colorscale_hosts_scorekeepers_retro"]
+    )
     app.jinja_env.globals["colorscale_retro"] = json.dumps(_colors["colorscale_retro"])
     app.jinja_env.globals["colorway_light"] = json.dumps(_colors["colorway_light"])
     app.jinja_env.globals["colorway_dark"] = json.dumps(_colors["colorway_dark"])
@@ -128,8 +136,10 @@ def create_app():
     app.register_blueprint(main_bp)
     app.register_blueprint(redirects_bp)
     app.register_blueprint(sitemaps_bp)
+    app.register_blueprint(hosts_bp, url_prefix="/hosts")
     app.register_blueprint(locations_bp, url_prefix="/locations")
     app.register_blueprint(panelists_bp, url_prefix="/panelists")
+    app.register_blueprint(scorekeepers_bp, url_prefix="/scorekeepers")
     app.register_blueprint(shows_bp, url_prefix="/shows")
 
     return app
