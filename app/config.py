@@ -117,6 +117,15 @@ COLORSCALE_HOME_AWAY_STUDIOS_RETRO: list[float | str] = [
     [1.0, "#000000"],  # Black (TBD)
 ]
 
+COLORSCALE_HOSTS_SCOREKEEPERS: list[float | str] = [
+    [0.0, "#a56eff"],  # IBM Purple 50
+    [1.0, "#f1c21b"],  # IBM Alert 30
+]
+COLORSCALE_HOSTS_SCOREKEEPERS_RETRO: list[float | str] = [
+    [0.0, "#ff66ff"],
+    [1.0, "#ffff66"],
+]
+
 
 def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
     """Read colors YAML configuration file."""
@@ -160,6 +169,13 @@ def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
             "colorscale_home_away_studios_retro": colors_config.get(
                 "colorscale_home_away_studios_retro", COLORSCALE_HOME_AWAY_STUDIOS_RETRO
             ),
+            "colorscale_hosts_scorekeepers": colors_config.get(
+                "colorscale_hosts_scorekeepers", COLORSCALE_HOSTS_SCOREKEEPERS
+            ),
+            "colorscale_hosts_scorekeepers_retro": colors_config.get(
+                "colorscale_hosts_scorekeepers_retro",
+                COLORSCALE_HOSTS_SCOREKEEPERS_RETRO,
+            ),
         }
     else:
         _config = {
@@ -179,6 +195,8 @@ def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
             "colorscale_studios_retro": COLORSCALE_STUDIOS_RETRO,
             "colorscale_home_away_studios": COLORSCALE_HOME_AWAY_STUDIOS,
             "colorscale_home_away_studios_retro": COLORSCALE_HOME_AWAY_STUDIOS_RETRO,
+            "colorscale_hosts_scorekeepers": COLORSCALE_HOSTS_SCOREKEEPERS,
+            "colorscale_hosts_scorekeepers_retro": COLORSCALE_HOSTS_SCOREKEEPERS_RETRO,
         }
 
     return _config

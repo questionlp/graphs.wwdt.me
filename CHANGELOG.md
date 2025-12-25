@@ -1,5 +1,17 @@
 # Changes
 
+## 3.10.0
+
+### Application Changes
+
+- Added "Show Host Types by Year" and "Show Scorekeeper Types by Year" bar charts that plots out each show for a given year and displays one color if a show had a regular host or scorekeeper and another for guest host or scorekeeper
+- Added "Show Hosts Heatmap" and "Show Scorekeepers Heatmap" charts that displays whether a show had a regular or a guest host or scorekeeper, respectively
+  - Hovering over each block in the heatmap only displays the year and the show number for that year
+  - Displaying the show date instead of the show number of a given year leads to issues with the heatmap due to dates not aligning correct and issues with rendering the axis
+- Added a new set of colorscales for the "Show Hosts Heatma" and "Show Scorekeepers Heatmap"
+- Corrected the `colorscale_away_retro` value for `1.0` to `#ffff66` in `colors.yaml` to match the corresponding default listed in `app/config.py`
+- Corrected the HTML class to `pages` for several index pages for consistency
+
 ## 3.9.0
 
 ### Application Changes

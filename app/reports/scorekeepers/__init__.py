@@ -3,4 +3,4 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 # vim: set noai syntax=python ts=4 sw=4:
-"""Panelists Reports Module for Wait Wait Graphs Site."""
+"""Scorekeepers Reports Module for Wait Wait Graphs Site."""

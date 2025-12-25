@@ -5,6 +5,10 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>{{ site_url }}{{ url_for("hosts.index") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>{{ site_url }}{{ url_for("locations.index") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
@@ -36,6 +40,12 @@
     <loc>{{ site_url }}{{ url_for("locations.show_location_types") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
+{% for year in show_years %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("locations.show_location_types_by_year", year=year) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% endfor %}
   <url>
     <loc>{{ site_url }}{{ url_for("panelists.index") }}</loc>
     <changefreq>weekly</changefreq>
@@ -70,6 +80,10 @@
     <changefreq>weekly</changefreq>
   </url>
 {% endfor %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("scorekeepers.index") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
   <url>
     <loc>{{ site_url }}{{ url_for("shows.index") }}</loc>
     <changefreq>weekly</changefreq>
