@@ -111,7 +111,7 @@ COLORSCALE_HOME_AWAY_STUDIOS: list[float | str] = [
 ]
 
 COLORSCALE_HOME_AWAY_STUDIOS_RETRO: list[float | str] = [
-    [0.0, "#ffff66"],  # Yello (Away)
+    [0.0, "#ffff66"],  # Yellow (Away)
     [0.333333, "#ff66ff"],  # Home
     [0.666667, "#00cc00"],  # Home/Remote Studios
     [1.0, "#000000"],  # Black (TBD)
@@ -124,6 +124,20 @@ COLORSCALE_HOSTS_SCOREKEEPERS: list[float | str] = [
 COLORSCALE_HOSTS_SCOREKEEPERS_RETRO: list[float | str] = [
     [0.0, "#ff66ff"],
     [1.0, "#ffff66"],
+]
+
+COLORSCALE_SHOW_TYPES: list[float | str] = [
+    [0.0, "#a56eff"],  # IBM Purple 50 (Regular)
+    [0.333333, "#f1c21b"],  # IBM Alert 30 (Best Of)
+    [0.666667, "#007d79"],  # IBM Teal 60 (Repeat)
+    [1.0, "#da1e28"],  # IBM Red 50 (Repeat Best Of)
+]
+
+COLORSCALE_SHOW_TYPES_RETRO: list[float | str] = [
+    [0.0, "#ff66ff"],  # Regular
+    [0.333333, "#ffff66"],  # Yellow (Best Of)
+    [0.666667, "#00cc00"],  # Repeat
+    [1.0, "#ff0000"],  # Black (Repeat Best Of)
 ]
 
 
@@ -176,6 +190,12 @@ def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
                 "colorscale_hosts_scorekeepers_retro",
                 COLORSCALE_HOSTS_SCOREKEEPERS_RETRO,
             ),
+            "colorscale_show_types": colors_config.get(
+                "colorscale_show_types", COLORSCALE_SHOW_TYPES
+            ),
+            "colorscale_show_types_retro": colors_config.get(
+                "colorscale_show_types_retro", COLORSCALE_SHOW_TYPES_RETRO
+            ),
         }
     else:
         _config = {
@@ -197,6 +217,8 @@ def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
             "colorscale_home_away_studios_retro": COLORSCALE_HOME_AWAY_STUDIOS_RETRO,
             "colorscale_hosts_scorekeepers": COLORSCALE_HOSTS_SCOREKEEPERS,
             "colorscale_hosts_scorekeepers_retro": COLORSCALE_HOSTS_SCOREKEEPERS_RETRO,
+            "colorscale_show_types": COLORSCALE_SHOW_TYPES,
+            "colorscale_show_types_retro": COLORSCALE_SHOW_TYPES_RETRO,
         }
 
     return _config

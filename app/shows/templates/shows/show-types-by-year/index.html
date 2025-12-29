@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% set page_title="Show Types by Year" %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
+    </ol>
+</nav>
+
+<h2>{{ page_title }}</h2>
+<p>
+    This chart displays each show type (regular, Best Ofs, repeats and repeat
+    Best Ofs) for all shows for a specific year.
+</p>
+
+<div class="info">
+    <div class="pages">
+        <ul class="list-group name-list">
+            {% for year in show_years %}
+            <li class="list-group-item">
+                <a href="{{ url_for('shows.show_types_by_year', year=year) }}">{{ year }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

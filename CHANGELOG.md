@@ -1,5 +1,23 @@
 # Changes
 
+## 3.11.0
+
+### Application Changes
+
+- Added "Show Types by Year" charts that plots every show for a specific year and if it is a regular, Best Of, repeat or a repeat Best Of show.
+- Added "Show Types Heatmap" that plots every show with blocks of various colors to denote regular, Best Of, repeat and repeat Best Of shows.
+  - Hovering over each block in the heatmap only displays the year and the show number for that year
+  - Displaying the show date instead of the show number of a given year leads to issues with the heatmap due to dates not aligning correct and issues with rendering the axis
+- Fixed the padding used at the end of the lists returned in the following functions under `app.reports.location`. The lists should be padded with `None` values rather than zeroes. Padding the lists with zeroes meant that it was hard to discern when the show had aired fewer than 53 shows in a single year.
+  - `retrieve_away_shows_by_year`
+  - `retrieve_away_shows_all_years`
+  - `retrieve_home_shows_by_year`
+  - `retrieve_home_shows_all_years`
+  - `retrieve_home_remote_studios_shows_by_year`
+  - `retrieve_home_remote_studios_shows_all_years`
+- Cleaned up and re-worked some spaghetti code
+- Updated some of the chart descriptions for clarity and accuracy
+
 ## 3.10.0
 
 ### Application Changes

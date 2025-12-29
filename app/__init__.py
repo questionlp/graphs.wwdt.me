@@ -118,6 +118,12 @@ def create_app():
     app.jinja_env.globals["colorscale_hosts_scorekeepers_retro"] = json.dumps(
         _colors["colorscale_hosts_scorekeepers_retro"]
     )
+    app.jinja_env.globals["colorscale_show_types"] = json.dumps(
+        _colors["colorscale_show_types"]
+    )
+    app.jinja_env.globals["colorscale_show_types_retro"] = json.dumps(
+        _colors["colorscale_show_types_retro"]
+    )
     app.jinja_env.globals["colorscale_retro"] = json.dumps(_colors["colorscale_retro"])
     app.jinja_env.globals["colorway_light"] = json.dumps(_colors["colorway_light"])
     app.jinja_env.globals["colorway_dark"] = json.dumps(_colors["colorway_dark"])

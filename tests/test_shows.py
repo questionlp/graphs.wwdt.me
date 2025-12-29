@@ -137,3 +137,30 @@ def test_panel_gender_mix(client: FlaskClient) -> None:
     assert b"Panel Gender Mix" in response.data
     assert b"2W / 1M" in response.data
     assert b"Year" in response.data
+
+
+def test_show_types(client: FlaskClient) -> None:
+    """Testing shows.show_types."""
+    response: TestResponse = client.get("/shows/show-types-by-year")
+    assert response.status_code == 200
+    assert b"Show Types by Year" in response.data
+    assert b"Best Ofs" in response.data
+
+
+@pytest.mark.parametrize("year", [1998, 2006, 2025])
+def test_show_types_by_year(client: FlaskClient, year: int) -> None:
+    """Testing shows.show_types_by_year."""
+    response: TestResponse = client.get(f"/shows/show-types-by-year/{year}")
+    assert response.status_code == 200
+    assert b"Show Types by Year" in response.data
+    assert b"Best Ofs" in response.data
+    assert b"plotly" in response.data
+
+
+def test_show_types_heatmap(client: FlaskClient) -> None:
+    """Testing shows.show_types_heatmap."""
+    response: TestResponse = client.get("/shows/show-types-heatmap/")
+    assert response.status_code == 200
+    assert b"Show Types Heatmap" in response.data
+    assert b"Best Of" in response.data
+    assert b"plotly" in response.data

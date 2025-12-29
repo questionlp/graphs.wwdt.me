@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% set page_title="Away Shows Heatmap" %}
-{% block title %}{{ page_title }} | Locations{% endblock %}
+{% set page_title="Show Types Heatmap" %}
+{% block title %}{{ page_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url_for('locations.index') }}">Locations</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
     </ol>
 </nav>
@@ -14,13 +14,13 @@
 
 {% if years and show_numbers and data %}
 <p>
-    This heatmap chart displays when shows that were recorded away from their
-    home (any venue or studio located in Chicago, Illinois), broken down by year.
-    All shows are represented in the heatmap, including regular, Best Of, repeat,
-    and repeat Best Of shows.
+    This heatmap chart displays the show type (regular, Best Of, repeat and
+    repeat Best Of) for each show, broken out by year.
 </p>
 <p>
-    Yellow blocks denote away shows
+    Purple or violet blocks denote regular shows, yellow blocks denote Best Of
+    shows, green blocks denote repeat shows and red blocks denote repeat
+    Best Of shows.
 </p>
 
 <div class="info py-2">
@@ -31,7 +31,7 @@
     // Set default colors and font list
     let axisColor = "#000";
     let backgroundColor = "#fff";
-    let colorscale = {{ colorscale_away | safe }};
+    colorscale = {{ colorscale_show_types | safe }};
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode (stored theme overrides prefers-color-scheme)
@@ -46,18 +46,18 @@
     } else if (retroMode) {
         backgroundColor = "#c0c0c0";
         fontList = "'IBM Plex Serif', serif";
-        colorscale = {{ colorscale_away_retro | safe }};
+        colorscale = {{ colorscale_show_types_retro | safe }};
     };
 
     let showNumbers = {{ show_numbers | safe }};
     let years = {{ years | safe }};
-    let locData = {{ data | safe }};
+    let showData = {{ data | safe }};
 
     let data = [
         {
             x: showNumbers,
             y: years,
-            z: locData,
+            z: showData,
             colorbar: {
                 tickfont: {
                     color: axisColor,
@@ -136,7 +136,7 @@
         ],
         responsive: true,
         toImageButtonOptions: {
-            filename: "away-shows-heatmap",
+            filename: "show-types-heatmap",
             height: 800,
             scale: 1,
             width: 1200

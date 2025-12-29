@@ -57,7 +57,7 @@ def retrieve_scorekeeper_types_by_year(year: int) -> list[int] | None:
 
 def retrieve_scorekeeper_types_by_year_with_dates(
     year: int,
-) -> dict[str, list[int | str]] | None:
+) -> dict[str, list[int | None]] | None:
     """Retrieve all shows for a given year with values for normal or guest scorekeepers.
 
     The dictionary contains two lists, one with show dates and a list each
