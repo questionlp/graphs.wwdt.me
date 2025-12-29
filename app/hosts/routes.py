@@ -69,7 +69,7 @@ def show_host_types_by_year(year: int) -> str:
     if not _data:
         return redirect_url(url_for("hosts.show_host_types"))
 
-    if "show_dates" in _data and "regulars" in _data and "guests" in _data:
+    if {"show_dates", "regulars", "guests"} <= set(_data):
         return render_template(
             "hosts/show-host-types-by-year/details.html",
             year=year,

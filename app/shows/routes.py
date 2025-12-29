@@ -5,6 +5,8 @@
 # vim: set noai syntax=python ts=4 sw=4:
 """Shows Routes for Wait Wait Graphs Site."""
 
+import json
+
 from flask import Blueprint, Response, current_app, render_template, url_for
 from mysql.connector import connect
 from wwdtm.show import Show
@@ -13,6 +15,10 @@ from app.reports.show import bluff_count, dates, gender_mix, scores, show_counts
 from app.reports.show.guests_vs_bluffs import (
     retrieve_bluff_win_rate_by_year,
     retrieve_not_my_job_win_rate_by_year,
+)
+from app.reports.show.types_by_year import (
+    retrieve_show_types_all_years,
+    retrieve_show_types_by_year_with_dates,
 )
 from app.reports.show.utility import retrieve_show_years
 from app.utility import MONTH_NAMES, redirect_url
@@ -350,4 +356,62 @@ def panel_gender_mix() -> Response | str:
         panel_1f=panel_1f,
         panel_2f=panel_2f,
         panel_3f=panel_3f,
+    )
+
+
+@blueprint.route("/show-types-by-year")
+def show_types() -> Response | str:
+    """View: Show Types by Year."""
+    show_years = retrieve_show_years()
+    if not show_years:
+        return redirect_url(url_for("shows.index"))
+
+    return render_template("shows/show-types-by-year/index.html", show_years=show_years)
+
+
+@blueprint.route("/show-types-by-year/<int:year>")
+def show_types_by_year(year: int) -> Response | str:
+    """View: Show Types by Year."""
+    show_years = retrieve_show_years()
+    if year not in show_years:
+        return redirect_url(url_for("shows.show_types"))
+
+    _data = retrieve_show_types_by_year_with_dates(year=year)
+
+    if {"show_dates", "regulars", "best_ofs", "repeats", "repeat_best_ofs"} <= set(
+        _data
+    ):
+        return render_template(
+            "shows/show-types-by-year/details.html",
+            year=year,
+            show_dates=_data["show_dates"],
+            regulars=json.dumps(_data["regulars"]),
+            best_ofs=json.dumps(_data["best_ofs"]),
+            repeats=json.dumps(_data["repeats"]),
+            repeat_best_ofs=json.dumps(_data["repeat_best_ofs"]),
+        )
+
+    return redirect_url(url_for("shows.show_types"))
+
+
+@blueprint.route("/show-types-heatmap")
+def show_types_heatmap() -> str:
+    """View: Show Types Heatmap."""
+    _shows = retrieve_show_types_all_years()
+
+    if not _shows:
+        return redirect_url(url_for("shows.index"))
+
+    show_years = list(_shows.keys())
+    show_numbers = [number + 1 for number in range(53)]
+
+    _data = []
+    for show_year in show_years:
+        _data.append(_shows[show_year])
+
+    return render_template(
+        "shows/show-types-heatmap/graph.html",
+        data=json.dumps(_data),
+        show_numbers=show_numbers,
+        years=show_years,
     )

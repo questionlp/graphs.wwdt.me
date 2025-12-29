@@ -227,12 +227,12 @@ def retrieve_home_away_studios_shows_by_year(
     }
 
 
-def retrieve_home_shows_by_year(year: int) -> list[int] | None:
+def retrieve_home_shows_by_year(year: int) -> list[int | None] | None:
     """Retrieve a list of all shows noted as home shows for a given year.
 
     The list contains either zeroes or ones, where ones denote shows
     recorded in Chicago, IL. The returned list will be padded out with
-    zeroes in order to have 53 items.
+    None values in order to have 53 items.
     """
     database_connection = connect(**current_app.config["database"])
 
@@ -273,7 +273,7 @@ def retrieve_home_shows_by_year(year: int) -> list[int] | None:
     return _shows
 
 
-def retrieve_home_shows_all_years() -> dict[int, list[int]] | None:
+def retrieve_home_shows_all_years() -> dict[int, list[int | None]] | None:
     """Retrieves a dictionary containing shows noted as home shows.
 
     Dictionary key is the year and each key value is a list of either
@@ -291,13 +291,13 @@ def retrieve_home_shows_all_years() -> dict[int, list[int]] | None:
     return _info
 
 
-def retrieve_away_shows_by_year(year: int) -> list[int] | None:
+def retrieve_away_shows_by_year(year: int) -> list[int | None] | None:
     """Retrieve a list of all shows noted as away shows for a given year.
 
     The list contains either zeroes or ones, where ones denote shows
     recorded away from Chicago, IL, but exclude shows with Home/Remote
     Studios as their location. The returned list will be padded out with
-    zeroes in order to have 53 items.
+    None values in order to have 53 items.
     """
     database_connection = connect(**current_app.config["database"])
 
@@ -339,12 +339,12 @@ def retrieve_away_shows_by_year(year: int) -> list[int] | None:
 
     _shows_len = len(_shows)
     if _shows_len < _MAX_SHOWS_PER_YEAR:
-        _shows = _shows + ([0] * (_MAX_SHOWS_PER_YEAR - _shows_len))
+        _shows = _shows + ([None] * (_MAX_SHOWS_PER_YEAR - _shows_len))
 
     return _shows
 
 
-def retrieve_away_shows_all_years() -> dict[int, list[int]] | None:
+def retrieve_away_shows_all_years() -> dict[int, list[int | None]] | None:
     """Retrieves a dictionary containing shows noted as away shows.
 
     Dictionary key is the year and each key value is a list of either
@@ -363,12 +363,12 @@ def retrieve_away_shows_all_years() -> dict[int, list[int]] | None:
     return _info
 
 
-def retrieve_home_remote_studios_shows_by_year(year: int) -> list[int] | None:
+def retrieve_home_remote_studios_shows_by_year(year: int) -> list[int | None] | None:
     """Retrieve a list of all shows noted as Home/Remote Studio shows for a given year.
 
     The list contains either zeroes or ones, where ones denote shows
     recorded from Home/Remote Studios. The returned list will be padded
-    out with zeroes in order to have 53 items.
+    out with None values in order to have 53 items.
     """
     database_connection = connect(**current_app.config["database"])
 
@@ -402,12 +402,14 @@ def retrieve_home_remote_studios_shows_by_year(year: int) -> list[int] | None:
 
     _shows_len = len(_shows)
     if _shows_len < _MAX_SHOWS_PER_YEAR:
-        _shows = _shows + ([0] * (_MAX_SHOWS_PER_YEAR - _shows_len))
+        _shows = _shows + ([None] * (_MAX_SHOWS_PER_YEAR - _shows_len))
 
     return _shows
 
 
-def retrieve_home_remote_studios_shows_all_years() -> dict[int, list[int]] | None:
+def retrieve_home_remote_studios_shows_all_years() -> (
+    dict[int, list[int | None]] | None
+):
     """Retrieves a dictionary containing shows noted as Home/Remote Studio shows.
 
     Dictionary key is the year and each key value is a list of either

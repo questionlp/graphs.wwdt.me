@@ -198,13 +198,7 @@ def show_location_types_by_year(year: int) -> str:
     if not _data:
         return redirect_url(url_for("locations.show_location_types"))
 
-    if (
-        "show_dates" in _data
-        and "home" in _data
-        and "away" in _data
-        and "studios" in _data
-        and "tbd_na" in _data
-    ):
+    if {"show_dates", "home", "away", "studios", "tbd_na"} <= set(_data):
         return render_template(
             "locations/show-location-types-by-year/details.html",
             year=year,

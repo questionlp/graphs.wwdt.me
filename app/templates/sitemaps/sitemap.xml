@@ -146,4 +146,18 @@
     <loc>{{ site_url }}{{ url_for("shows.panel_gender_mix") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.show_types") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% for year in show_years %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.show_types_by_year", year=year) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% endfor %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.show_types_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
 </urlset>
