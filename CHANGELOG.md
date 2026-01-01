@@ -1,5 +1,11 @@
 # Changes
 
+## 3.11.1
+
+### Application Changes
+
+- Fixed an uncaught divide-by-zero error that occurs when there aren't any Bluff the Listener or Not My Job data for a given year for the "Not My Job vs Bluff the Listener Win Ratios" chart
+
 ## 3.11.0
 
 ### Application Changes
