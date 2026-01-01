@@ -115,15 +115,18 @@ def retrieve_not_my_job_win_rate_by_year(
                 elif result["guestscore"] < 2 and not bool(result["exception"]):
                     best_of_only_guest_losses += 1
 
-    win_ratio = round(
-        100
-        * (
-            (count_guest_wins + best_of_only_guest_wins)
-            / (count_all_guest_scores + len(best_of_only_guest_ids))
-        ),
-        5,
-    )
-    return win_ratio
+    if count_all_guest_scores or best_of_only_guest_ids:
+        win_ratio = round(
+            100
+            * (
+                (count_guest_wins + best_of_only_guest_wins)
+                / (count_all_guest_scores + len(best_of_only_guest_ids))
+            ),
+            5,
+        )
+        return win_ratio
+
+    return 0
 
 
 def retrieve_bluff_win_rate_by_year(
@@ -178,5 +181,8 @@ def retrieve_bluff_win_rate_by_year(
 
     count_chosen_correct = result[0]
 
-    correct_ratio = round(100 * (count_chosen_correct / count_unique_bluffs), 5)
-    return correct_ratio
+    if count_unique_bluffs:
+        correct_ratio = round(100 * (count_chosen_correct / count_unique_bluffs), 5)
+        return correct_ratio
+
+    return 0
