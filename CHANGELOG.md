@@ -1,5 +1,20 @@
 # Changes
 
+## 3.12.0-alpha
+
+### Application Changes
+
+- Added a new higher contrast dark theme that increases the contrast between the page background and text colors
+  - This was introduced for those who prefer or require a higher contrast than the slightly decreased contrast of the updated dark theme
+  - When using the higher contrast dark theme, charts will use the same set of colors as the regular dark theme, including the chart and plot background colors
+- Added chart background color variables in `colors.yaml` and `app/config.py` that's used in the setup for all charts instead of hard-coding colors
+- Updated the margins and paddings of various charts for a more consistent look and provide extra top margin for the title
+- Updated descriptions for several Locations graphs for consistency and clarity
+
+### Component Changes
+
+- Upgraded wwdtm-theme from 2.4.6 to 2.5.0-alpha
+
 ## 3.11.1
 
 ### Application Changes
