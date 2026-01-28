@@ -1,5 +1,11 @@
 # Using color palettes from: https://carbondesignsystem.com/data-visualization/color-palettes/
 
+# Define chart background colors
+chart_backgrounds:
+  light: "#ffffff"
+  dark: "#262626" # IBM Gray 90
+  retro: "#c0c0c0"
+
 # Based on Categorical Palettes / Light / 5-Color Group / Option 1
 # Magenta 70 has been replaced with Purple 30 for better contrast
 colorway_light:
