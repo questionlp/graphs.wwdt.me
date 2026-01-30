@@ -19,11 +19,11 @@
     regular, Best Of and repeat Best Of shows.
 </p>
 <p>
-    All shows are included, including regular, Best Of, repeat and repeat Best
-    Of shows. Purple or violet blocks denote home shows (recorded in Chicago,
-    Illinois), yellow blocks denote away shows (recorded outside of Chicago),
-    green blocks denote home/remote studios shows, and black blocks denote a
-    location that has yet to be determined or is not available.
+    Purple or violet blocks represent home shows (shows recorded in Chicago,
+    Illinois), yellow blocks represent away shows (shows recorded outside of
+    Chicago, Illinois), green blocks represent home/remote studios shows,
+    and black blocks represent locations that have yet to be determined or
+    data is currently unavailable.
 </p>
 
 <div class="info py-2">
@@ -32,8 +32,8 @@
 
 <script>
     // Set default colors and font list
-    let axisColor = "#000";
-    let backgroundColor = "#fff";
+    let axisColor = "#000000";
+    let backgroundColor = {{ chart_background_light | safe }};
     colorscale = {{ colorscale_home_away_studios | safe }};
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
@@ -42,12 +42,13 @@
     const storedTheme = getStoredTheme();
     let lightMode = storedTheme === "light" || ((storedTheme === "light" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches));
     let darkMode = storedTheme === "dark" || ((storedTheme === "dark" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches));
+    let darkContrastMode = storedTheme === "dark-contrast";
     let retroMode = storedTheme === "retro"
-    if (darkMode) {
-        axisColor = "#fff";
-        backgroundColor = "#262626"; // IBM Gray 100
+    if (darkMode || darkContrastMode) {
+        axisColor = "#ffffff";
+        backgroundColor = {{ chart_background_dark | safe }};
     } else if (retroMode) {
-        backgroundColor = "#c0c0c0";
+        backgroundColor = {{ chart_background_retro | safe }};
         fontList = "'IBM Plex Serif', serif";
         colorscale = {{ colorscale_home_away_studios_retro | safe }};
     };
@@ -88,10 +89,10 @@
             },
         },
         margin: {
-            l: 128,
+            l: 96,
             r: 64,
             t: 64,
-            b: 64
+            b: 96
         },
         paper_bgcolor: backgroundColor,
         plot_bgcolor: backgroundColor,
@@ -103,7 +104,7 @@
                 size: 20
             },
             pad: {
-                t: 6
+                t: 16
             },
             text: "{{ page_title }}",
             x: 0.01

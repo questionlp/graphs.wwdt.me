@@ -24,8 +24,8 @@
 
 <script>
     // Set default colors and font list
-    let axisColor = "#000";
-    let backgroundColor = "#fff";
+    let axisColor = "#000000";
+    let backgroundColor = {{ chart_background_light | safe }};
     let colorscale = {{ colorscale | safe }};
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
@@ -34,12 +34,13 @@
     const storedTheme = getStoredTheme();
     let lightMode = storedTheme === "light" || ((storedTheme === "light" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches));
     let darkMode = storedTheme === "dark" || ((storedTheme === "dark" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches));
+    let darkContrastMode = storedTheme === "dark-contrast";
     let retroMode = storedTheme === "retro"
-    if (darkMode) {
-        axisColor = "#fff";
-        backgroundColor = "#262626"; // IBM Gray 100
+    if (darkMode || darkContrastMode) {
+        axisColor = "#ffffff";
+        backgroundColor = {{ chart_background_dark | safe }};
     } else if (retroMode) {
-        backgroundColor = "#c0c0c0";
+        backgroundColor = {{ chart_background_retro | safe }};
         fontList = "'IBM Plex Serif', serif";
         colorscale = {{ colorscale_retro | safe }};
     };
@@ -90,10 +91,10 @@
             },
         },
         margin: {
-            l: 128,
+            l: 96,
             r: 64,
             t: 64,
-            b: 64
+            b: 96
         },
         paper_bgcolor: backgroundColor,
         plot_bgcolor: backgroundColor,
@@ -105,7 +106,7 @@
                 size: 20
             },
             pad: {
-                t: 6
+                t: 16
             },
             text: "{{ page_title }}",
             x: 0.01

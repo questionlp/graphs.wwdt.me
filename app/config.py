@@ -1,4 +1,4 @@
-# Copyright (c) 2018-2025 Linh Pham
+# Copyright (c) 2018-2026 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -12,6 +12,12 @@ from typing import Any
 import yaml
 
 from app import utility
+
+CHART_BACKGROUNDS: dict[str, str] = {
+    "light": "#ffffff",
+    "dark": "#262626",  # IBM Gray 90
+    "retro": "#c0c0c0",
+}
 
 COLORWAY_LIGHT: list[str] = [
     "#6929c4",  # IBM Purple 70
@@ -144,13 +150,33 @@ COLORSCALE_SHOW_TYPES_RETRO: list[float | str] = [
 def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
     """Read colors YAML configuration file."""
     _colors_file_path = Path(colors_file_path)
+    chart_bg_light = CHART_BACKGROUNDS["light"]
+    chart_bg_dark = CHART_BACKGROUNDS["dark"]
+    chart_bg_retro = CHART_BACKGROUNDS["retro"]
+
     if _colors_file_path.exists():
         with _colors_file_path.open(mode="r", encoding="utf-8") as colors_file:
             colors_config: dict[str, list[str | int | float]] = yaml.safe_load(
                 colors_file
             )
 
+        _config_chart_backgrounds = colors_config.get("chart_backgrounds")
+
+        if _config_chart_backgrounds:
+            chart_bg_light = _config_chart_backgrounds.get(
+                "light", CHART_BACKGROUNDS["light"]
+            )
+            chart_bg_dark = _config_chart_backgrounds.get(
+                "dark", CHART_BACKGROUNDS["dark"]
+            )
+            chart_bg_retro = _config_chart_backgrounds.get(
+                "retro", CHART_BACKGROUNDS["retro"]
+            )
+
         _config = {
+            "chart_background_light": chart_bg_light,
+            "chart_background_dark": chart_bg_dark,
+            "chart_background_retro": chart_bg_retro,
             "colorway_light": colors_config.get("colorway_light", COLORWAY_LIGHT),
             "colorway_dark": colors_config.get("colorway_dark", COLORWAY_DARK),
             "colorway_retro": colors_config.get("colorway_retro", COLORWAY_RETRO),
@@ -199,6 +225,9 @@ def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
         }
     else:
         _config = {
+            "chart_background_light": chart_bg_light,
+            "chart_background_dark": chart_bg_dark,
+            "chart_background_retro": chart_bg_retro,
             "colorway_light": COLORWAY_LIGHT,
             "colorway_dark": COLORWAY_DARK,
             "colorway_retro": COLORWAY_RETRO,

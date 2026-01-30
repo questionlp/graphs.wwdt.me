@@ -1,5 +1,30 @@
 # Changes
 
+## 3.12.0
+
+### Application Changes
+
+- Added a new higher contrast dark theme that increases the contrast between the page background and text colors
+  - This was introduced for those who prefer or require a higher contrast than the slightly decreased contrast of the updated dark theme
+  - When using the higher contrast dark theme, charts will use the same set of colors as the regular dark theme, including the chart and plot background colors, due to heatmaps using black to denote the minimum value in the colorscale
+- Added chart background color variables in `colors.yaml` and `app/config.py` that's used in the setup for all charts instead of hard-coding colors
+- Updated the margins and paddings of various charts for a more consistent look and provide extra top margin for the title
+- Updated descriptions for several Locations graphs for consistency and clarity
+- Updated copyright year in source code comments
+- Updated the list of AI bots in the `robots.txt` template to reflect the latest version published at [ai.robots.txt](https://github.com/ai-robots-txt/ai.robots.txt)
+
+### Component Changes
+
+- Upgraded gunicorn from 23.0.0 to 24.1.1
+- Upgraded wwdtm from 2.21.1 to 2.22.1
+- Upgraded wwdtm-theme from 2.4.6 to 2.5.1
+
+### Development Changes
+
+- Upgraded Ruff from 0.13.3 to 0.14.14
+- Upgraded pytest from 8.4.1 to 9.0.2
+- Upgraded pytest-cov from 6.2.1 to 7.0.0
+
 ## 3.11.1
 
 ### Application Changes

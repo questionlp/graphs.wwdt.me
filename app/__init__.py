@@ -1,4 +1,4 @@
-# Copyright (c) 2018-2025 Linh Pham
+# Copyright (c) 2018-2026 Linh Pham
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -84,6 +84,15 @@ def create_app():
         _config["settings"].get("use_decimal_scores", False)
     )
 
+    app.jinja_env.globals["chart_background_light"] = json.dumps(
+        _colors["chart_background_light"]
+    )
+    app.jinja_env.globals["chart_background_dark"] = json.dumps(
+        _colors["chart_background_dark"]
+    )
+    app.jinja_env.globals["chart_background_retro"] = json.dumps(
+        _colors["chart_background_retro"]
+    )
     app.jinja_env.globals["colorscale"] = json.dumps(_colors["colorscale"])
     app.jinja_env.globals["colorscale_bold"] = json.dumps(_colors["colorscale_bold"])
     app.jinja_env.globals["colorscale_compressed_bottom"] = json.dumps(
