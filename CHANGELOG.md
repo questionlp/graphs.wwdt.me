@@ -1,5 +1,16 @@
 # Changes
 
+## 3.13.0
+
+### Application Changes
+
+- Added "Guest Host Counts by Year" and "Guest Scorekeeper Counts by Year" bar charts that display the number of shows that had a guest host or a guest scorekeeper for each year
+
+### Component Changes
+
+- Upgraded @ibm/plex-serif from 1.1.0 to 2.0.0
+- Upgraded wwdtm-theme from 2.5.1 to 2.5.2
+
 ## 3.12.0
 
 ### Application Changes

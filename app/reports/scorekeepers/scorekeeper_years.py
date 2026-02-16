@@ -2,6 +2,7 @@
 # graphs.wwdt.me is released under the terms of the Apache License 2.0
 # SPDX-License-Identifier: Apache-2.0
 #
+# pylint: disable=line-too-long
 # vim: set noai syntax=python ts=4 sw=4:
 """WWDTM Scorekeeper Types Retrieval Functions."""
 
@@ -12,8 +13,44 @@ from app.reports.location.home_vs_away_year import _MAX_SHOWS_PER_YEAR
 from app.reports.show.utility import retrieve_show_years
 
 
+def retrieve_guest_scorekeeper_counts_by_year() -> dict[int, int | None] | None:
+    """Retrieve a breakdown of guest scorekeeper counts per year.
+
+    The returned dictionary uses year as the key.
+    """
+    database_connection = connect(**current_app.config["database"])
+
+    _years = retrieve_show_years(reverse_order=False)
+    if not _years:
+        return None
+
+    query = """
+        SELECT YEAR(s.showdate) AS year, COUNT(s.showdate) AS count
+        FROM ww_showskmap skm
+        JOIN ww_shows s ON s.showid = skm.showid
+        WHERE skm.guest = 1
+        GROUP BY YEAR(s.showdate)
+        ORDER BY YEAR(s.showdate);
+    """
+
+    cursor = database_connection.cursor(dictionary=False)
+    cursor.execute(query)
+    results = cursor.fetchall()
+    cursor.close()
+    database_connection.close()
+
+    if not results:
+        return None
+
+    _show_years = dict.fromkeys(_years, 0)
+    for row in results:
+        _show_years[row[0]] = row[1]
+
+    return _show_years
+
+
 def retrieve_scorekeeper_types_by_year(year: int) -> list[int] | None:
-    """Retrieve a list of all shows for a given year with corresponding value for normal or guest scorekeepers.
+    """Retrieve a list of shows for a given year with corresponding value for normal or guest scorekeeper.
 
     The list contains zeroes for regular hosts and ones for guest scorekeepers.
     The returned list will be padded out with zeroes in order to have 53 items.

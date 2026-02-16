@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% set page_title = "Guest Host Counts by Year" %}
+{% block title %}{{ page_title }} | Hosts{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" id="nav-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('hosts.index') }}">Hosts</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
+    </ol>
+</nav>
+
+<h2>{{ page_title }}</h2>
+
+{% if years and counts %}
+<p>
+    This chart displays the number of shows that had a guest host for each
+    year. Best Of, repeat and repeat Best Of shows are included.
+</p>
+
+<div class="info py-2">
+    <div id="ww-chart"></div>
+</div>
+
+<script>
+    // Set default colors
+    let axisColor = "#000000";
+    let backgroundColor = {{ chart_background_light | safe }};
+    let colorway = {{ colorway_light | safe }};
+    let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
+
+    // Change colors if in dark mode (stored theme overrides prefers-color-scheme)
+    const getStoredTheme = () => localStorage.getItem("theme");
+    const storedTheme = getStoredTheme();
+    let lightMode = storedTheme === "light" || ((storedTheme === "light" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches));
+    let darkMode = storedTheme === "dark" || ((storedTheme === "dark" || storedTheme === "auto") && (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches));
+    let darkContrastMode = storedTheme === "dark-contrast";
+    let retroMode = storedTheme === "retro";
+    if (darkMode || darkContrastMode) {
+        axisColor = "#ffffff";
+        backgroundColor = {{ chart_background_dark | safe }};
+        colorway = {{ colorway_dark | safe }};
+    } else if (retroMode) {
+        backgroundColor = {{ chart_background_retro | safe }};
+        colorway = {{ colorway_retro | safe }};
+        fontList = "'IBM Plex Serif', serif";
+    };
+
+    // Set y-axis dtick value
+    let yAxisdTick = 5;
+
+    let data = [
+        {
+            x: {{ years }},
+            y: {{ counts }},
+            name: "Shows",
+            showlegend: false,
+            type: "bar"
+        }
+    ];
+
+    let layout = {
+        autosize: true,
+        colorway: colorway,
+        font: { family: fontList },
+        hoverlabel: {
+            font: {
+                color: axisColor,
+                family: fontList,
+                size: 16
+            },
+        },
+        hovermode: "x unified",
+        margin: {
+            l: 96,
+            r: 64,
+            t: 64,
+            b: 112
+        },
+        paper_bgcolor: backgroundColor,
+        plot_bgcolor: backgroundColor,
+        showlegend: false,
+        title: {
+            automargin: true,
+            font: {
+                color: axisColor,
+                size: 20
+            },
+            pad: {
+                t: 16
+            },
+            text: "{{ page_title }}",
+            x: 0.01
+        },
+        xaxis: {
+            color: axisColor,
+            showspikes: true,
+            spikecolor: axisColor,
+            spikedash: "dot",
+            spikemode: "across",
+            spikethickness: 1,
+            tickangle: -45,
+            tickfont: { size: 16 },
+            tickmode: "linear",
+            title: {
+                font: { size: 18 },
+                text: "Year"
+            }
+        },
+        yaxis: {
+            dtick: yAxisdTick,
+            color: axisColor,
+            fixedrange: true,
+            showline: true,
+            tickfont: { size: 16 },
+            title: {
+                font: { size: 18 },
+                text: "Shows"
+            }
+        }
+    };
+
+    let config = {
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+            "autoScale2d",
+            "lasso2d",
+            "select2d",
+        ],
+        responsive: true,
+        toImageButtonOptions: {
+            filename: "guest-host-counts-by-year",
+            height: 800,
+            scale: 1,
+            width: 1200
+        }
+    };
+
+    Plotly.newPlot("ww-chart", data, layout, config);
+</script>
+{% else %}
+<p>
+    Not enough guest host data to generate a graph.
+</p>
+{% endif %}
+
+{% endblock %}

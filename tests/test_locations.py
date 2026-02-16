@@ -19,7 +19,7 @@ def test_index(client: FlaskClient) -> None:
     assert b"Recordings by State" in response.data
 
 
-def test_all_locations_shows_heatmap(client: FlaskClient) -> None:
+def test_locations_shows_heatmap(client: FlaskClient) -> None:
     """Testing locations.all_locations_shows_heatmap."""
     response: TestResponse = client.get("/locations/all-locations-shows-heatmap")
     assert response.status_code == 200
