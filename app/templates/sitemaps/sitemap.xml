@@ -9,6 +9,28 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>{{ site_url }}{{ url_for("hosts.guest_host_counts_by_year") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("hosts.show_hosts_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("hosts.show_host_types") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% for year in show_years %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("hosts.show_host_types_by_year", year=year) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% endfor %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("hosts.index") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>{{ site_url }}{{ url_for("locations.index") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
@@ -84,6 +106,24 @@
     <loc>{{ site_url }}{{ url_for("scorekeepers.index") }}</loc>
     <changefreq>weekly</changefreq>
   </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("scorekeepers.guest_scorekeeper_counts_by_year") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("scorekeepers.show_scorekeepers_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("scorekeepers.show_scorekeeper_types") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% for year in show_years %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("scorekeepers.show_scorekeeper_types_by_year", year=year) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+{% endfor %}
   <url>
     <loc>{{ site_url }}{{ url_for("shows.index") }}</loc>
     <changefreq>weekly</changefreq>

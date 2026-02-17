@@ -5,6 +5,7 @@
 ### Application Changes
 
 - Added "Guest Host Counts by Year" and "Guest Scorekeeper Counts by Year" bar charts that display the number of shows that had a guest host or a guest scorekeeper for each year
+- Added missing Hosts and Scorekeeper routes to the `sitemap.xml` template
 
 ### Component Changes
 
