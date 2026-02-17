@@ -22,6 +22,24 @@ def index() -> str:
     return render_template("scorekeepers/index.html")
 
 
+@blueprint.route("/guest-scorekeeper-counts-by-year")
+def guest_scorekeeper_counts_by_year() -> str:
+    """View: Guest Scorekeeper Counts by Year."""
+    _counts = scorekeeper_years.retrieve_guest_scorekeeper_counts_by_year()
+
+    if not _counts:
+        return redirect_url(url_for("scorekeepers.index"))
+
+    _years = list(_counts.keys())
+    _counts = list(_counts.values())
+
+    return render_template(
+        "scorekeepers/guest-scorekeeper-counts-by-year/graph.html",
+        years=json.dumps(_years),
+        counts=json.dumps(_counts),
+    )
+
+
 @blueprint.route("/show-scorekeepers-heatmap")
 def show_scorekeepers_heatmap() -> str:
     """View: Show Scorekeepers Heatmap."""

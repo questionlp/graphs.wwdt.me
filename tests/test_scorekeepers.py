@@ -18,7 +18,17 @@ def test_index(client: FlaskClient) -> None:
     assert b"Show Scorekeepers Heatmap" in response.data
 
 
-def test_all_show_scorekeepers_heatmap(client: FlaskClient) -> None:
+def test_guest_scorekeeper_counts_by_year(client: FlaskClient) -> None:
+    """Testing hosts.guest_scorekeeper_counts_by_year."""
+    response: TestResponse = client.get(
+        "/scorekeepers/guest-scorekeeper-counts-by-year"
+    )
+    assert response.status_code == 200
+    assert b"Guest Scorekeeper Counts by Year" in response.data
+    assert b"plotly" in response.data
+
+
+def test_show_scorekeepers_heatmap(client: FlaskClient) -> None:
     """Testing scorekeepers.show_scorekeepers_heatmap."""
     response: TestResponse = client.get("/scorekeepers/show-scorekeepers-heatmap")
     assert response.status_code == 200

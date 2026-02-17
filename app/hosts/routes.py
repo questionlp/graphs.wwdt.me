@@ -22,6 +22,24 @@ def index() -> str:
     return render_template("hosts/index.html")
 
 
+@blueprint.route("/guest-host-counts-by-year")
+def guest_host_counts_by_year() -> str:
+    """View: Guest Host Counts by Year."""
+    _counts = host_years.retrieve_guest_host_counts_by_year()
+
+    if not _counts:
+        return redirect_url(url_for("hosts.index"))
+
+    _years = list(_counts.keys())
+    _counts = list(_counts.values())
+
+    return render_template(
+        "hosts/guest-host-counts-by-year/graph.html",
+        years=json.dumps(_years),
+        counts=json.dumps(_counts),
+    )
+
+
 @blueprint.route("/show-hosts-heatmap")
 def show_hosts_heatmap() -> str:
     """View: Show Hosts Heatmap."""
