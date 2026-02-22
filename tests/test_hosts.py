@@ -22,7 +22,7 @@ def test_guest_host_counts_by_year(client: FlaskClient) -> None:
     """Testing hosts.guest_host_counts_by_year."""
     response: TestResponse = client.get("/hosts/guest-host-counts-by-year")
     assert response.status_code == 200
-    assert b"Guest Host Counts by Year" in response.data
+    assert b"Guest Host Appearance Counts by Year" in response.data
     assert b"plotly" in response.data
 
 

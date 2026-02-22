@@ -1,5 +1,11 @@
 # Changes
 
+## 3.13.1
+
+### Application Changes
+
+- Changed the title of "Guest Host Counts by Year" and "Guest Scorekeeper Counts by Year" to "Guest Host Appearance Counts by Year" and "Guest Scorekeeper Appearance Counts by Year" to clarify the purpose of the charts
+
 ## 3.13.0
 
 ### Application Changes
