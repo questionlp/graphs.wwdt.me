@@ -24,7 +24,7 @@ def index() -> str:
 
 @blueprint.route("/guest-scorekeeper-counts-by-year")
 def guest_scorekeeper_counts_by_year() -> str:
-    """View: Guest Scorekeeper Counts by Year."""
+    """View: Guest Scorekeeper Appearance Counts by Year."""
     _counts = scorekeeper_years.retrieve_guest_scorekeeper_counts_by_year()
 
     if not _counts:
