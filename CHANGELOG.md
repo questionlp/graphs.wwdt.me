@@ -6,6 +6,10 @@
 
 - Changed the title of "Guest Host Counts by Year" and "Guest Scorekeeper Counts by Year" to "Guest Host Appearance Counts by Year" and "Guest Scorekeeper Appearance Counts by Year" to clarify the purpose of the charts
 
+### Component Changes
+
+- Upgraded Plotly.js from 3.3.1 to 3.4.0
+
 ## 3.13.0
 
 ### Application Changes
