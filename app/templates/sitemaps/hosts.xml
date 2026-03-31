@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{ site_url }}{{ url_for("hosts.guest_host_counts_by_year") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("hosts.show_hosts_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("hosts.show_host_types") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% for year in show_years %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("hosts.show_host_types_by_year", year=year) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% endfor %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("hosts.index") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+</urlset>

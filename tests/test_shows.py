@@ -14,17 +14,17 @@ def test_index(client: FlaskClient) -> None:
     """Testing shows.index."""
     response: TestResponse = client.get("/shows/")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"All Scores" in response.data
-    assert b"Counts by Year" in response.data
+    assert "Shows" in response.text
+    assert "All Scores" in response.text
+    assert "Counts by Year" in response.text
 
 
 def test_all_scores(client: FlaskClient) -> None:
     """Testing shows.all_scores."""
     response: TestResponse = client.get("/shows/all-scores")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"All Scores" in response.data
+    assert "Shows" in response.text
+    assert "All Scores" in response.text
 
 
 @pytest.mark.parametrize("year", [2020])
@@ -32,25 +32,25 @@ def test_all_scores_by_year(client: FlaskClient, year: int) -> None:
     """Testing shows.all_scores_by_year."""
     response: TestResponse = client.get(f"/shows/all-scores/{year}")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"All Scores:" in response.data
+    assert "Shows" in response.text
+    assert "All Scores:" in response.text
 
 
 def test_bluff_counts(client: FlaskClient) -> None:
     """Testing shows.bluff_counts."""
     response: TestResponse = client.get("/shows/bluff-counts")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"Bluff the Listener Counts" in response.data
+    assert "Shows" in response.text
+    assert "Bluff the Listener Counts" in response.text
 
 
 def test_bluff_counts_all(client: FlaskClient) -> None:
     """Testing shows.bluff_counts_all."""
     response: TestResponse = client.get("/shows/bluff-counts/all")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"Bluff the Listener Counts: All Years" in response.data
-    assert b"Correct" in response.data
+    assert "Shows" in response.text
+    assert "Bluff the Listener Counts: All Years" in response.text
+    assert "Correct" in response.text
 
 
 @pytest.mark.parametrize("year", [2020])
@@ -58,26 +58,26 @@ def test_bluff_counts_by_year(client: FlaskClient, year: int) -> None:
     """Testing shows.bluff_counts_by_year."""
     response: TestResponse = client.get(f"/shows/bluff-counts/{year}")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"Bluff the Listener Counts:" in response.data
-    assert b"Correct" in response.data
+    assert "Shows" in response.text
+    assert "Bluff the Listener Counts:" in response.text
+    assert "Correct" in response.text
 
 
 def test_counts_by_day_of_month(client: FlaskClient) -> None:
     """Testing shows.counts_by_day_of_month."""
     response: TestResponse = client.get("/shows/counts-by-day-month")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"Counts by Day of Month" in response.data
+    assert "Shows" in response.text
+    assert "Counts by Day of Month" in response.text
 
 
 def test_counts_by_day_of_month_all(client: FlaskClient) -> None:
     """Testing shows.counts_by_day_of_month_all."""
     response: TestResponse = client.get("/shows/counts-by-day-month/all")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"Counts by Day of Month: All Months" in response.data
-    assert b"Regular" in response.data
+    assert "Shows" in response.text
+    assert "Counts by Day of Month: All Months" in response.text
+    assert "Regular" in response.text
 
 
 @pytest.mark.parametrize("month", [8])
@@ -85,66 +85,66 @@ def test_counts_by_day_of_month_by_month(client: FlaskClient, month: int) -> Non
     """Testing shows.counts_by_day_of_month_by_month."""
     response: TestResponse = client.get(f"/shows/counts-by-day-month/{month}")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"Counts by Day of Month:" in response.data
-    assert b"Regular" in response.data
+    assert "Shows" in response.text
+    assert "Counts by Day of Month:" in response.text
+    assert "Regular" in response.text
 
 
 def test_counts_by_year(client) -> None:
     """Testing shows.counts_by_year."""
     response: TestResponse = client.get("/shows/counts-by-year")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"Counts by Year" in response.data
-    assert b"Regular" in response.data
+    assert "Shows" in response.text
+    assert "Counts by Year" in response.text
+    assert "Regular" in response.text
 
 
 def test_monthly_aggregate_score_heatmap(client: FlaskClient) -> None:
     """Testing shows.monthly_aggregate_score_heatmap."""
     response: TestResponse = client.get("/shows/monthly-aggregate-score-heatmap")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"Monthly Aggregate Score Heatmap" in response.data
-    assert b"Month" in response.data
-    assert b"Year" in response.data
+    assert "Shows" in response.text
+    assert "Monthly Aggregate Score Heatmap" in response.text
+    assert "Month" in response.text
+    assert "Year" in response.text
 
 
 def test_monthly_average_score_heatmap(client: FlaskClient) -> None:
     """Testing shows.monthly_average_score_heatmap."""
     response: TestResponse = client.get("/shows/monthly-average-score-heatmap")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"Monthly Average Score Heatmap" in response.data
-    assert b"Month" in response.data
-    assert b"Year" in response.data
+    assert "Shows" in response.text
+    assert "Monthly Average Score Heatmap" in response.text
+    assert "Month" in response.text
+    assert "Year" in response.text
 
 
 def test_not_by_job_vs_bluff_win_ratios(client: FlaskClient) -> None:
     """Testing shows.not_by_job_vs_bluff_win_ratios."""
     response: TestResponse = client.get("/shows/not-my-job-vs-bluff-win-ratios")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"Not My Job vs Bluff the Listener Win Ratios" in response.data
-    assert b"Win Ratio (%)" in response.data
-    assert b"Year" in response.data
+    assert "Shows" in response.text
+    assert "Not My Job vs Bluff the Listener Win Ratios" in response.text
+    assert "Win Ratio (%)" in response.text
+    assert "Year" in response.text
 
 
 def test_panel_gender_mix(client: FlaskClient) -> None:
     """Testing shows.panel_gender_mix."""
     response: TestResponse = client.get("/shows/panel-gender-mix")
     assert response.status_code == 200
-    assert b"Shows" in response.data
-    assert b"Panel Gender Mix" in response.data
-    assert b"2W / 1M" in response.data
-    assert b"Year" in response.data
+    assert "Shows" in response.text
+    assert "Panel Gender Mix" in response.text
+    assert "2W / 1M" in response.text
+    assert "Year" in response.text
 
 
 def test_show_types(client: FlaskClient) -> None:
     """Testing shows.show_types."""
     response: TestResponse = client.get("/shows/show-types-by-year")
     assert response.status_code == 200
-    assert b"Show Types by Year" in response.data
-    assert b"Best Ofs" in response.data
+    assert "Show Types by Year" in response.text
+    assert "Best Ofs" in response.text
 
 
 @pytest.mark.parametrize("year", [1998, 2006, 2025])
@@ -152,15 +152,15 @@ def test_show_types_by_year(client: FlaskClient, year: int) -> None:
     """Testing shows.show_types_by_year."""
     response: TestResponse = client.get(f"/shows/show-types-by-year/{year}")
     assert response.status_code == 200
-    assert b"Show Types by Year" in response.data
-    assert b"Best Ofs" in response.data
-    assert b"plotly" in response.data
+    assert "Show Types by Year" in response.text
+    assert "Best Ofs" in response.text
+    assert "plotly" in response.text
 
 
 def test_show_types_heatmap(client: FlaskClient) -> None:
     """Testing shows.show_types_heatmap."""
     response: TestResponse = client.get("/shows/show-types-heatmap/")
     assert response.status_code == 200
-    assert b"Show Types Heatmap" in response.data
-    assert b"Best Of" in response.data
-    assert b"plotly" in response.data
+    assert "Show Types Heatmap" in response.text
+    assert "Best Of" in response.text
+    assert "plotly" in response.text

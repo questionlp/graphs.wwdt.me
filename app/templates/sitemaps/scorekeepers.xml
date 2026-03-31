@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{ site_url }}{{ url_for("scorekeepers.guest_scorekeeper_counts_by_year") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("scorekeepers.show_scorekeepers_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("scorekeepers.show_scorekeeper_types") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% for year in show_years %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("scorekeepers.show_scorekeeper_types_by_year", year=year) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% endfor %}
+</urlset>
