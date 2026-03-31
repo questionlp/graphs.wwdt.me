@@ -15,5 +15,60 @@ def test_primary(client: FlaskClient) -> None:
     assert response.status_code == 200
     assert "Content-Type" in response.headers
     assert response.headers["Content-Type"] == "text/xml; charset=utf-8"
-    assert b"?xml" in response.data
-    assert b"urlset" in response.data
+    assert "?xml" in response.text
+    assert "urlset" in response.text
+
+
+def test_hosts(client: FlaskClient) -> None:
+    """Testing sitemaps.hosts."""
+    response: TestResponse = client.get("/sitemap-hosts.xml")
+    assert response.status_code == 200
+    assert "Content-Type" in response.headers
+    assert response.headers["Content-Type"] == "text/xml; charset=utf-8"
+    assert "?xml" in response.text
+    assert "urlset" in response.text
+    assert "/hosts" in response.text
+
+
+def test_locations(client: FlaskClient) -> None:
+    """Testing sitemaps.primary."""
+    response: TestResponse = client.get("/sitemap-locations.xml")
+    assert response.status_code == 200
+    assert "Content-Type" in response.headers
+    assert response.headers["Content-Type"] == "text/xml; charset=utf-8"
+    assert "?xml" in response.text
+    assert "urlset" in response.text
+    assert "/locations" in response.text
+
+
+def test_panelists(client: FlaskClient) -> None:
+    """Testing sitemaps.panelists."""
+    response: TestResponse = client.get("/sitemap-panelists.xml")
+    assert response.status_code == 200
+    assert "Content-Type" in response.headers
+    assert response.headers["Content-Type"] == "text/xml; charset=utf-8"
+    assert "?xml" in response.text
+    assert "urlset" in response.text
+    assert "/panelists" in response.text
+
+
+def test_scorekeepers(client: FlaskClient) -> None:
+    """Testing sitemaps.scorekeepers."""
+    response: TestResponse = client.get("/sitemap-scorekeepers.xml")
+    assert response.status_code == 200
+    assert "Content-Type" in response.headers
+    assert response.headers["Content-Type"] == "text/xml; charset=utf-8"
+    assert "?xml" in response.text
+    assert "urlset" in response.text
+    assert "/scorekeepers" in response.text
+
+
+def test_shows(client: FlaskClient) -> None:
+    """Testing sitemaps.shows."""
+    response: TestResponse = client.get("/sitemap-shows.xml")
+    assert response.status_code == 200
+    assert "Content-Type" in response.headers
+    assert response.headers["Content-Type"] == "text/xml; charset=utf-8"
+    assert "?xml" in response.text
+    assert "urlset" in response.text
+    assert "/shows" in response.text

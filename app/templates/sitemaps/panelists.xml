@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.aggregate_scores") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.appearances_by_year") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.score_breakdown") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.scores_by_appearance") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% for panelist in panelists %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.appearances_by_year_details", panelist=panelist.slug) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.score_breakdown_details", panelist=panelist.slug) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("panelists.scores_by_appearance_details", panelist=panelist.slug) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% endfor %}
+</urlset>

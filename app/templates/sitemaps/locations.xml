@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{ site_url }}{{ url_for("locations.all_locations_shows_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("locations.away_shows_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("locations.home_shows_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("locations.home_remote_studios_shows_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("locations.home_vs_away") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("locations.recordings_by_state") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("locations.show_location_types") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% for year in show_years %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("locations.show_location_types_by_year", year=year) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% endfor %}
+</urlset>

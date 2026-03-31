@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.all_scores") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% for year in show_years %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.all_scores_by_year", year=year) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% endfor %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.bluff_counts") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.bluff_counts_all") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% for year in show_years %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.bluff_counts_by_year", year=year) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% endfor %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.counts_by_day_of_month") }}</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.counts_by_day_of_month_all") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% for month in months %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.counts_by_day_of_month_by_month", month=month) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% endfor %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.counts_by_year") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.monthly_aggregate_score_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.monthly_average_score_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.not_by_job_vs_bluff_win_ratios") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.panel_gender_mix") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.show_types") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% for year in show_years %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.show_types_by_year", year=year) }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% endfor %}
+  <url>
+    <loc>{{ site_url }}{{ url_for("shows.show_types_heatmap") }}</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+</urlset>
