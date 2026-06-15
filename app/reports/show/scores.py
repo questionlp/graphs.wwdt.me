@@ -45,36 +45,19 @@ def build_year_scoring_dict() -> dict:
     }
 
 
-def build_all_scoring_dict(use_decimal_scores: bool = False) -> dict | None:
+def build_all_scoring_dict() -> dict | None:
     """Return a dictionary used to populate all panelist scoring data."""
-    if (
-        use_decimal_scores
-        and not current_app.config["app_settings"]["has_decimal_scores_column"]
-    ):
-        return None
-
     database_connection = connect(**current_app.config["database"])
+    query = """
+        SELECT DISTINCT YEAR(s.showdate) AS year
+        FROM ww_showpnlmap pm
+        JOIN ww_shows s ON s.showid = pm.showid
+        WHERE s.bestof = 0 AND s.repeatshowid IS NULL
+        GROUP BY YEAR(s.showdate)
+        HAVING SUM(pm.panelistscore_decimal) IS NOT NULL
+        ORDER BY YEAR(s.showdate);
+        """
 
-    if use_decimal_scores:
-        query = """
-            SELECT DISTINCT YEAR(s.showdate) AS year
-            FROM ww_showpnlmap pm
-            JOIN ww_shows s ON s.showid = pm.showid
-            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
-            GROUP BY YEAR(s.showdate)
-            HAVING SUM(pm.panelistscore_decimal) IS NOT NULL
-            ORDER BY YEAR(s.showdate);
-            """
-    else:
-        query = """
-            SELECT DISTINCT YEAR(s.showdate) AS year
-            FROM ww_showpnlmap pm
-            JOIN ww_shows s ON s.showid = pm.showid
-            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
-            GROUP BY YEAR(s.showdate)
-            HAVING SUM(pm.panelistscore) IS NOT NULL
-            ORDER BY YEAR(s.showdate);
-            """
     cursor = database_connection.cursor(dictionary=True)
     cursor.execute(query)
     result = cursor.fetchall()
@@ -91,38 +74,20 @@ def build_all_scoring_dict(use_decimal_scores: bool = False) -> dict | None:
     return all_scores_dict
 
 
-def retrieve_monthly_aggregate_scores(use_decimal_scores: bool = False) -> dict | None:
+def retrieve_monthly_aggregate_scores() -> dict | None:
     """Retrieve aggregated panelist scores grouped by month for every available year."""
-    if (
-        use_decimal_scores
-        and not current_app.config["app_settings"]["has_decimal_scores_column"]
-    ):
-        return None
-
     database_connection = connect(**current_app.config["database"])
+    query = """
+        SELECT YEAR(s.showdate) AS year, MONTH(s.showdate) AS month,
+        SUM(pm.panelistscore_decimal) AS total
+        FROM ww_showpnlmap pm
+        JOIN ww_shows s ON s.showid = pm.showid
+        WHERE s.bestof = 0 AND s.repeatshowid IS NULL
+        GROUP BY YEAR(s.showdate), MONTH(s.showdate)
+        HAVING SUM(pm.panelistscore_decimal) IS NOT NULL
+        ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
+        """
 
-    if use_decimal_scores:
-        query = """
-            SELECT YEAR(s.showdate) AS year, MONTH(s.showdate) AS month,
-            SUM(pm.panelistscore_decimal) AS total
-            FROM ww_showpnlmap pm
-            JOIN ww_shows s ON s.showid = pm.showid
-            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
-            GROUP BY YEAR(s.showdate), MONTH(s.showdate)
-            HAVING SUM(pm.panelistscore_decimal) IS NOT NULL
-            ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
-            """
-    else:
-        query = """
-            SELECT YEAR(s.showdate) AS year, MONTH(s.showdate) AS month,
-            SUM(pm.panelistscore) AS total
-            FROM ww_showpnlmap pm
-            JOIN ww_shows s ON s.showid = pm.showid
-            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
-            GROUP BY YEAR(s.showdate), MONTH(s.showdate)
-            HAVING SUM(pm.panelistscore) IS NOT NULL
-            ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
-            """
     cursor = database_connection.cursor(dictionary=True)
     cursor.execute(query)
     result = cursor.fetchall()
@@ -140,38 +105,20 @@ def retrieve_monthly_aggregate_scores(use_decimal_scores: bool = False) -> dict 
     return all_scores_dict
 
 
-def retrieve_monthly_average_scores(use_decimal_scores: bool = False) -> dict | None:
+def retrieve_monthly_average_scores() -> dict | None:
     """Retrieve average panelist scores grouped by month for every available year."""
-    if (
-        use_decimal_scores
-        and not current_app.config["app_settings"]["has_decimal_scores_column"]
-    ):
-        return None
-
     database_connection = connect(**current_app.config["database"])
+    query = """
+        SELECT YEAR(s.showdate) AS year, MONTH(s.showdate) AS month,
+        AVG(pm.panelistscore_decimal) AS average
+        FROM ww_showpnlmap pm
+        JOIN ww_shows s ON s.showid = pm.showid
+        WHERE s.bestof = 0 AND s.repeatshowid IS NULL
+        GROUP BY YEAR(s.showdate), MONTH(s.showdate)
+        HAVING AVG(pm.panelistscore_decimal) IS NOT NULL
+        ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
+        """
 
-    if use_decimal_scores:
-        query = """
-            SELECT YEAR(s.showdate) AS year, MONTH(s.showdate) AS month,
-            AVG(pm.panelistscore_decimal) AS average
-            FROM ww_showpnlmap pm
-            JOIN ww_shows s ON s.showid = pm.showid
-            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
-            GROUP BY YEAR(s.showdate), MONTH(s.showdate)
-            HAVING AVG(pm.panelistscore_decimal) IS NOT NULL
-            ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
-            """
-    else:
-        query = """
-            SELECT YEAR(s.showdate) AS year, MONTH(s.showdate) AS month,
-            AVG(pm.panelistscore) AS average
-            FROM ww_showpnlmap pm
-            JOIN ww_shows s ON s.showid = pm.showid
-            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
-            GROUP BY YEAR(s.showdate), MONTH(s.showdate)
-            HAVING AVG(pm.panelistscore) IS NOT NULL
-            ORDER BY YEAR(s.showdate) ASC, MONTH(s.showdate) ASC;
-            """
     cursor = database_connection.cursor(dictionary=True)
     cursor.execute(
         query,

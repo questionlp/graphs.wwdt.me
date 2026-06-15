@@ -1,5 +1,41 @@
 # Changes
 
+## 3.16.0
+
+### Application Changes
+
+- The Stats Page now requires panelist decimal score columns in the Wait Wait Stats Database
+  - Removed the `settings.use_decimal_scores` configuration key references and logic
+- Added `settings.repo_url` configuration key that can be set to the Git repository for this application
+- Changed the handling of the following configuration keys within `settings` to use `None` as the default value rather than an empty string and exclude links if they are `None` or empty
+  - `api_url`
+  - `blog_url`
+  - `reports_url`
+  - `stats_url`
+  - `bluesky_url`
+  - `bluesky_user`
+  - `mastodon_url`
+  - `mastodon_user`
+  - `support_npr_url`
+
+### Component Changes
+
+- Upgraded wwdtm from 2.23.1 to a minimum version of 3.2.0
+  - A version constraint is set to only allow versions starting from 3.2.0 but less than 3.3
+- Upgraded Plotly.js from 3.4.0 to 3.6.0
+- Upgraded wwdtm from 2.5.5 to 2.6.1
+  - Includes an upgrade of IBM Plex Mono from 1.1.0 to 2.5.0
+
+### Development Changes
+
+- Replaced GitHub repository URLs with Codeberg repository URLs for the Wait Wait Stats Project repositories that have migrated over to Codeberg
+
+## 6.15.0-post0 (Non-Release)
+
+### Development Changes
+
+- Upgraded pytest from 9.0.2 to 9.0.3
+
 ## 3.15.0-post0 (Non-Release)
 
 ### Development Changes

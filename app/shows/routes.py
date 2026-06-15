@@ -52,10 +52,7 @@ def all_scores_by_year(year: int) -> Response | str:
 
     database_connection = connect(**current_app.config["database"])
     _show = Show(database_connection=database_connection)
-    _all_scores = _show.retrieve_scores_by_year(
-        year,
-        use_decimal_scores=current_app.config["app_settings"]["use_decimal_scores"],
-    )
+    _all_scores = _show.retrieve_scores_by_year(year)
     database_connection.close()
 
     if not _all_scores:
@@ -67,14 +64,9 @@ def all_scores_by_year(year: int) -> Response | str:
     scores_3 = []
     for show in _all_scores:
         shows.append(show[0])
-        if current_app.config["app_settings"]["use_decimal_scores"]:
-            scores_1.append(float(show[1]))
-            scores_2.append(float(show[2]))
-            scores_3.append(float(show[3]))
-        else:
-            scores_1.append(show[1])
-            scores_2.append(show[2])
-            scores_3.append(show[3])
+        scores_1.append(float(show[1]))
+        scores_2.append(float(show[2]))
+        scores_3.append(float(show[3]))
 
     return render_template(
         "shows/all-scores/details.html",
@@ -258,9 +250,7 @@ def counts_by_year() -> Response | str:
 @blueprint.route("/monthly-aggregate-score-heatmap")
 def monthly_aggregate_score_heatmap() -> str:
     """View: Monthly Aggregate Score Heatmap."""
-    _all_scores = scores.retrieve_monthly_aggregate_scores(
-        use_decimal_scores=current_app.config["app_settings"]["use_decimal_scores"]
-    )
+    _all_scores = scores.retrieve_monthly_aggregate_scores()
 
     if not _all_scores:
         return render_template(
@@ -282,9 +272,7 @@ def monthly_aggregate_score_heatmap() -> str:
 @blueprint.route("/monthly-average-score-heatmap")
 def monthly_average_score_heatmap() -> str:
     """View: Monthly Average Score Heatmap."""
-    _all_scores = scores.retrieve_monthly_average_scores(
-        use_decimal_scores=current_app.config["app_settings"]["use_decimal_scores"]
-    )
+    _all_scores = scores.retrieve_monthly_average_scores()
 
     if not _all_scores:
         return render_template(

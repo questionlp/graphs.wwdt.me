@@ -32,9 +32,7 @@ def index() -> str:
 @blueprint.route("/aggregate-scores")
 def aggregate_scores() -> str:
     """View: Aggregate Scores."""
-    _aggregate_scores = agg.retrieve_score_spread(
-        use_decimal_scores=current_app.config["app_settings"]["use_decimal_scores"]
-    )
+    _aggregate_scores = agg.retrieve_score_spread()
     return render_template(
         "panelists/aggregate-scores/graph.html", aggregate_scores=_aggregate_scores
     )
@@ -109,14 +107,8 @@ def score_breakdown_details(panelist: str) -> Response | str:
     if not info:
         return redirect_url(url_for("panelists.score_breakdown"))
 
-    if current_app.config["app_settings"]["use_decimal_scores"]:
-        _panelist_scores = PanelistDecimalScores(
-            database_connection=database_connection
-        )
-        scores = _panelist_scores.retrieve_scores_grouped_list_by_slug(panelist)
-    else:
-        _panelist_scores = PanelistScores(database_connection=database_connection)
-        scores = _panelist_scores.retrieve_scores_grouped_list_by_slug(panelist)
+    _panelist_scores = PanelistDecimalScores(database_connection=database_connection)
+    scores = _panelist_scores.retrieve_scores_grouped_list_by_slug(panelist)
 
     database_connection.close()
 
@@ -152,14 +144,8 @@ def scores_by_appearance_details(panelist: str) -> Response | str:
     _panelist = Panelist(database_connection=database_connection)
     info = _panelist.retrieve_by_slug(panelist)
 
-    if current_app.config["app_settings"]["use_decimal_scores"]:
-        _panelist_scores = PanelistDecimalScores(
-            database_connection=database_connection
-        )
-        scores = _panelist_scores.retrieve_scores_list_by_slug(panelist)
-    else:
-        _panelist_scores = PanelistScores(database_connection=database_connection)
-        scores = _panelist_scores.retrieve_scores_list_by_slug(panelist)
+    _panelist_scores = PanelistDecimalScores(database_connection=database_connection)
+    scores = _panelist_scores.retrieve_scores_list_by_slug(panelist)
 
     database_connection.close()
 
@@ -168,13 +154,10 @@ def scores_by_appearance_details(panelist: str) -> Response | str:
 
     if scores:
         shows_json = json.dumps(scores["shows"])
-        if current_app.config["app_settings"]["use_decimal_scores"]:
-            scores_float = []
-            for score in scores["scores"]:
-                scores_float.append(round(float(score), 5))
-            scores_json = json.dumps(scores_float)
-        else:
-            scores_json = json.dumps(scores["scores"])
+        scores_float = []
+        for score in scores["scores"]:
+            scores_float.append(round(float(score), 5))
+        scores_json = json.dumps(scores_float)
 
         return render_template(
             "panelists/scores-by-appearance/details.html",
