@@ -23,7 +23,7 @@
 - Upgraded wwdtm from 2.23.1 to a minimum version of 3.2.0
   - A version constraint is set to only allow versions starting from 3.2.0 but less than 3.3
 - Upgraded Plotly.js from 3.4.0 to 3.6.0
-- - Upgraded wwdtm from 2.5.5 to 2.6.1
+- Upgraded wwdtm from 2.5.5 to 2.6.1
   - Includes an upgrade of IBM Plex Mono from 1.1.0 to 2.5.0
 
 ### Development Changes
