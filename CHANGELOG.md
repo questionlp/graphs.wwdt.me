@@ -6,6 +6,7 @@
 
 - The Stats Page now requires panelist decimal score columns in the Wait Wait Stats Database
   - Removed the `settings.use_decimal_scores` configuration key references and logic
+- Added `settings.repo_url` configuration key that can be set to the Git repository for this application
 - Changed the handling of the following configuration keys within `settings` to use `None` as the default value rather than an empty string and exclude links if they are `None` or empty
   - `api_url`
   - `blog_url`
