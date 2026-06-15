@@ -1,5 +1,7 @@
 # Wait Wait Don't Tell Me! Graphs
 
+**Note:** The authoritative version of this repository now resides on Codeberg as [graphs.wwdt.me](https://codeberg.org/qlp/graphs.wwdt.me) and mirrors changes to GitHub. Going forward, issues and pull requests should be created on Codeberg rather than GitHub.
+
 ## Overview
 
 Flask-based web application that serves up charts and graphs based on collected statistics and details for the NPR weekly quiz show [Wait Wait... Don't Tell Me!](http://waitwait.npr.org)

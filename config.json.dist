@@ -25,7 +25,7 @@
             "data_auto_track": true
         },
         "graphs_url": "",
-        "repo_url": "https://github.com/questionlp/graphs.wwdt.me",
+        "repo_url": "https://codeberg.org/qlp/graphs.wwdt.me",
         "reports_url": "",
         "site_url": "",
         "time_zone": "UTC",
@@ -36,7 +36,6 @@
         "support_npr_url": "",
         "patreon_url": "",
         "github_sponsor_url": "",
-        "use_decimal_scores": true,
         "block_ai_scrapers": false,
         "use_minified_css": false
     }
