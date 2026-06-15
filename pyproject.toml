@@ -20,10 +20,11 @@ norecursedirs = [
     "static",
     ".eggs",
     "wwdtm.egg-info",
+    "node_modules"
 ]
 
 [tool.ruff]
-required-version = ">= 0.13.0"
+required-version = ">= 0.15.0"
 target-version = "py312"
 
 exclude = [

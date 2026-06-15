@@ -52,36 +52,31 @@ def create_app():
     app.jinja_env.globals["rendered_at"] = utility.generate_date_time_stamp
     app.jinja_env.globals["time_zone"] = app.config["app_settings"]["time_zone"]
     app.jinja_env.globals["ga_property_code"] = _config["settings"].get(
-        "ga_property_code", ""
+        "ga_property_code", None
     )
     app.jinja_env.globals["umami"] = _config["settings"]["umami"]
-    app.jinja_env.globals["api_url"] = _config["settings"].get("api_url", "")
-    app.jinja_env.globals["blog_url"] = _config["settings"].get("blog_url", "")
-    app.jinja_env.globals["repo_url"] = _config["settings"].get("repo_url", "")
-    app.jinja_env.globals["reports_url"] = _config["settings"].get("reports_url", "")
+    app.jinja_env.globals["api_url"] = _config["settings"].get("api_url")
+    app.jinja_env.globals["blog_url"] = _config["settings"].get("blog_url")
+    app.jinja_env.globals["repo_url"] = _config["settings"].get("repo_url")
+    app.jinja_env.globals["reports_url"] = _config["settings"].get("reports_url")
     app.jinja_env.globals["site_url"] = _config["settings"].get("site_url", "")
-    app.jinja_env.globals["stats_url"] = _config["settings"].get("stats_url", "")
-    app.jinja_env.globals["bluesky_url"] = _config["settings"].get("bluesky_url", "")
-    app.jinja_env.globals["bluesky_user"] = _config["settings"].get("bluesky_user", "")
-    app.jinja_env.globals["mastodon_url"] = _config["settings"].get("mastodon_url", "")
-    app.jinja_env.globals["mastodon_user"] = _config["settings"].get(
-        "mastodon_user", ""
-    )
+    app.jinja_env.globals["stats_url"] = _config["settings"].get("stats_url")
+    app.jinja_env.globals["bluesky_url"] = _config["settings"].get("bluesky_url")
+    app.jinja_env.globals["bluesky_user"] = _config["settings"].get("bluesky_user")
+    app.jinja_env.globals["mastodon_url"] = _config["settings"].get("mastodon_url")
+    app.jinja_env.globals["mastodon_user"] = _config["settings"].get("mastodon_user")
     app.jinja_env.globals["support_npr_url"] = _config["settings"].get(
-        "support_npr_url", ""
+        "support_npr_url"
     )
-    app.jinja_env.globals["patreon_url"] = _config["settings"].get("patreon_url", "")
+    app.jinja_env.globals["patreon_url"] = _config["settings"].get("patreon_url")
     app.jinja_env.globals["github_sponsor_url"] = _config["settings"].get(
-        "github_sponsor_url", ""
+        "github_sponsor_url"
     )
     app.jinja_env.globals["block_ai_scrapers"] = bool(
         _config["settings"].get("block_ai_scrapers", False)
     )
     app.jinja_env.globals["use_minified_css"] = bool(
         _config["settings"].get("use_minified_css", False)
-    )
-    app.jinja_env.globals["use_decimal_scores"] = bool(
-        _config["settings"].get("use_decimal_scores", False)
     )
 
     app.jinja_env.globals["chart_background_light"] = json.dumps(
