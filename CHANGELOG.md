@@ -33,17 +33,15 @@
 
 ### Component Changes
 
-- Upgraded wwdtm from 2.23.1 to 3.2.0
+- Upgraded wwdtm from 2.23.1 to a minimum version of 3.2.0
+  - A version constraint is set to only allow versions starting from 3.2.0 but less than 3.3
 - Upgraded Plotly.js from 3.4.0 to 3.6.0
 - Upgraded wwdtm from 2.5.5 to 2.6.1
   - Includes an upgrade of IBM Plex Mono from 1.1.0 to 2.5.0
 
 ### Development Changes
 
-- Added pydoclint 0.8.4
 - Replaced GitHub repository URLs with Codeberg repository URLs for the Wait Wait Stats Project repositories that have migrated over to Codeberg
-- Upgraded Ruff from 0.14.14 to 0.15.6
-  - Version 0.15.6 was chosen as it was released before Astral announced that they had joined OpenAI
 
 ## 6.15.0-post.0 (Non-Release)
 
