@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% set page_title="Show Hosts Heatmap" %}
+{% set page_title = "Show Hosts Heatmap" %}
 {% block title %}{{ page_title }} | Hosts{% endblock %}
 
 {% block content %}
@@ -103,7 +103,7 @@
             pad: {
                 t: 16
             },
-            text: "{{ page_title }}",
+            text: "{{ page_title | safe }}",
             x: 0.01
         },
         xaxis: {
@@ -134,13 +134,14 @@
             "autoScale2d",
             "lasso2d",
             "select2d",
+            "sendChartToCloud",
         ],
         responsive: true,
         toImageButtonOptions: {
-            filename: "show-hosts-heatmap",
-            height: 800,
+            filename: "{{ page_title | slugify }}",
+            height: {{ heatmap_export_dimensions.height | safe }},
             scale: 1,
-            width: 1200
+            width: {{ heatmap_export_dimensions.width | safe }},
         }
     };
 

@@ -1,17 +1,18 @@
 {% extends "base.html" %}
-{% set page_title = "Show Host Types by Year" %}
-{% block title %}{{ year }} | {{ page_title }} | Hosts{% endblock %}
+{% set section_title = "Show Host Types by Year" %}
+{% set page_title -%}{{ section_title }}: {{ year}}{%- endset %}
+{% block title %}{{ year }} | {{ section_title }} | Hosts{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('hosts.index') }}">Hosts</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('hosts.show_host_types') }}">{{ page_title }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('hosts.show_host_types') }}">{{ section_title }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ year }}</li>
     </ol>
 </nav>
 
-<h2>{{ page_title }}: {{ year }}</h2>
+<h2>{{ page_title }}</h2>
 
 {% if show_dates and regulars and guests %}
 <p>
@@ -105,7 +106,7 @@
             pad: {
                 t: 16
             },
-            text: "{{ page_title }}: {{ year | safe }}",
+            text: "{{ page_title | safe }}",
             x: 0.01
         },
         xaxis: {
@@ -143,13 +144,14 @@
             "autoScale2d",
             "lasso2d",
             "select2d",
+            "sendChartToCloud",
         ],
         responsive: true,
         toImageButtonOptions: {
-            filename: "show-host-types-by-year-{{ year }}",
-            height: 800,
+            filename: "{{ page_title | slugify }}",
+            height: {{ plot_export_dimensions.height | safe }},
             scale: 1,
-            width: 1200
+            width: {{ plot_export_dimensions.width | safe }},
         }
     };
 

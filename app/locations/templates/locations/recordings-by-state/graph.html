@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% set page_title="Recordings by State" %}
+{% set page_title = "Recordings by State" %}
 {% block title %}{{ page_title }} | Locations{% endblock %}
 
 {% block content %}
@@ -111,7 +111,7 @@
             pad: {
                 t: 16
             },
-            text: "{{ page_title }}",
+            text: "{{ page_title | safe }}",
             x: 0.01
         },
         geo: {
@@ -130,13 +130,14 @@
             "autoScale2d",
             "lasso2d",
             "select2d",
+            "sendChartToCloud",
         ],
         responsive: true,
         toImageButtonOptions: {
-            filename: "recordings-by-state",
-            height: 800,
+            filename: "{{ page_title | slugify }}",
+            height: {{ plot_export_dimensions.height | safe }},
             scale: 1,
-            width: 1200
+            width: {{ plot_export_dimensions.width | safe }},
         }
     };
 
