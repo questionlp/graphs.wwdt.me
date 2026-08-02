@@ -15,7 +15,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-icons/bootstrap-icons.min.css')}}">
 
     <!-- Plotly.js -->
+    {% if use_plotly_v4 %}
+    <script src="{{ url_for('static', filename='js/plotly-v4.min.js') }}"></script>
+    {% else %}
     <script src="{{ url_for('static', filename='js/plotly.min.js') }}"></script>
+    {% endif %}
 
     {% if ga_property_code %}
     <!-- Global site tag (gtag.js) - Google Analytics -->

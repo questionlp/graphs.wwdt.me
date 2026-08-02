@@ -146,13 +146,23 @@ COLORSCALE_SHOW_TYPES_RETRO: list[float | str] = [
     [1.0, "#ff0000"],  # Black (Repeat Best Of)
 ]
 
+DEFAULT_PLOT_EXPORT_DIMENSIONS: dict[str, int] = {
+    "height": 1000,
+    "width": 1600,
+}
+
+DEFAULT_HEATMAP_EXPORT_DIMENSIONS: dict[str, int] = {
+    "height": 1200,
+    "width": 1680,
+}
+
 
 def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
     """Read colors YAML configuration file."""
     _colors_file_path = Path(colors_file_path)
-    chart_bg_light = CHART_BACKGROUNDS["light"]
-    chart_bg_dark = CHART_BACKGROUNDS["dark"]
-    chart_bg_retro = CHART_BACKGROUNDS["retro"]
+    chart_bg_light: dict[str, str] = CHART_BACKGROUNDS["light"]
+    chart_bg_dark: dict[str, str] = CHART_BACKGROUNDS["dark"]
+    chart_bg_retro: dict[str, str] = CHART_BACKGROUNDS["retro"]
 
     if _colors_file_path.exists():
         with _colors_file_path.open(mode="r", encoding="utf-8") as colors_file:
@@ -160,7 +170,9 @@ def load_colors(colors_file_path: str = "colors.yaml") -> dict[str, list[str]]:
                 colors_file
             )
 
-        _config_chart_backgrounds = colors_config.get("chart_backgrounds")
+        _config_chart_backgrounds: dict[str, str] | None = colors_config.get(
+            "chart_backgrounds"
+        )
 
         if _config_chart_backgrounds:
             chart_bg_light = _config_chart_backgrounds.get(
@@ -273,12 +285,12 @@ def load_config(
         # is a ``use_pool`` key and it is set to True. Remove the key
         # after parsing through the configuration to prevent issues
         # with mysql.connector.connect()
-        use_pool = database_config.get("use_pool", False)
+        use_pool = bool(database_config.get("use_pool", False))
 
         if use_pool:
             pool_name: str = str(database_config.get("pool_name", connection_pool_name))
             pool_size: int = int(database_config.get("pool_size", connection_pool_size))
-            _pool_size = max(pool_size, connection_pool_size)
+            _pool_size: int = max(pool_size, connection_pool_size)
 
             database_config["pool_name"] = pool_name
             database_config["pool_size"] = _pool_size
@@ -293,6 +305,30 @@ def load_config(
             if "use_pool" in database_config:
                 del database_config["use_pool"]
 
+    # Read in plot export dimension values
+    _plot_export_dimensions: dict[str, int] | None = settings_config.get(
+        "plot_export_dimensions", DEFAULT_PLOT_EXPORT_DIMENSIONS
+    )
+    _heatmap_export_dimensions: dict[str, int] | None = settings_config.get(
+        "heatmap_export_dimensions", DEFAULT_HEATMAP_EXPORT_DIMENSIONS
+    )
+
+    if (
+        "height" not in _plot_export_dimensions
+        or "width" not in _plot_export_dimensions
+    ):
+        settings_config["plot_export_dimensions"] = DEFAULT_PLOT_EXPORT_DIMENSIONS
+    else:
+        settings_config["plot_export_dimensions"] = _plot_export_dimensions
+
+    if (
+        "height" not in _heatmap_export_dimensions
+        or "height" not in _heatmap_export_dimensions
+    ):
+        settings_config["heatmap_export_dimensions"] = DEFAULT_HEATMAP_EXPORT_DIMENSIONS
+    else:
+        settings_config["heatmap_export_dimensions"] = _heatmap_export_dimensions
+
     # Process time zone configuration settings
     time_zone = settings_config.get("time_zone", app_time_zone)
     time_zone_object, time_zone_string = utility.time_zone_parser(time_zone)
@@ -302,7 +338,7 @@ def load_config(
 
     # Read in Umami Analytics settings
     if "umami_analytics" in settings_config:
-        _umami = dict(settings_config["umami_analytics"])
+        _umami: dict[str, str | bool] = dict(settings_config["umami_analytics"])
         settings_config["umami"] = {
             "enabled": bool(_umami.get("enabled", False)),
             "url": _umami.get("url"),

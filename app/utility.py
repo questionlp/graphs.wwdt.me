@@ -11,6 +11,7 @@ from typing import Any
 import pytz
 from flask import current_app
 from mysql.connector import DatabaseError, connect
+from slugify import slugify
 from wwdtm.panelist import Panelist
 from wwdtm.show import Show
 
@@ -91,6 +92,11 @@ def retrieve_show_years(reverse_order: bool = True) -> list[int]:
         years.reverse()
 
     return years
+
+
+def slugify_filter(string: str) -> str:
+    """Slugify a string."""
+    return slugify(string)
 
 
 def time_zone_parser(time_zone: str) -> tuple[pytz.timezone, str]:
