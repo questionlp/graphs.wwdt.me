@@ -1,17 +1,18 @@
 {% extends "base.html" %}
-{% set page_title="Counts by Day of Month" %}
-{% block title %}All | {{ page_title }} | Shows{% endblock %}
+{% set section_title = "Counts by Day of Month" %}
+{% set page_title -%}{{ section_title }}: All Months{%- endset %}
+{% block title %}All | {{ section_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('shows.counts_by_day_of_month') }}">{{ page_title }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.counts_by_day_of_month') }}">{{ section_title }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">All</li>
     </ol>
 </nav>
 
-<h2>{{ page_title }}: All Months</h2>
+<h2>{{ page_title }}</h2>
 
 {% if days %}
 <p>
@@ -130,7 +131,7 @@
             pad: {
                 t: 16
             },
-            text: "{{ page_title }}: All Months",
+            text: "{{ page_title | safe }}",
             x: 0.01
         },
         xaxis: {
@@ -170,14 +171,15 @@
             "autoScale2d",
             "lasso2d",
             "select2d",
+            "sendChartToCloud",
         ],
         responsive: true,
         scrollZoom: true,
         toImageButtonOptions: {
-            filename: "counts-by-day-months-all",
-            height: 800,
+            filename: "{{ page_title | slugify }}",
+            height: {{ plot_export_dimensions.height | safe }},
             scale: 1,
-            width: 1200
+            width: {{ plot_export_dimensions.width | safe }},
         }
     };
 

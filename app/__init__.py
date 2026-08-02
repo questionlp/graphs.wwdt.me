@@ -9,6 +9,7 @@ import json
 import platform
 
 from flask import Flask
+from slugify import slugify
 from wwdtm import VERSION as WWDTM_VERSION
 
 from app import config, utility
@@ -21,6 +22,7 @@ from app.panelists.routes import blueprint as panelists_bp
 from app.scorekeepers.routes import blueprint as scorekeepers_bp
 from app.shows.routes import blueprint as shows_bp
 from app.sitemaps.routes import blueprint as sitemaps_bp
+from app.utility import slugify_filter
 from app.version import APP_VERSION
 
 
@@ -76,8 +78,17 @@ def create_app():
         _config["settings"].get("block_ai_scrapers", False)
     )
     app.jinja_env.globals["use_minified_css"] = bool(
-        _config["settings"].get("use_minified_css", False)
+        _config["settings"].get("use_minified_css", True)
     )
+    app.jinja_env.globals["use_plotly_v4"] = bool(
+        _config["settings"].get("use_plotly_v4", False)
+    )
+    app.jinja_env.globals["plot_export_dimensions"] = _config["settings"][
+        "plot_export_dimensions"
+    ]
+    app.jinja_env.globals["heatmap_export_dimensions"] = _config["settings"][
+        "heatmap_export_dimensions"
+    ]
 
     app.jinja_env.globals["chart_background_light"] = json.dumps(
         _colors["chart_background_light"]
@@ -141,6 +152,8 @@ def create_app():
     app.jinja_env.globals["node_name"] = (
         platform.node().split(".")[0] if platform.node() else None
     )
+
+    app.jinja_env.filters["slugify"] = slugify_filter
 
     # Register application blueprints
     app.register_blueprint(main_bp)

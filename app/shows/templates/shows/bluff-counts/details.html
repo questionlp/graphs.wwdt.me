@@ -1,17 +1,18 @@
 {% extends "base.html" %}
-{% set page_title="Bluff the Listener Counts" %}
-{% block title %}{{ year }} | {{ page_title }} | Shows{% endblock %}
+{% set section_title = "Bluff the Listener Counts" %}
+{% set page_title -%}{{ section_title }}: {{ year }}{%- endset %}
+{% block title %}{{ year }} | {{ section_title }} | Shows{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" id="nav-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('shows.index') }}">Shows</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('shows.bluff_counts') }}">{{ page_title }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('shows.bluff_counts') }}">{{ section_title }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ year }}</li>
     </ol>
 </nav>
 
-<h2>{{ page_title }}: {{ year }}</h2>
+<h2>{{ page_title }}</h2>
 
 {% if months %}
 <p>
@@ -107,7 +108,7 @@
             pad: {
                 t: 16
             },
-            text: "{{ page_title }}: {{ year }}",
+            text: "{{ page_title | safe }}",
             x: 0.01
         },
         xaxis: {
@@ -145,13 +146,14 @@
             "autoScale2d",
             "lasso2d",
             "select2d",
+            "sendChartToCloud",
         ],
         responsive: true,
         toImageButtonOptions: {
-            filename: "bluff-counts-{{ year }}",
-            height: 800,
+            filename: "{{ page_title | slugify }}",
+            height: {{ plot_export_dimensions.height | safe }},
             scale: 1,
-            width: 1200
+            width: {{ plot_export_dimensions.width | safe }},
         }
     };
 
