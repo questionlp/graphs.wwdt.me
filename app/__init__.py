@@ -78,7 +78,7 @@ def create_app():
         _config["settings"].get("block_ai_scrapers", False)
     )
     app.jinja_env.globals["use_minified_css"] = bool(
-        _config["settings"].get("use_minified_css", False)
+        _config["settings"].get("use_minified_css", True)
     )
     app.jinja_env.globals["use_plotly_v4"] = bool(
         _config["settings"].get("use_plotly_v4", False)

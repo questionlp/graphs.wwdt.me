@@ -37,7 +37,7 @@
         "patreon_url": "",
         "github_sponsor_url": "",
         "block_ai_scrapers": false,
-        "use_minified_css": false,
+        "use_minified_css": true,
         "use_plotly_v4": false,
         "plot_export_dimensions": {
             "width": 1600,

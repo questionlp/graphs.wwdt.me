@@ -1,13 +1,17 @@
 # Changes
 
-## 3.17.0-beta (Work-in-Progress)
+## 3.17.0
 
 ### Application Changes
 
 - Added `sendChartToCloud` to the `config.modeBarButtonsToRemove` list of values for all plots to remove the "Share Data" modebar button for Plotly.js 4.0 and newer
 - Added initial support for Plotly.js 4.0
-  - Added `use_plotly_v4` configuration setting that is used to set which Plotly.js script file to use
-  - By default, Plotly.js 3.0 is used if the configuration setting has not been set or when set to `true`
+  - Added `use_plotly_v4` configuration setting that is used to set which Plotly.js script file to use. The default is `false`.
+  - Since the latest release of Plotly.js v4 is still a pre-release version, it is recommended to only use it for development and testing purposes only.
+  - This also includes a change to how Plotly.js symlinks are handled under `app/static/js`:
+    - **plotly-v3.min.js** points to the latest version of Plotly.js supported by the application, `3.7.0`
+    - **plotly-v4.min.js** points to the latest version of Plotly.js supported by the application, `4.0.0-rc.0`
+    - **plotly.min.js** points to **plotly-v3.min.js**
 - Added two new configuration settings that is used to set the export dimensions for the PNG files in pixels:
   - `plot_export_dimensions`
     - `height` (Default: `1000`)
@@ -16,11 +20,8 @@
     - `height` (Default: `1200`)
     - `width` (Default: `1600`)
   - The export dimensions for heatmaps is higher compared to other plots in order to improve readability due to heatmaps grow by row rather than by column
-- Changed how page titles and plot titles are set, along with using variables for defining export dimensions for plots
-- Changed the symlinks for Plotly.js files under `app/static/js`:
-  - **plotly-v3.min.js** points to the latest version of Plotly.js supported by the application, `3.7.0`
-  - **plotly-v4.min.js** points to the latest version of Plotly.js supported by the application, `4.0.0-rc.0`
-  - **plotly.min.js** points to **plotly-v3.min.js**
+- Changed how page titles and plot titles are defined within the templates, in addition to using variables for defining export dimensions for plots.
+- Changed the default value for `use_minified_css` from `False` to `True`
 
 ### Component Changes
 
