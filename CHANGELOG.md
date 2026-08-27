@@ -1,5 +1,11 @@
 # Changes
 
+## 3.17.1
+
+### Component Changes
+
+- Upgraded Plotly.js version 4 from 4.0.0-rc.0 to 4.0.0
+
 ## 3.17.0
 
 ### Application Changes
