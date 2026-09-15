@@ -1,5 +1,12 @@
 # Changes
 
+## 3.17.2
+
+### Component Changes
+
+- Removed the pre-release Plotly.js 4.0.0-rc.0 file from `app/static/js`
+- Upgraded Plotly.js version 4 from 4.0.0 to 4.1.1
+
 ## 3.17.1
 
 ### Component Changes
