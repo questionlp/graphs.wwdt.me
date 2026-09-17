@@ -23,6 +23,22 @@
     Studios</a> are also excluded.
 </p>
 
+<p>
+    {% if not include_all_chicago %}
+    In addition, recordings from the home venues in Chicago, IL, including the
+    Studebaker Theater, Chase Auditorium and in-studio at Chicago Public Radio/WBEZ
+    are not included. A version of this graph
+    <a href="{{ url_for('locations.recordings_by_state') ~ '?include_all_chicago' }}">that
+    includes all recordings from Chicago, IL</a> is also available.
+    {% else %}
+    In addition, recordings from the home venues in Chicago, IL, including the
+    Studebaker Theater, Chase Auditorium and in-studio at Chicago Public Radio/WBEZ
+    are included. A version of this graph
+    <a href="{{ url_for('locations.recordings_by_state') }}">that
+    excludes all recordings from Chicago, IL</a> is also available.
+    {% endif %}
+</p>
+
 <div class="info py-2">
     <div id="ww-chart"></div>
 </div>
@@ -32,7 +48,11 @@
     let axisColor = "#000000";
     let backgroundColor = {{ chart_background_light | safe }};
     let markerColor = "#f4f4f4"; // IBM Gray 10
+    {% if include_all_chicago %}
     let colorscale = {{ colorscale_compressed_bottom | safe }};
+    {% else %}
+    let colorscale = {{ colorscale | safe }};
+    {% endif %}
     let fontList = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
 
     // Change colors if in dark mode (stored theme overrides prefers-color-scheme)
@@ -50,7 +70,11 @@
         backgroundColor = {{ chart_background_retro | safe }};
         markerColor = "#cccccc";
         fontList = "'IBM Plex Serif', serif";
+        {% if include_all_chicago %}
         colorscale = {{ colorscale_compressed_bottom_retro | safe }};
+        {% else %}
+        let colorscale = {{ colorscale | safe }};
+        {% endif %}
     };
 
     let data = [{

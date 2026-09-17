@@ -58,14 +58,14 @@ COLORSCALE: list[float | str] = [
 
 COLORSCALE_COMPRESSED_BOTTOM: list[float | str] = [
     [0.000, "#000000"],  # Black
-    [0.001, "#31135e"],  # IBM Purple 90
-    [0.025, "#d4bbff"],  # IBM Purple 30
+    [0.010, "#31135e"],  # IBM Purple 90
+    [0.050, "#d4bbff"],  # IBM Purple 30
     [1.000, "#f6f2ff"],  # IBM Purple 10
 ]
 
 COLORSCALE_COMPRESSED_BOTTOM_RETRO: list[float | str] = [
     [0.000, "#000000"],  # Black
-    [0.001, "#330066"],
+    [0.005, "#330066"],
     [0.100, "#ff00ff"],
     [1.000, "#ffccff"],
 ]

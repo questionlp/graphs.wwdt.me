@@ -49,13 +49,13 @@ colorscale:
 # compressed into the lower end of the scale
 colorscale_compressed_bottom:
   - [0.000, "#000000"] # Black
-  - [0.001, "#31135e"] # IBM Purple 90
-  - [0.025, "#d4bbff"] # IBM Purple 30
+  - [0.010, "#31135e"] # IBM Purple 90
+  - [0.050, "#d4bbff"] # IBM Purple 30
   - [1.000, "#f6f2ff"] # IBM Purple 10
 
 colorscale_compressed_bottom_retro:
   - [0.000, "#000000"] # Black
-  - [0.001, "#6600cc"]
+  - [0.005, "#6600cc"]
   - [0.100, "#ff00ff"]
   - [1.000, "#ffccff"]
 

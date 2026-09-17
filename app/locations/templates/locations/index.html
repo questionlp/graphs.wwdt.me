@@ -35,6 +35,8 @@
             </li>
             <li class="list-group-item">
                 <a href="{{ url_for('locations.recordings_by_state') }}">Recordings by State</a>
+                <div class="vr align-middle mx-2"></div>
+                <a href="{{ url_for('locations.recordings_by_state') ~ '?include_all_chicago' }}">Include All Chicago, IL Recordings</a>
             </li>
             <li class="list-group-item">
                 <a href="{{ url_for('locations.show_location_types') }}">Show Location Types by Year</a>
