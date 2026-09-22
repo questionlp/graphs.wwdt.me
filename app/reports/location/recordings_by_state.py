@@ -43,20 +43,43 @@ def retrieve_states_dict() -> dict[str, dict[str | int]] | None:
     return states
 
 
-def retrieve_recordings_by_state() -> dict[str, dict[str | int]] | None:
+def retrieve_recordings_by_state(
+    include_all_chicago: bool = False,
+) -> dict[str, dict[str | int]] | None:
     """Retrieve recordings counts by state."""
     database_connection = connect(**current_app.config["database"])
 
-    query = """
-        SELECT l.state, COUNT(s.showid) AS recordings
-        FROM ww_showlocationmap lm
-        JOIN ww_shows s ON lm.showid = s.showid
-        JOIN ww_locations l ON l.locationid = lm.locationid
-        JOIN ww_postal_abbreviations pa ON pa.postal_abbreviation = l.state
-        WHERE s.bestof = 0 AND s.repeatshowid IS NULL
-        AND pa.country = 'United States'
-        GROUP BY l.state
-    """
+    if include_all_chicago:
+        query = """
+            SELECT l.state, COUNT(s.showid) AS recordings
+            FROM ww_showlocationmap lm
+            JOIN ww_shows s ON lm.showid = s.showid
+            JOIN ww_locations l ON l.locationid = lm.locationid
+            JOIN ww_postal_abbreviations pa ON pa.postal_abbreviation = l.state
+            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
+            AND pa.country = 'United States'
+            GROUP BY l.state
+        """
+    else:
+        query = """
+            SELECT l.state, COUNT(s.showid) AS recordings
+            FROM ww_showlocationmap lm
+            JOIN ww_shows s ON lm.showid = s.showid
+            JOIN ww_locations l ON l.locationid = lm.locationid
+            JOIN ww_postal_abbreviations pa ON pa.postal_abbreviation = l.state
+            WHERE s.bestof = 0 AND s.repeatshowid IS NULL
+            AND NOT (
+                l.city = 'Chicago' AND
+                l.state = 'IL' AND
+                l.venue IN (
+                    'Chicago Public Radio/WBEZ',
+                    'Chase Auditorium',
+                    'Studebaker Theater'
+                )
+            )
+            AND pa.country = 'United States'
+            GROUP BY l.state
+        """
     cursor = database_connection.cursor(dictionary=True)
     cursor.execute(query)
     results = cursor.fetchall()

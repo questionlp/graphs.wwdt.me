@@ -64,6 +64,18 @@ def test_recordings_by_state(client: FlaskClient) -> None:
     response: TestResponse = client.get("/locations/recordings-by-state")
     assert response.status_code == 200
     assert "Recordings by State" in response.text
+    assert "includes all recordings from Chicago" in response.text
+    assert "choropleth" in response.text
+
+
+def test_recordings_by_state_include_all_chicago(client: FlaskClient) -> None:
+    """Testing locations.recordings_by_state with include_all_chicago flag parameter."""
+    response: TestResponse = client.get(
+        "/locations/recordings-by-state?include_all_chicago"
+    )
+    assert response.status_code == 200
+    assert "Recordings by State" in response.text
+    assert "excludes all recordings from Chicago" in response.text
     assert "choropleth" in response.text
 
 

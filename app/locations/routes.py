@@ -7,7 +7,7 @@
 
 import json
 
-from flask import Blueprint, render_template, url_for
+from flask import Blueprint, render_template, request, url_for
 
 from app.reports.location import home_vs_away as home_away
 from app.reports.location import home_vs_away_year as home_away_year
@@ -152,7 +152,13 @@ def home_vs_away() -> str:
 @blueprint.route("/recordings-by-state")
 def recordings_by_state() -> str:
     """View: Recordings by State."""
-    recording_counts = recordings_state.retrieve_recordings_by_state()
+    include_all_chicago = False
+    if "include_all_chicago" in request.args:
+        include_all_chicago = True
+
+    recording_counts = recordings_state.retrieve_recordings_by_state(
+        include_all_chicago=include_all_chicago
+    )
 
     if not recording_counts:
         return render_template("locations/recordings-by-state/graph.html")
@@ -171,6 +177,7 @@ def recordings_by_state() -> str:
         states=states,
         names=names,
         recordings=recordings,
+        include_all_chicago=include_all_chicago,
     )
 
 
