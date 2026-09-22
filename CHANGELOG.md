@@ -4,6 +4,7 @@
 
 ### Application Changes
 
+- Added AI Policy collapsible and updated the Disclaimers collapsible located in the page footer template
 - Changed the Locations "Recordings by State" to exclude recordings from home venues in Chicago, IL (which includes the Studebaker Theater, Chase Auditorium and Chicago Public Radio/WBEZ) from being counted by default
   - Added a `include_all_chicago` flag parameter that includes all recordings from Chicago, IL. The parameter does not take or parse any values
   - When excluding recordings from home venues in Chicago, the normal, uncompressed colorscale is used for a more linear spread of colors
