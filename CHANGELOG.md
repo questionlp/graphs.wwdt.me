@@ -1,5 +1,31 @@
 # Changes
 
+## 3.19.0
+
+### Application Changes
+
+- Changed the default Plotly.js version from 3 to 4
+  - To continue to use Plotly.js version 3, set the `use_plotly_v4` configuration setting to `false` which is the previous default
+  - This also includes a change to how Plotly.js symlinks are handled under `app/static/js`:
+    - **plotly-v3.min.js** points to the latest version of Plotly.js supported by the application, `3.7.0`
+    - **plotly-v4.min.js** points to the latest version of Plotly.js supported by the application, `4.1.2`
+    - **plotly.min.js** points to **plotly-v4.min.js**
+
+### Component Changes
+
+- Upgraded gunicorn from 26.0.0 to 26.2.0
+- Upgraded Plotly.js version 4 from 4.1.1 to 4.1.2
+- Upgraded wwdtm from 3.2.0 to 3.3.0
+- Upgraded wwdtm-theme from 2.6.1 to 2.6.7
+
+### Development Changes
+
+- Upgraded pydoclint from 0.8.4 to 0.11.0
+- Upgraded pytest from 9.0.3 to 9.1.1
+- Upgraded pytest-cov from 7.0.0 to 7.1.0
+- Upgraded ruff from 0.15.6 to 0.17.0
+  - Minimum version of ruff in `pyproject.toml` has been increased to 0.17.0 to match
+
 ## 3.18.0
 
 ### Application Changes

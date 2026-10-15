@@ -81,7 +81,7 @@ def create_app():
         _config["settings"].get("use_minified_css", True)
     )
     app.jinja_env.globals["use_plotly_v4"] = bool(
-        _config["settings"].get("use_plotly_v4", False)
+        _config["settings"].get("use_plotly_v4", True)
     )
     app.jinja_env.globals["plot_export_dimensions"] = _config["settings"][
         "plot_export_dimensions"
