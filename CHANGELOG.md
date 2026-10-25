@@ -1,5 +1,17 @@
 # Changes
 
+## 3.20.0
+
+### Component Changes
+
+- Upgraded wwdtm from 3.3.0 to 3.4.4
+- Upgraded wwdtm-theme from 2.6.7 to 2.6.9
+  - Includes upgrading Bootstrap Icons from 1.13.1 to 1.13.2
+
+### Development Changes
+
+- Increased the minimum version of pytest in `pyproject.toml` has been increased to 9.0
+
 ## 3.19.0
 
 ### Application Changes
