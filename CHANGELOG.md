@@ -1,5 +1,17 @@
 # Changes
 
+## 3.21.0
+
+### Component Changes
+
+- Upgraded Plotly.js version 4 from 4.1.2 to 4.2.0
+- Removed the following Plotly.js versions from `app/dist/js`:
+  - 3.1.0
+  - 3.1.1
+  - 3.2.0
+  - 3.3.0
+  - 3.3.1
+
 ## 3.20.0
 
 ### Component Changes
